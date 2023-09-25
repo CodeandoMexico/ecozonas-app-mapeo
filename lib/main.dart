@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'src/ui/pages/pages.dart';
+import 'src/ui/theme/theme.dart';
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -10,14 +13,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      theme: myTheme,
+      home: const NewSessionPage(),
+      // home: MapatonMapPage(),
+      routes: {
+        NewSessionPage.routeName: (_) => const NewSessionPage(),
+        NewIdPage.routeName: (_) => const NewIdPage(),
+        MapatonListPage.routeName: (_) => MapatonListPage(),
+        MapatonDetailsPage.routeName: (_) => MapatonDetailsPage(),
+        MapatonMapPage.routeName: (_) => MapatonMapPage(),
+      },
     );
   }
 }
