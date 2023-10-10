@@ -17,7 +17,7 @@ class MyPrimaryElevatedButton extends StatelessWidget {
         minimumSize: fullWidth == true ? const Size.fromHeight(50) : null,
         backgroundColor: Constants.yellowColor,
         disabledBackgroundColor: Constants.disabledColor,
-        shadowColor: Constants.shadowColor,
+        shadowColor: Constants.yellowShadowColor,
         elevation: 5,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(Constants.borderRadiusMedium))

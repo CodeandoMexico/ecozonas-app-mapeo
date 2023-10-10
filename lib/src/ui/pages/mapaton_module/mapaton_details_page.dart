@@ -1,8 +1,9 @@
-import 'package:ecozonas/src/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 
-import '../../styles/my_button_styles.dart';
+import '../../../domain/models/new_mapaton_model.dart';
+import '../../theme/theme.dart';
 import '../../utils/constants.dart';
+import '../../widgets/my_double_button_row.dart';
 import 'mapaton_map_page.dart';
 
 class MapatonDetailsPage extends StatelessWidget {
@@ -21,6 +22,8 @@ class MapatonDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mapaton = ModalRoute.of(context)!.settings.arguments as Mapatone;
+
     return Scaffold(
       appBar: _appBar(),
       body: Column(
@@ -31,7 +34,7 @@ class MapatonDetailsPage extends StatelessWidget {
           const SizedBox(height: Constants.paddingXLarge),
           _details(),
           const Spacer(),
-          _buttons(context)
+          _buttons(context, mapaton)
         ],
       ),
       backgroundColor: myTheme.primaryColor,
@@ -113,30 +116,14 @@ class MapatonDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buttons(BuildContext context) {
+  Widget _buttons(BuildContext context, Mapatone mapaton) {
     return Container(
-      width: double.infinity,
       margin: const EdgeInsets.all(Constants.padding),
-      child: Row(
-        children: [
-          Expanded(
-            child: ElevatedButton(
-              onPressed: () {},
-              style: MyButtonStyles.secondaryButton,
-              child: const Text('Cancelar descarga', style: TextStyle(fontSize: 16))
-            ),
-          ),
-          const SizedBox(
-            width: Constants.padding,
-          ),
-          Expanded(
-            child: ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, MapatonMapPage.routeName),
-              style: MyButtonStyles.primaryButton,
-              child: const Text('Continuar', style: TextStyle(fontSize: 18))
-            ),
-          ),
-        ],
+      child: MyDoubleButtonRow(
+        cancelText: 'Cancelar descarga',
+        cancelCallback: () {},
+        acceptText: 'Continuar',
+        acceptCallback: () => Navigator.pushNamed(context, MapatonMapPage.routeName, arguments: mapaton),
       ),
     );
   }

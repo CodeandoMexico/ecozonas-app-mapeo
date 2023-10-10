@@ -21,7 +21,7 @@ class NewIdPage extends StatelessWidget {
 
     return Scaffold(
       appBar: const MyAppBar(
-        title: 'ID de mapeo',
+        title: Text('ID de mapeo'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(Constants.padding),

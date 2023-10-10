@@ -26,7 +26,9 @@ class Constants {
    */
   static const disabledColor = Color(0xFFDDDDDD);
   static const yellowColor = Color(0xFFF9D47C);
-  static const shadowColor = Color(0xFFB38254);
+  static const yellowShadowColor = Color(0xFFB38254);
+  static const blueColor = Color(0xFF4B5375);
+  static const blueShadowColor = Color(0xFF1B1E2A);
   static const buttonTextColor = Color(0xFF4B5375);
   static const labelTextColor = Color(0xFF1F1F1F);
 }

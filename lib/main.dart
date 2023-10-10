@@ -22,6 +22,8 @@ class MyApp extends StatelessWidget {
         MapatonListPage.routeName: (_) => MapatonListPage(),
         MapatonDetailsPage.routeName: (_) => MapatonDetailsPage(),
         MapatonMapPage.routeName: (_) => MapatonMapPage(),
+        FormPage.routeName: (_) => const FormPage(),
+        ViewMapPage.routeName: (_) => const ViewMapPage(),
       },
     );
   }

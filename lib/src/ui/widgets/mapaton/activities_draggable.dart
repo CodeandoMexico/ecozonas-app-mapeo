@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/models/activity_model.dart';
+import '../../../domain/models/new_mapaton_model.dart';
 import '../../../domain/models/task_model.dart';
+import '../../pages/form_module/form_page.dart';
 import '../../utils/constants.dart';
 import '../activity_item.dart';
 import '../task_item.dart';
@@ -11,35 +12,8 @@ class ActivitiesDraggable extends StatelessWidget {
 
   final DraggableScrollableController _draggableController = DraggableScrollableController();
 
-  final activitiesTest = [
-    ActivityModel(
-      title: 'Disponibilidad de estacionamientos para bicicletas',
-      detail: 'Analiza los bici-estacionamientos de la zona y elige sus características',
-      percentage: 0.7,
-      type: 'Entorno urbano',
-      backgroundColor: const Color(0xFFC2D2E7),
-      borderColor: const Color(0xFF6A94C6),
-      iconData: Icons.pedal_bike
-    ),
-    ActivityModel(
-      title: 'Calidad del servicio de recolección de basura',
-      detail: 'Observa y anota las características del servicio de recolección de basura',
-      percentage: 0.3,
-      type: 'Calidad medioambiental',
-      backgroundColor: const Color(0xFFD8E9D4),
-      borderColor: const Color(0xFFA8D29E),
-      iconData: Icons.pedal_bike
-    ),
-    ActivityModel(
-      title: 'Mapeo de estacios públicos',
-      detail: 'Analiza la zona, ubica las paradas formales e informales del transporte público',
-      percentage: 1,
-      type: 'Entorno urbano',
-      backgroundColor: const Color(0xFFC2D2E7),
-      borderColor: const Color(0xFF6A94C6),
-      iconData: Icons.pedal_bike
-    ),
-  ];
+  late Mapatone _mapatone;
+  List<Activity> _activities = [];
 
   final tasksTest = [
     TaskModel(
@@ -89,7 +63,7 @@ class ActivitiesDraggable extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   controller: pageController,
                   children: [
-                    _page1(pageController),
+                    _page1(context, pageController),
                     _page2(pageController),
                   ],
                 ),
@@ -123,29 +97,63 @@ class ActivitiesDraggable extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: const [
           SizedBox(width: 16.0),
-          Chip(label: Text('Todas las dimensiones')),
-          SizedBox(width: 8.0),
-          Chip(label: Text('Menor progreso')),
-          SizedBox(width: 8.0),
-          Chip(label: Text('Mostrar completadas')),
-          SizedBox(width: 16.0),
+          Chip(
+            label: Row(
+              children: [
+                Text('Todas las dimensiones'),
+                Icon(Icons.keyboard_arrow_down)
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _page1(PageController pageController) {
+  Widget _page1(BuildContext context, PageController pageController) {
     return Column(
       children: [
         _filters(),
         Expanded(
           child: ListView(
-            children: activitiesTest.map((e) {
+            children: [
+              Container(
+                height: 50,
+                margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                decoration: BoxDecoration(
+                  color: Constants.yellowColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Row(
+                  children: [
+                    Icon(Icons.error, size: 20),
+                    Icon(Icons.error, size: 20),
+                    SizedBox(width: 8.0),
+                    Text('Actividades prioritarias')
+                  ],
+                ),
+              ),
+              ..._activities.map((e) {
+              final category = _mapatone.categories.where((element) {
+                return element.code.replaceAll(' ', '_') == e.category.code;
+              }).toList();
+              if (category.isNotEmpty) {
+                e.color = category[0].color;
+                e.icon = category[0].icon;
+              }
+
               return ActivityItem(
                 activity: e,
-                callback: () => _animateToPage(pageController, 1),
+                callback: () {
+                  e.mapatonTitle = _mapatone.title;
+                  e.mapatonLocationText = _mapatone.locationText;
+                  
+                  Navigator.pushNamed(context, FormPage.routeName, arguments: e);
+                },
               );
-            }).toList(),
+            }).toList()
+            ],
           ),
         ),
       ],
@@ -168,9 +176,9 @@ class ActivitiesDraggable extends StatelessWidget {
               const SizedBox(width: 8.0),
               Container(
                 padding: const EdgeInsets.all(8.0),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.blue
+                  border: Border.all(color: const Color(0xFF6A94C6), width: 2)
                 ),
                 child: const Icon(Icons.pedal_bike, size: 20)
               ),
@@ -233,5 +241,10 @@ class ActivitiesDraggable extends StatelessWidget {
       duration: const Duration(milliseconds: 500),
       curve: Curves.ease
     );
+  }
+
+  void setActivities(Mapatone mapatone) {
+    _mapatone = mapatone;
+    _activities = mapatone.activities;
   }
 }

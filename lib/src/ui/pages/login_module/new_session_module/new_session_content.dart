@@ -6,7 +6,6 @@ import '../../../theme/theme.dart';
 import '../../../utils/constants.dart';
 import '../../../widgets/my_app_bar.dart';
 import '../../../widgets/my_bottom_sheet_text_field.dart';
-import '../../../widgets/my_dropdown_button.dart';
 import '../../../widgets/my_primary_elevated_button.dart';
 import 'bloc/bloc.dart';
 
@@ -45,7 +44,7 @@ class NewSessionContent extends StatelessWidget {
     
     return Scaffold(
       appBar: const MyAppBar(
-        title: 'Nueva sesión',
+        title: Text('Nueva sesión'),
       ),
       body: _body(context, bloc),
       backgroundColor: myTheme.colorScheme.background,

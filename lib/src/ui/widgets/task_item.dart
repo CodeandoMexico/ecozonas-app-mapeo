@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/models/task_model.dart';
+import '../pages/form_module/form_page.dart';
 
 class TaskItem extends StatelessWidget {
   final TaskModel task;
-  final Function? callback;
 
-  const TaskItem({super.key, required this.task, this.callback});
+  const TaskItem({super.key, required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class TaskItem extends StatelessWidget {
             const SizedBox(width: 16.0),
             Flexible(
               flex: 5,
-              child: _activityDetails(),
+              child: _activityDetails(context),
             )
           ],
         ),
@@ -47,12 +47,12 @@ class TaskItem extends StatelessWidget {
           color: Colors.black,
           backgroundColor: Colors.grey,
         ),
-        Text('${task.percentage * 100}% completado', style: const TextStyle(fontSize: 10))
+        Text('${(task.percentage * 100).round()}% completado', style: const TextStyle(fontSize: 10))
       ],
     );
   }
 
-  Widget _activityDetails() {
+  Widget _activityDetails(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -71,12 +71,12 @@ class TaskItem extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         const Spacer(),
-        _activityButton()
+        _activityButton(context)
       ],
     );
   }
 
-  Widget _activityButton() {
+  Widget _activityButton(BuildContext context) {
     return Row(
       children: [
         Expanded(
@@ -90,7 +90,7 @@ class TaskItem extends StatelessWidget {
           ),
         ),
         ElevatedButton(
-          onPressed: () => callback!(),
+          onPressed: () => Navigator.pushNamed(context, FormPage.routeName),
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xff4B5375),
             shape: RoundedRectangleBorder(
