@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/models/new_mapaton_model.dart';
+import '../../../../domain/models/mapaton_model.dart';
 import 'block_title_widget.dart';
 
 class RadioBlockWidget extends StatefulWidget {
   final String title;
   final String description;
   final List<Choice> choices;
+  final Function(String) callback;
 
-  const RadioBlockWidget({super.key, required this.title, required this.description, required this.choices});
+  const RadioBlockWidget({super.key, required this.title, required this.description, required this.choices, required this.callback});
 
   @override
   State<RadioBlockWidget> createState() => _RadioBlockWidgetState();
@@ -16,6 +17,7 @@ class RadioBlockWidget extends StatefulWidget {
 
 class _RadioBlockWidgetState extends State<RadioBlockWidget> {
   late int selectedRadioTile;
+  late String selectedValue;
 
   @override
   void initState() {
@@ -53,8 +55,11 @@ class _RadioBlockWidgetState extends State<RadioBlockWidget> {
                   value: e.key,
                   title: Text(e.value.label),
                   groupValue: selectedRadioTile,
+                  contentPadding: const EdgeInsets.only(left: 6.0),
                   onChanged: (value) {
+                    selectedValue = e.value.label;
                     setState(() => setSelectedRadioTile(value!));
+                    widget.callback(e.value.label);
                   },
                 );
               }).toList()
@@ -65,20 +70,3 @@ class _RadioBlockWidgetState extends State<RadioBlockWidget> {
     );
   }
 }
-
-
-
-// return Row(
-//   mainAxisSize: MainAxisSize.min,
-//   children: [
-//     Text(e.label),
-//     Checkbox(
-//       value: e.checked ?? false,
-//       onChanged: (value) {
-//         setState(() {
-//           e.checked = value;
-//         });
-//       }
-//     )
-//   ],
-// );

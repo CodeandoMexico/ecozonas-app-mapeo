@@ -5,11 +5,11 @@ import '../utils/constants.dart';
 class MyButtonStyles {
   static final primaryButton = ElevatedButton.styleFrom(
     minimumSize: const Size.fromHeight(50),
-    backgroundColor: Constants.yellowColor,
-    disabledBackgroundColor: Constants.disabledColor,
-    shadowColor: Constants.yellowShadowColor,
+    backgroundColor: Constants.yellowButtonColor,
+    disabledBackgroundColor: Constants.disabledButtonColor,
+    shadowColor: Constants.yellowButtonShadowColor,
     elevation: 5,
-    textStyle: const TextStyle(fontSize: 20),
+    textStyle: const TextStyle(fontSize: 30),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(Constants.borderRadiusMedium))
     )
@@ -17,9 +17,9 @@ class MyButtonStyles {
 
   static final secondaryButton = ElevatedButton.styleFrom(
     minimumSize: const Size.fromHeight(50),
-    backgroundColor: Constants.blueColor,
-    disabledBackgroundColor: Constants.disabledColor,
-    shadowColor: Constants.blueShadowColor,
+    backgroundColor: Constants.darkBlueColor,
+    disabledBackgroundColor: Constants.disabledButtonColor,
+    shadowColor: Constants.blueButtonShadowColor,
     elevation: 5,
     textStyle: const TextStyle(fontSize: 20),
     shape: const RoundedRectangleBorder(

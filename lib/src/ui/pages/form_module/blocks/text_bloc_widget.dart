@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'block_title_widget.dart';
 
-class LongTextWidget extends StatelessWidget {
+class TextBlockWidget extends StatelessWidget {
   final String title;
   final String description;
+  final int? maxLines;
+  final TextInputType? textInputType;
+  final Function(String) onChanged;
 
-  const LongTextWidget({super.key, required this.title, required this.description});
+  const TextBlockWidget({super.key, required this.title, required this.description, this.maxLines = 1, this.textInputType = TextInputType.text, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(16.0)
+      borderRadius: BorderRadius.circular(10)
     );
 
     return Padding(
@@ -24,11 +27,13 @@ class LongTextWidget extends StatelessWidget {
             description: description,
           ),
           TextFormField(
-            maxLines: 8,
+            maxLines: maxLines,
+            keyboardType: textInputType,
             decoration: InputDecoration(
               border: border,
               focusedBorder: border
             ),
+            onChanged: (value) => onChanged(value),
           )
         ],
       ),

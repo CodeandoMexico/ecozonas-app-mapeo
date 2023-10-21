@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/models/new_mapaton_model.dart';
+import '../../domain/models/mapaton_model.dart';
 import '../../ui/utils/color_extension.dart';
+import '../../ui/utils/constants.dart';
 
 class ActivityItem extends StatelessWidget {
   final Activity activity;
@@ -16,7 +17,7 @@ class ActivityItem extends StatelessWidget {
       margin:const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
-        side: const BorderSide(color: Color(0xFF6A94C6), width: 2)
+        // side: const BorderSide(color: Color(0xFF6A94C6), width: 2)
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
@@ -73,8 +74,8 @@ class ActivityItem extends StatelessWidget {
         Expanded(
           child: Row(
             children: [
-              isPriority ? const Icon(Icons.error, size: 20) : Container(),
-              isPriority ? const Icon(Icons.error, size: 20) : Container(),
+              isPriority ? Image.asset('assets/icons/ic_asterisk_50.png', width: 18) : Container(),
+              isPriority ? Image.asset('assets/icons/ic_asterisk_50.png', width: 18) : Container(),
               SizedBox(width: isPriority ? 8.0 : 0),
               const Icon(Icons.business_outlined, size: 15),
               const SizedBox(width: 4.0),
@@ -85,7 +86,7 @@ class ActivityItem extends StatelessWidget {
         ElevatedButton(
           onPressed: () => callback!(),
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xff4B5375),
+            backgroundColor: Constants.darkBlueColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12)
             )

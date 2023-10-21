@@ -7,14 +7,18 @@ import 'new_session_content.dart';
 class NewSessionPage extends StatelessWidget {
   static const routeName = 'newSession';
 
-  const NewSessionPage({super.key});
+  final Function? callback;
+
+  const NewSessionPage({super.key, this.callback});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
         create: (context) => NewSessionBloc(),
-        child: NewSessionContent(),
+        child: NewSessionContent(
+          callback: callback!,
+        ),
       ),
     );
   }

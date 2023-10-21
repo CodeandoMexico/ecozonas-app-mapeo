@@ -12,7 +12,7 @@ class MySecondaryElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const style = TextStyle(color: Constants.buttonTextColor, fontSize: 18);
+    const style = TextStyle(color: Constants.darkBlueColor, fontSize: 18);
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(

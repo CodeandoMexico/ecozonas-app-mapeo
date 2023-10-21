@@ -4,3 +4,5 @@ class NewSessionEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
+
+class CreateNewSession extends NewSessionEvent {}

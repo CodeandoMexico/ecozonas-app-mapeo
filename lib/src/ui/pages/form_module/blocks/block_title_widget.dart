@@ -1,3 +1,4 @@
+import 'package:ecozonas/src/ui/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class BlockTitleWidget extends StatelessWidget {
@@ -13,14 +14,14 @@ class BlockTitleWidget extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+          style: const TextStyle(fontSize: 16, color: Constants.labelTextColor, fontWeight: FontWeight.bold)
         ),
-        description != null ?
+        description != null && description!.isNotEmpty ?
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
               description!,
-              style: const TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16, color: Constants.labelTextColor),
             ),
           ) : Container()
       ],

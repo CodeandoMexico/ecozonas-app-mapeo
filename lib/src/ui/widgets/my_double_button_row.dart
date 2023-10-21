@@ -19,7 +19,7 @@ class MyDoubleButtonRow extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => cancelCallback(),
             style: MyButtonStyles.cancelButton,
-            child: Text(cancelText, style: const TextStyle(fontSize: 16))
+            child: Text(cancelText, style: const TextStyle(fontSize: 16, color: Constants.darkBlueColor))
           ),
         ),
         const SizedBox(
@@ -29,7 +29,7 @@ class MyDoubleButtonRow extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => acceptCallback(),
             style: MyButtonStyles.primaryButton,
-            child: Text(acceptText, style: const TextStyle(fontSize: 18))
+            child: Text(acceptText, style: const TextStyle(fontSize: 18, color: Constants.darkBlueColor))
           ),
         ),
       ],

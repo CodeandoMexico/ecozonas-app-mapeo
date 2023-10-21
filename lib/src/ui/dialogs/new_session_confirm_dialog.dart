@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../pages/login_module/new_session_module/new_id_page.dart';
 import '../utils/constants.dart';
 import '../widgets/my_primary_elevated_button.dart';
 import '../widgets/my_secondary_elevated_button.dart';
 
 class NewSessionConfirmDialog extends StatelessWidget {
-  const NewSessionConfirmDialog({super.key});
+  final String gender;
+  final String age;
+  final String disability;
+  final Function callback;
+
+  const NewSessionConfirmDialog({super.key, required this.gender, required this.age, required this.disability, required this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +33,13 @@ class NewSessionConfirmDialog extends StatelessWidget {
             const Text('¿Tus datos son correctos?', style: styleTitle),
             const SizedBox(height: Constants.padding),
             const Text('Género', style: styleField),
-            const Text('Mujer', style: styleBold),
+            Text(gender, style: styleBold),
             const SizedBox(height: Constants.padding),
             const Text('Rango de edad', style: styleField),
-            const Text('56-65 años', style: styleBold),
+            Text(age, style: styleBold),
             const SizedBox(height: Constants.padding),
             const Text('Discapacidad', style: styleField),
-            const Text('Motriz', style: styleBold),
+            Text(disability, style: styleBold),
             const SizedBox(height: Constants.padding),
             _buttons(context)
           ],
@@ -54,7 +58,6 @@ class NewSessionConfirmDialog extends StatelessWidget {
           Expanded(
             child: MySecondaryElevatedButton(
               onPressed: () => Navigator.pop(context),
-              fullWidth: false,
               label: 'No',
             ),
           ),
@@ -62,10 +65,9 @@ class NewSessionConfirmDialog extends StatelessWidget {
           Expanded(
             child: MyPrimaryElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, NewIdPage.routeName);
+                callback();
               },
-              fullWidth: false,
+              fullWidth: true,
               label: 'Si',
             ),
           ),

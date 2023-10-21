@@ -1,33 +1,65 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/models/new_mapaton_model.dart';
-import '../../../domain/models/task_model.dart';
+import '../../../domain/models/db/activity_db_model.dart';
+import '../../../domain/models/mapaton_model.dart';
 import '../../pages/form_module/form_page.dart';
 import '../../utils/constants.dart';
+import '../../utils/dialogs.dart' as dialogs;
 import '../activity_item.dart';
-import '../task_item.dart';
+import '../my_text_form_field.dart';
 
-class ActivitiesDraggable extends StatelessWidget {
+class CategoryOptions {
+  CategoryOptions({
+    required this.text,
+    this.code,
+  });
+
+  String text;
+  String? code;
+}
+
+class ActivitiesDraggable extends StatefulWidget {
+  final DraggableScrollableController draggableController = DraggableScrollableController();
+
   ActivitiesDraggable({super.key});
 
-  final DraggableScrollableController _draggableController = DraggableScrollableController();
+  @override
+  State<ActivitiesDraggable> createState() => _ActivitiesDraggableState();
 
-  late Mapatone _mapatone;
+  late Mapaton _mapatone;
   List<Activity> _activities = [];
+  List<Activity> _filteredActivities = [];
+  late Function(ActivityDbModel) _callback;
 
-  final tasksTest = [
-    TaskModel(
-      title: 'Biciestacionamiento (Hospital San Gabriel)',
-      detail: 'Ve al edificio y evalúa si tiene algún estacionamiento para bicicletas',
-      percentage: 0.3,
-      type: 'Disponibilidad de estacionamiento',
-    ),
-    TaskModel(
-      title: 'Biciestacionamiento (Secretaría Municipal)',
-      detail: 'Ve al edificio y evalúa si tiene algún estacionamiento para bicicletas',
-      percentage: 0.3,
-      type: 'Disponibilidad de estacionamiento',
-    ),
+  void animateDraggable(bool isShowing) {
+    draggableController.animateTo(
+      !isShowing ? 0.9 : 0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.ease
+    );
+  }
+
+  void setActivities(Mapaton mapatone) {
+    _mapatone = mapatone;
+    _activities = mapatone.activities;
+    _filteredActivities = _activities;
+  }
+
+  void setCallback(Function(ActivityDbModel) callback) {
+    _callback = callback;
+  }
+}
+
+class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
+  final _controller = TextEditingController();
+
+  String _defaultCategory = 'Todas las dimensiones';
+  final _options = [
+    CategoryOptions(text: 'Todas las dimensiones'),
+    CategoryOptions(text: 'Entorno urbano', code: 'ENTORNO_URBANO'),
+    CategoryOptions(text: 'Calidad medioambiental', code: 'CALIDAD_MEDIOAMBIENTAL'),
+    CategoryOptions(text: 'Bienestar socioeconómico', code: 'BIENESTAR_SOCIOECONOMICO'),
+    CategoryOptions(text: 'Riesgo de desastres', code: 'RIESGO DESASTRES'),
   ];
 
   @override
@@ -35,7 +67,7 @@ class ActivitiesDraggable extends StatelessWidget {
     final pageController = PageController(initialPage: 0);
 
     return DraggableScrollableSheet(
-      controller: _draggableController,
+      controller: widget.draggableController,
       minChildSize: 0,
       initialChildSize: 0,
       maxChildSize: 0.9,
@@ -64,7 +96,7 @@ class ActivitiesDraggable extends StatelessWidget {
                   controller: pageController,
                   children: [
                     _page1(context, pageController),
-                    _page2(pageController),
+                    // _page2(pageController),
                   ],
                 ),
               ),
@@ -79,14 +111,11 @@ class ActivitiesDraggable extends StatelessWidget {
    * WIDGETS
    */
   Widget _searchTextField() {
-    return TextFormField(
-      decoration: const InputDecoration(
-        hintText: 'Buscar actividad',
-        suffixIcon: Icon(Icons.search),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(50))
-        )
-      ),
+    return MyTextFormField(
+      controller: _controller,
+      hintText: 'Buscar actividad',
+      suffixIconData: Icons.search,
+      onChanged: (value) => _search(value),
     );
   }
 
@@ -95,14 +124,23 @@ class ActivitiesDraggable extends StatelessWidget {
       height: 50,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        children: const [
-          SizedBox(width: 16.0),
-          Chip(
-            label: Row(
-              children: [
-                Text('Todas las dimensiones'),
-                Icon(Icons.keyboard_arrow_down)
-              ],
+        children: [
+          const SizedBox(width: 16.0),
+          GestureDetector(
+            onTap: () {
+              dialogs.showMyBottomSheet(
+                context: context,
+                options: _options.map((e) => e.text).toList(),
+                callback: (value) => _filter(value),
+              );
+            },
+            child: Chip(
+              label: Row(
+                children: [
+                  Text(_defaultCategory),
+                  const Icon(Icons.keyboard_arrow_down)
+                ],
+              ),
             ),
           ),
         ],
@@ -122,20 +160,20 @@ class ActivitiesDraggable extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 decoration: BoxDecoration(
-                  color: Constants.yellowColor,
+                  color: Constants.yellowButtonColor,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
-                    Icon(Icons.error, size: 20),
-                    Icon(Icons.error, size: 20),
-                    SizedBox(width: 8.0),
-                    Text('Actividades prioritarias')
+                    Image.asset('assets/icons/ic_asterisk_50.png', width: 18),
+                    Image.asset('assets/icons/ic_asterisk_50.png', width: 18),
+                    const SizedBox(width: 8.0),
+                    const Text('Actividades prioritarias')
                   ],
                 ),
               ),
-              ..._activities.map((e) {
-              final category = _mapatone.categories.where((element) {
+              ...widget._filteredActivities.map((e) {
+              final category = widget._mapatone.categories.where((element) {
                 return element.code.replaceAll(' ', '_') == e.category.code;
               }).toList();
               if (category.isNotEmpty) {
@@ -145,11 +183,8 @@ class ActivitiesDraggable extends StatelessWidget {
 
               return ActivityItem(
                 activity: e,
-                callback: () {
-                  e.mapatonTitle = _mapatone.title;
-                  e.mapatonLocationText = _mapatone.locationText;
-                  
-                  Navigator.pushNamed(context, FormPage.routeName, arguments: e);
+                callback: () async {
+                  await _goToFormPage(e, context);
                 },
               );
             }).toList()
@@ -160,91 +195,58 @@ class ActivitiesDraggable extends StatelessWidget {
     );
   }
 
-  Widget _page2(PageController pageController) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () => _animateToPage(pageController, 0),
-                child: const Icon(Icons.arrow_back)
-              ),
-              const SizedBox(width: 8.0),
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: const Color(0xFF6A94C6), width: 2)
-                ),
-                child: const Icon(Icons.pedal_bike, size: 20)
-              ),
-              const SizedBox(width: 8.0),
-              const Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Disponibilidad de estacionamientos para bicicletas',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'Analiza los bici-estacionamientos de la zona y elige sus características',
-                      style: TextStyle(fontSize: 12),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 16, top: 16),
-          child: Text('Tareas', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: tasksTest.length,
-            itemBuilder: (context, index) {
-              return TaskItem(
-                task: tasksTest[index]
-              );
-            },
-          ),
-        )
-      ],
-    );
-  }
-
   /*
    * METHODS
    */
-  void animateDraggable(bool isShowing) {
-    _draggableController.animateTo(
-      !isShowing ? 0.9 : 0,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.ease
-    );
-  }
-  
-  void _animateToPage(PageController pageController, int page) {
-    pageController.animateToPage(
-      page,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.ease
-    );
+  void _search(String value) {
+    setState(() {
+      widget._filteredActivities = widget._activities.where((element) {
+        return element.title.toLowerCase().contains(value.toLowerCase()) ||
+          element.description.toLowerCase().contains(value.toLowerCase());
+      }).toList();
+    });
   }
 
-  void setActivities(Mapatone mapatone) {
-    _mapatone = mapatone;
-    _activities = mapatone.activities;
+  void _filter(String value) {
+    setState(() {
+      final index = _options.indexWhere((element) {
+        return element.text == value;
+      });
+    
+      _defaultCategory = value;
+      if (index == 0) {
+        widget._filteredActivities = widget._activities;
+      } else {
+        widget._filteredActivities = widget._activities.where((element) {
+          final category = _options.firstWhere((element) {
+            return element.text == value;
+          });
+    
+          return element.category.code == category.code;
+        }).toList();
+      }
+    });
+  }
+
+  Future<void> _goToFormPage(Activity e, BuildContext context) async {
+    e.mapatonUuid = widget._mapatone.uuid;
+    e.mapatonTitle = widget._mapatone.title;
+    e.mapatonLocationText = widget._mapatone.locationText;
+    
+    final a = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const FormPage(),
+        settings: RouteSettings(arguments: e)
+      )
+    ) as ActivityDbModel;
+    
+    widget._callback(a);
+    
+    widget.draggableController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.ease
+    );
   }
 }

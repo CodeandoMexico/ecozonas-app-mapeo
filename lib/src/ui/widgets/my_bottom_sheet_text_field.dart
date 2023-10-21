@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/theme.dart';
 import '../utils/constants.dart';
+import '../utils/dialogs.dart' as dialogs;
 
 class MyBottomSheetTextField extends StatelessWidget {
   final String titleText;
@@ -76,12 +77,14 @@ class MyBottomSheetTextField extends StatelessWidget {
   }
 
   void showMyBottomSheet(BuildContext context) {
-    showModalBottomSheet(
+    dialogs.showMyBottomSheet(
       context: context,
-      shape: _shape(),
-      builder: (_) {
-        return _options(context);
-      },
+      titleText: titleText,
+      options: options,
+      callback: (value) {
+        textController.text = value;
+        callback(value);
+      }
     );
   }
 }

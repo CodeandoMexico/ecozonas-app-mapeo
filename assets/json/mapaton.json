@@ -11,6 +11,8 @@
         },
         "updated_at": "2023-10-01 00:00:00",
         "status": "PUBLICADO",
+        "survey_is_active": false,
+        "survey_url": "https://google.com",
         "activities": [{
                 "uuid": "7244783f-e919-4f92-bfa8-256c1c545b5e",
                 "title": "Disponibilidad de instalaciones y servicios básicos",
@@ -23,19 +25,22 @@
                         "uuid": "75c8742b-5ea4-4535-83f0-590108b28d46",
                         "block_type": "INSTRUCTIONS",
                         "title": "",
-                        "description": "Estas son las instrucciones"
+                        "description": "Estas son las instrucciones",
+                        "mandatory": true
                     },
                     {
                         "uuid": "75c8742b-5ea4-4535-83f0-590108b28c46",
                         "block_type": "POINT",
                         "title": "Pon un punto en el mapa",
-                        "description": ""
+                        "description": "",
+                        "mandatory": false
                     },
                     {
                         "uuid": "15183827-4cbe-4a28-a28f-f1d5bfd42a7a",
                         "block_type": "SELECT",
                         "title": "¿Qué tipo de espacio o necesidad básica estás mapeando?",
                         "description": "",
+                        "mandatory": true,
                         "options": {
                             "choices": [{
                                     "label": "Alimentación",
@@ -74,7 +79,8 @@
                     "uuid": "c0ddbd05-518a-494b-93bd-5bfc8d14a21e",
                     "block_type": "POINT",
                     "title": "Marca dónde se encuentra la parada",
-                    "description": ""
+                    "description": "",
+                    "mandatory": true
                 }]
             },
             {
@@ -89,13 +95,15 @@
                         "uuid": "a3d7bf7b-7ec6-43b5-bd3a-3469b303bd58",
                         "block_type": "POINT",
                         "title": "Pon un punto en el mapa",
-                        "description": ""
+                        "description": "",
+                        "mandatory": true
                     },
                     {
                         "uuid": "ebe89c0a-3b50-464d-a55f-44ee90643161",
                         "block_type": "SELECT",
                         "title": "",
                         "description": "",
+                        "mandatory": true,
                         "options": {
                             "choices": [{
                                     "label": "Área verde",
@@ -126,13 +134,15 @@
                         "uuid": "13580c3d-2825-4247-8cfd-c7b78badeff8",
                         "block_type": "POINT",
                         "title": "Pon un punto en el mapa",
-                        "description": ""
+                        "description": "",
+                        "mandatory": true
                     },
                     {
                         "uuid": "e34665fa-4a44-4aab-a718-0bc48be93125",
                         "block_type": "SELECT",
                         "title": "",
                         "description": "",
+                        "mandatory": true,
                         "options": {
                             "choices": [{
                                     "label": "Inundación",
@@ -169,21 +179,38 @@
                 },
                 "blocks": [{
                         "uuid": "f73ef997-d4c0-4ef3-8b42-f42d0838672e",
+                        "block_type": "INSTRUCTIONS",
+                        "title": "",
+                        "description": "Esto es lo que debes hacer."
+                    },
+                    {
+                        "uuid": "f73ef997-d4c0-4ef3-8b42-f42d0838672e",
+                        "block_type": "NUMBER",
+                        "title": "Título para el bloque de tipo numerico",
+                        "description": "Descipción para el bloque de tipo numerico",
+                        "mandatory": true,
+                        "is_decimal": false
+                    },
+                    {
+                        "uuid": "f73ef997-d4c0-4ef3-8b42-f42d0838672e",
                         "block_type": "SHORT_TEXT",
                         "title": "Título para el bloque de tipo texto corto",
-                        "description": "Descipción para el bloque de tipo texto corto"
+                        "description": "Descipción para el bloque de tipo texto corto",
+                        "mandatory": true
                     },
                     {
                         "uuid": "baabe937-acdc-4ea4-bf5b-d7847cd67745",
                         "block_type": "LONG_TEXT",
                         "title": "Título para el bloque de tipo texto largo",
-                        "description": "Descipción para el bloque de tipo texto largo"
+                        "description": "Descipción para el bloque de tipo texto largo",
+                        "mandatory": true
                     },
                     {
                         "uuid": "4350ee01-8188-46c9-bee9-38e61caddff2",
                         "block_type": "SELECT",
                         "title": "Título para el bloque de tipo select",
                         "description": "Descipción para el bloque de tipo select",
+                        "mandatory": true,
                         "options": {
                             "choices": [{
                                     "label": "Opción Uno",
@@ -205,6 +232,7 @@
                         "block_type": "CHECKBOX",
                         "title": "Título para el bloque de tipo checkbox",
                         "description": "Descipción para el bloque de tipo checkbox",
+                        "mandatory": true,
                         "options": {
                             "choices": [{
                                     "label": "Opción Uno",
@@ -226,6 +254,7 @@
                         "block_type": "RADIO",
                         "title": "Título para el bloque de tipo radio",
                         "description": "Descipción para el bloque de tipo radio",
+                        "mandatory": true,
                         "options": {
                             "choices": [{
                                     "label": "Opción Uno",
@@ -246,25 +275,29 @@
                         "uuid": "5a6f83d7-6709-4f21-8742-6af3d5251b58",
                         "block_type": "PICTURE",
                         "title": "Título para el bloque de tipo imagen",
-                        "description": "Descipción para el bloque de tipo imagen"
+                        "description": "Descipción para el bloque de tipo imagen",
+                        "mandatory": true
                     },
                     {
                         "uuid": "8b6385ae-6774-470a-bd67-9c2174558857",
                         "block_type": "POINT",
                         "title": "Título para el bloque de tipo punto",
-                        "description": "Descipción para el bloque de tipo punto"
+                        "description": "Descipción para el bloque de tipo punto",
+                        "mandatory": true
                     },
                     {
                         "uuid": "a98eb397-e7e3-45e3-9d82-0b8af0151f90",
                         "block_type": "LINE",
                         "title": "Título para el bloque de tipo punto",
-                        "description": "Descipción para el bloque de tipo punto"
+                        "description": "Descipción para el bloque de tipo punto",
+                        "mandatory": true
                     },
                     {
                         "uuid": "0c04b6d9-6cb3-47d6-a619-158056730077",
                         "block_type": "POLYGON",
                         "title": "Título para el bloque de tipo punto",
-                        "description": "Descipción para el bloque de tipo punto"
+                        "description": "Descipción para el bloque de tipo punto",
+                        "mandatory": true
                     }
                 ]
             }

@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/models/new_mapaton_model.dart';
+import '../../../../domain/models/mapaton_model.dart';
+import '../../../widgets/my_dropdown_button.dart';
 import 'block_title_widget.dart';
 
-class SelectBlockWidget extends StatefulWidget {
+class SelectBlockWidget extends StatelessWidget {
   final String title;
   final String description;
   final List<Choice> choices;
+  final Function(String) callback;
 
-  const SelectBlockWidget({super.key, required this.title, required this.description, required this.choices});
+  const SelectBlockWidget({super.key, required this.title, required this.description, required this.choices, required this.callback});
 
-  @override
-  State<SelectBlockWidget> createState() => _SelectBlockWidgetState();
-}
-
-class _SelectBlockWidgetState extends State<SelectBlockWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,18 +20,18 @@ class _SelectBlockWidgetState extends State<SelectBlockWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BlockTitleWidget(
-            title: widget.title,
-            description: widget.description,
+            title: title,
+            description: description,
           ),
-          ...widget.choices.map((e) {
-            return CheckboxListTile(
-              value: e.checked ?? false,
-              title: Text(e.label),
-              onChanged: (value) {
-                setState(() => e.checked = value);
+          MyDropdownButton(
+            labelText: '',
+            items: choices.map((e) => e.label).toList(),
+            onChange: (value) {
+              if (value != null) {
+                callback(value);
               }
-            );
-          })
+            },
+          )
         ],
       ),
     );

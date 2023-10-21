@@ -1,25 +1,48 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/models/new_mapaton_model.dart';
+import '../../../data/preferences/user_preferences.dart';
+import '../../../data/repositories/db/activity/activity_repository_impl.dart';
+import '../../../data/repositories/db/mapaton/mapaton_repository_impl.dart';
+import '../../../domain/models/db/activity_db_model.dart';
+import '../../../domain/models/mapaton_model.dart';
+import '../../../domain/models/mapaton_post_model.dart';
+import '../../../domain/use_cases/db/activity_use_case.dart';
+import '../../../domain/use_cases/db/mapaton_use_case.dart';
 import '../../theme/theme.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/my_double_button_row.dart';
-import 'blocks/check_block_widget.dart';
-import 'blocks/instructions_block_widget.dart';
-import 'blocks/long_text_widget.dart';
-import 'blocks/map_block_widget.dart';
-import 'blocks/radio_block_widget.dart';
+import '../../utils/utils.dart' as utils;
+import 'blocks/blocks.dart';
 import 'blocks/select_block_widget.dart';
-import 'blocks/short_text_widget.dart';
 
-class FormPage extends StatelessWidget {
+class FormPage extends StatefulWidget {
   static String routeName = 'form';
 
   const FormPage({super.key});
 
   @override
+  State<FormPage> createState() => _FormPageState();
+}
+
+class _FormPageState extends State<FormPage> {
+  late MapatonPostModel _mapatonPost;
+
+  @override
+  void initState() {
+    final prefs = UserPreferences();
+
+    _mapatonPost = MapatonPostModel(
+      mapaton: MapatonActivities(
+        activities: []
+      ),
+      mapper: prefs.getMapper!
+    );
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     final activity = ModalRoute.of(context)!.settings.arguments as Activity;
+    _mapatonPost.mapaton.uuid = activity.mapatonUuid;
 
     return Scaffold(
       appBar: _appBar(activity),
@@ -46,25 +69,31 @@ class FormPage extends StatelessWidget {
       child:  Column(
         children: [
           ...activity.blocks.map((e) {
-            // if (e.blockType == 'POINT') {
-            //   return _map(context, e.title);
-            // }
             if (e.blockType == 'INSTRUCTIONS') {
               return _instructions(e.title, e.description);
             } else if (e.blockType == 'SHORT_TEXT') {
-              return _shortText(e.title, e.description);
+              return _shortText(e);
             } else if (e.blockType == 'LONG_TEXT') {
-              return _longText(e.title, e.description);
+              return _longText(e);
+            } else if (e.blockType == 'NUMBER') {
+              return e.isDecimal == true ? _decimalText(e) : _numberText(e);
+            } else if (e.blockType == 'CHECKBOX') {
+              return _checkbox(e);
             } else if (e.blockType == 'SELECT') {
-              return _select(e.title, e.description, e.options!);
+              return _select(e);
             } else if (e.blockType == 'RADIO') {
-              return _radio(e.title, e.description, e.options!);
-              // return _checkbox();
+              return _radio(e);
+            } else if (e.blockType == 'PICTURE') {
+              return _picture(e);
             }
+            // if (e.blockType == 'POINT') {
+            //   return _map(context, e.title);
+            // }
 
+            // return _checkboxImage();
             return Container();
           }),
-          _buttons()
+          _buttons(activity)
         ]
       ),
     );
@@ -73,14 +102,14 @@ class FormPage extends StatelessWidget {
   /*
    * WIDGETS
    */
-  Widget _buttons() {
+  Widget _buttons(Activity activity) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: MyDoubleButtonRow(
         cancelText: 'Salir',
-        cancelCallback: () {},
+        cancelCallback: () => Navigator.pop(context),
         acceptText: 'Guardar mapeo',
-        acceptCallback: () {},
+        acceptCallback: () => _save(activity),
       ),
     );
   }
@@ -90,22 +119,42 @@ class FormPage extends StatelessWidget {
    */
   Widget _instructions(String title, String description) {
     return InstructionsBlockWidget(
-      title: title,
       description: description,
     );
   }
 
-  Widget _shortText(String title, String description) {
-    return ShortTextWidget(
-      title: title,
-      description: description,
+  Widget _shortText(Block block) {
+    return TextBlockWidget(
+      title: block.title,
+      description: block.description,
+      onChanged: (value) => block.value = value,
     );
   }
 
-  Widget _longText(String title, String description) {
-    return LongTextWidget(
-      title: title,
-      description: description,
+  Widget _longText(Block block) {
+    return TextBlockWidget(
+      title: block.title,
+      description: block.description,
+      maxLines: 8,
+      onChanged: (value) => block.value = value,
+    );
+  }
+
+  Widget _numberText(Block block) {
+    return TextBlockWidget(
+      title: block.title,
+      description: block.description,
+      textInputType: TextInputType.number,
+      onChanged: (value) => block.value = value,
+    );
+  }
+
+  Widget _decimalText(Block block) {
+    return TextBlockWidget(
+      title: block.title,
+      description: block.description,
+      textInputType: const TextInputType.numberWithOptions(decimal: true),
+      onChanged: (value) => block.value = value,
     );
   }
 
@@ -115,23 +164,78 @@ class FormPage extends StatelessWidget {
     );
   }
 
-  Widget _select(String title, String description, Options options) {
+  Widget _checkbox(Block block) {
+    return CheckboxBlockWidget(
+      title: block.title,
+      description: block.description,
+      choices: block.options!.choices,
+      callback: (value) => block.value = value,
+    );
+  }
+
+  Widget _select(Block block) {
     return SelectBlockWidget(
-      title: title,
-      description: description,
-      choices: options.choices,
+      title: block.title,
+      description: block.description,
+      choices: block.options!.choices,
+      callback: (value) => block.value = value,
     );
   }
 
-  Widget _radio(String title, String description, Options options) {
+  Widget _radio(Block block) {
     return RadioBlockWidget(
-      title: title,
-      description: description,
-      choices: options.choices,
+      title: block.title,
+      description: block.description,
+      choices: block.options!.choices,
+      callback: (value) => block.value = value,
     );
   }
 
-  Widget _checkbox() {
+  Widget _picture(Block block) {
+    return PictureBlockWidget(
+      title: block.title,
+      description: block.description,
+      callback: (value) => block.value = value,
+    );
+  }
+
+  Widget _checkboxImage() {
     return const CheckBlockWidget();
+  }
+
+  /*
+   * METHODS
+   */
+  void _save(Activity activity) async {
+    for (var element in activity.blocks) {
+      debugPrint(element.toString());
+    }
+
+    // return;
+
+    final prefs = UserPreferences();
+
+    final useCase = MapatonUseCase(MapatonRepositoryImpl());
+    final m = await useCase.getMapatonsByUuidAndMapper(activity.mapatonUuid!, prefs.getMapper!.id.toString());
+
+    double lat = prefs.getActivityLocation != null ? prefs.getActivityLocation!.latitude : 0;
+    double lng = prefs.getActivityLocation != null ? prefs.getActivityLocation!.longitude : 0;
+
+    final activityUseCase = ActivityUseCase(ActivityRepositoryImpl());
+    final a = ActivityDbModel(
+      mapatonId: m!.id!,
+      uuid: activity.uuid,
+      latitude: lat,
+      longitude: lng,
+      timestamp: utils.formatDate(DateTime.now(), strFormat: "yyyy-MM-dd HH:mm:ss"),
+      blocks: blockListToJson(activity.blocks)
+    );
+
+    int id = await activityUseCase.addActivity(a);
+    a.id = id;
+
+    if (context.mounted) {
+      Navigator.pop(context, a);
+    }
   }
 }

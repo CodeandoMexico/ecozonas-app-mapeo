@@ -1,11 +1,19 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../../../data/repositories/db/mapper/mapper_repository_impl.dart';
+import '../../../../../data/repositories/preferences/preferences_repository_impl.dart';
+import '../../../../../domain/models/db/mapper_db_model.dart';
+import '../../../../../domain/models/mapaton_post_model.dart';
+import '../../../../../domain/use_cases/db/mapper_use_case.dart';
+import '../../../../../domain/use_cases/preferences_use_case.dart';
 import 'bloc.dart';
 
 class NewSessionBloc extends Bloc<NewSessionEvent, NewSessionState> {
   NewSessionBloc() : super(NewSessionInitial()) {
-    on<NewSessionEvent>((event, emit) { });
+    on<CreateNewSession>((event, emit) => _mapCreateNewSessionToState(emit));
   }
 
   final _genderController = BehaviorSubject<String>();
@@ -28,5 +36,47 @@ class NewSessionBloc extends Bloc<NewSessionEvent, NewSessionState> {
     _genderController.close();
     _ageController.close();
     _disabilityController.close();
+  }
+  
+  /*
+   * EVENTS TO STATE
+   */
+  void _mapCreateNewSessionToState(Emitter<NewSessionState> emit) async {
+    emit(CreatingNewSession());
+    try {
+      final id = await _saveSession();
+      emit(NewSessionCreated(id));
+    } catch (err) {
+      emit(ErrorCreatedNewSession());
+    }
+  }  
+
+  /*
+   * METHODS
+   */
+  Future<int> _saveSession() async {
+    final rand = Random();
+    final id = rand.nextInt(10000);
+
+    final preferencesUserCase = PreferencesUseCase(PreferencesRepositoryImpl());
+    preferencesUserCase.setMapper(Mapper(
+      id: id,
+      sociodemographicData: SociodemographicData(
+        genre: _genderController.value,
+        ageRange: _ageController.value,
+        disability: _disabilityController.value
+      )
+    ));
+
+    final mapperUseCase = MapperUseCase(MapperRepositoryImpl());
+    await mapperUseCase.addMapper(MapperDbModel(
+      mapperId: id,
+      alias: '',
+      gender: _genderController.value,
+      age: _ageController.value,
+      disability: _disabilityController.value
+    ));
+
+    return id;
   }
 }

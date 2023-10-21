@@ -8,8 +8,9 @@ class MyTextFormField extends StatelessWidget {
   final String? hintText;
   final IconData? prefixIconData;
   final IconData? suffixIconData;
+  final Function(String) onChanged;
 
-  const MyTextFormField({super.key, required this.controller, this.hintText, this.prefixIconData, this.suffixIconData});
+  const MyTextFormField({super.key, required this.controller, this.hintText, this.prefixIconData, this.suffixIconData, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class MyTextFormField extends StatelessWidget {
         enabledBorder: _border(),
         focusedBorder: _border(),
       ),
+      onChanged: (value) => onChanged(value),
     );
   }
 

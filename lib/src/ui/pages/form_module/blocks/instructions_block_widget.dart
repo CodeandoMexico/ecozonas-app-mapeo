@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class InstructionsBlockWidget extends StatelessWidget {
-  final String title;
   final String description;
 
-  const InstructionsBlockWidget({super.key, required this.title, required this.description});
+  const InstructionsBlockWidget({super.key, required this.description});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +17,11 @@ class InstructionsBlockWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          const Row(
             children: [
-              const Icon(Icons.push_pin, color: Colors.red),
-              const SizedBox(width: 6.0),
-              Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Icon(Icons.push_pin, color: Colors.red),
+              SizedBox(width: 6.0),
+              Text('Instrucciones', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ],
           ),
           const SizedBox(height: 8.0),

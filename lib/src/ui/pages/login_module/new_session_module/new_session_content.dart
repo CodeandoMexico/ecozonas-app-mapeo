@@ -4,49 +4,46 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../dialogs/new_session_confirm_dialog.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/constants.dart';
-import '../../../widgets/my_app_bar.dart';
+import '../../../utils/dialogs.dart' as dialogs;
 import '../../../widgets/my_bottom_sheet_text_field.dart';
 import '../../../widgets/my_primary_elevated_button.dart';
 import 'bloc/bloc.dart';
+import '../new_id_module/new_id_page.dart';
 
-class NewSessionContent extends StatelessWidget {
-  NewSessionContent({super.key});
+class NewSessionContent extends StatefulWidget {
+  final Function? callback;
 
-  final List<String> _gender = [
-    'Hombre',
-    'Mujer',
-    'No binario',
-    'Otro',
-    'Prefiero no contestar',
-  ];
+  const NewSessionContent({super.key, this.callback});
 
-  final List<String> _ageRange = [
-    'Menos de 18 años',
-    '19 - 25 años',
-    '26 - 35 años',
-    '36 - 45 años',
-    '46 - 55 años',
-    '56 - 65 años',
-    '+66 años',
-  ];
+  @override
+  State<NewSessionContent> createState() => _NewSessionContentState();
+}
 
-  final List<String> _disability = [
-    'Motriz',
-    'Visual',
-    'Auditiva',
-    'Cognitiva',
-    'Ninguna',
-  ];
+class _NewSessionContentState extends State<NewSessionContent> {
+  String? _selectedGender;
+  String? _selectedAge;
+  String? _selectedDisability;
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<NewSessionBloc>();
     
     return Scaffold(
-      appBar: const MyAppBar(
-        title: Text('Nueva sesión'),
+      body: BlocListener<NewSessionBloc, NewSessionState>(
+        listener: (context, state) {
+          if (state is CreatingNewSession) {
+            dialogs.showLoadingDialog(context);
+          } else {
+            Navigator.pop(context);
+          }
+          if (state is NewSessionCreated) {
+            widget.callback!();
+            Navigator.pop(context);
+            Navigator.pushNamed(context, NewIdPage.routeName, arguments: state.id);
+          }
+        },
+        child: _body(context, bloc),
       ),
-      body: _body(context, bloc),
       backgroundColor: myTheme.colorScheme.background,
     );
   }
@@ -76,31 +73,35 @@ class NewSessionContent extends StatelessWidget {
   }
 
   Widget _genderDropdown(BuildContext context, NewSessionBloc bloc) {
-    // return MyDropdownButton(
-    //   labelText: 'Género',
-    //   items: _gender,
-    //   onChange: (value) => bloc.setGender(value!),
-    // );
     return MyBottomSheetTextField(
       titleText: 'Género',
-      options: _gender,
-      callback: (value) => bloc.setGender(value),
+      options: Constants.gender,
+      callback: (value) {
+        bloc.setGender(value);
+        _selectedGender = value;
+      },
     );
   }
 
   Widget _ageDropdown(NewSessionBloc bloc) {
     return MyBottomSheetTextField(
       titleText: 'Rango de edad',
-      options: _ageRange,
-      callback: (value) => bloc.setAge(value),
+      options: Constants.ageRange,
+      callback: (value) {
+        bloc.setAge(value);
+        _selectedAge = value;
+      },
     );
   }
 
   Widget _disabilityDropdown(NewSessionBloc bloc) {
     return MyBottomSheetTextField(
       titleText: 'Discapacidad',
-      options: _disability,
-      callback: (value) => bloc.setDisability(value),
+      options: Constants.disability,
+      callback: (value) {
+        bloc.setDisability(value);
+        _selectedDisability = value;
+      },
     );
   }
 
@@ -110,15 +111,30 @@ class NewSessionContent extends StatelessWidget {
       initialData: false,
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         return MyPrimaryElevatedButton(
-          onPressed: snapshot.data == true ? () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const NewSessionConfirmDialog();  
-              },
-            );
-          } : null,
+          onPressed: snapshot.data == true ?
+            () => _showConfirmDialog(context) :
+            null,
+            fullWidth: true,
           label: 'Continuar',
+        );
+      },
+    );
+  }
+
+  /*
+   * METHODS
+   */
+  void _showConfirmDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return NewSessionConfirmDialog(
+          gender: _selectedGender!,
+          age: _selectedAge!,
+          disability: _selectedDisability!,
+          callback: () {
+            BlocProvider.of<NewSessionBloc>(context).add(CreateNewSession());
+          },
         );
       },
     );

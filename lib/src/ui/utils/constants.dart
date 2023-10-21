@@ -2,6 +2,36 @@ import 'package:flutter/material.dart';
 
 class Constants {
   /*
+   * LISTS
+   */
+  static const List<String> gender = [
+    'Hombre',
+    'Mujer',
+    'No binario',
+    'Otro',
+    'Prefiero no contestar',
+  ];
+
+  static const List<String> ageRange = [
+    'Menos de 18 años',
+    '19 - 25 años',
+    '26 - 35 años',
+    '36 - 45 años',
+    '46 - 55 años',
+    '56 - 65 años',
+    '+66 años',
+  ];
+
+  static const List<String> disability = [
+    'Motriz',
+    'Visual',
+    'Auditiva',
+    'Cognitiva',
+    'Otra',
+    'Ninguna',
+  ];
+
+  /*
    * PADDING
    */
   static const paddingHuge = 80.0;
@@ -24,11 +54,12 @@ class Constants {
   /*
    * COLORS
    */
-  static const disabledColor = Color(0xFFDDDDDD);
-  static const yellowColor = Color(0xFFF9D47C);
-  static const yellowShadowColor = Color(0xFFB38254);
-  static const blueColor = Color(0xFF4B5375);
-  static const blueShadowColor = Color(0xFF1B1E2A);
-  static const buttonTextColor = Color(0xFF4B5375);
+  static const disabledButtonColor = Color(0xFFDDDDDD);
+  static const yellowButtonColor = Color(0xFFF9D47C);
+  static const yellowButtonShadowColor = Color(0xFFB38254);
+  static const blueButtonShadowColor = Color(0xFF1B1E2A);
+  static const darkBlueColor = Color(0xFF4B5375);
   static const labelTextColor = Color(0xFF1F1F1F);
+  static const whiteLabelTextColor = Color(0xFFFCFBF9);
+  static const redColor = Color(0xFFDC362E);
 }
