@@ -17,4 +17,8 @@ class MapperUseCase {
   Future<int> updateMapper(MapperDbModel mapper) async {
     return _repository.updateMapper(mapper);
   }
+
+  Future<int> deleteSession(int id) async {
+    return _repository.removeMapper(id);
+  }
 }

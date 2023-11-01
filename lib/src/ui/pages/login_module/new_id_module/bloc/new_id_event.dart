@@ -1,17 +1,15 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../../../domain/models/db/mapper_db_model.dart';
-
 class NewIdEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
 class AddAlias extends NewIdEvent {
-  final MapperDbModel mapper;
+  final String alias;
 
-  AddAlias(this.mapper);
+  AddAlias(this.alias);
 
   @override
-  List<Object?> get props => [mapper];
+  List<Object?> get props => [alias];
 }

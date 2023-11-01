@@ -21,13 +21,13 @@ class MapperRepositoryImpl implements MapperRepository {
   
   @override
   Future<int> updateMapper(MapperDbModel mapper) async {
-    final response = await MyDatabase.instance.update(mappersTable, mapper.mapperId, mapper.toJson());
+    final response = await MyDatabase.instance.update(mappersTable, mapper.id!, mapper.toJson());
     return response;
   }
 
   @override
-  Future<void> removeMapper(MapperDbModel mapper) {
-    // TODO: implement removeMapper
-    throw UnimplementedError();
+  Future<int> removeMapper(int id) async {
+    final response = await MyDatabase.instance.delete(mappersTable, id);
+    return response;
   }
 }

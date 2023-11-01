@@ -39,43 +39,6 @@ class MyBottomSheetTextField extends StatelessWidget {
     );
   }
 
-  RoundedRectangleBorder _shape() {
-    return const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(Constants.borderRadiusBottomSheet),
-        topRight: Radius.circular(Constants.borderRadiusBottomSheet),
-      )
-    );
-  }
-
-  Widget _options(BuildContext context) {
-    return Wrap(
-      children: [
-        ListTile(
-          title: Text(
-            titleText,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
-          ),
-        ),
-        ...options.map((e) {
-          return ListTile(
-            onTap: () {
-              Navigator.pop(context);
-              textController.text = e;
-              callback(e);
-            },
-            leading: Radio(
-              value: false,
-              groupValue: 'options',
-              onChanged: (value) {}
-            ),
-            title: Text(e, style: const TextStyle(fontSize: 18)),
-          );
-        }).toList(),
-      ],
-    );
-  }
-
   void showMyBottomSheet(BuildContext context) {
     dialogs.showMyBottomSheet(
       context: context,

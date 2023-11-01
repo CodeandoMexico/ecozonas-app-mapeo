@@ -160,9 +160,9 @@ class MapatonDetailsPage extends StatelessWidget {
         mapperAge: mapper.sociodemographicData.ageRange,
         mapperDisability: mapper.sociodemographicData.disability,
       ));
-      prefs.setMapatonId = id;
+      prefs.setMapatonDbId = id;
     } else {
-      prefs.setMapatonId = m.id;
+      prefs.setMapatonDbId = m.id;
     }
     
     if (context.mounted) {

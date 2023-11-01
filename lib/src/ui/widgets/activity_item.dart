@@ -31,7 +31,8 @@ class ActivityItem extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: Colors.white
                   ),
-                  child: const Icon(Icons.pedal_bike, size: 60)
+                  child: const Icon(Icons.abc, size: 60)
+                  // child: const FaIcon(FontAwesomeIcons.adn, size: 60)
                 ),
                 const SizedBox(width: 16.0),
                 _activityDetails()
@@ -79,7 +80,7 @@ class ActivityItem extends StatelessWidget {
               SizedBox(width: isPriority ? 8.0 : 0),
               const Icon(Icons.business_outlined, size: 15),
               const SizedBox(width: 4.0),
-              Flexible(child: Text(activity.category.code, style: const TextStyle(fontSize: 10)))
+              Flexible(child: Text(activity.category.description!, style: const TextStyle(fontSize: 10)))
             ],
           ),
         ),

@@ -115,20 +115,24 @@ class AnswerClass {
 }
 
 class Mapper {
+    int? dbId;
     int id;
     SociodemographicData sociodemographicData;
 
     Mapper({
+        this.dbId,
         required this.id,
         required this.sociodemographicData,
     });
 
     factory Mapper.fromJson(Map<String, dynamic> json) => Mapper(
+        dbId: json["dbId"],
         id: json["id"],
         sociodemographicData: SociodemographicData.fromJson(json["sociodemographic_data"]),
     );
 
     Map<String, dynamic> toJson() => {
+        "dbId": dbId,
         "id": id,
         "sociodemographic_data": sociodemographicData.toJson(),
     };

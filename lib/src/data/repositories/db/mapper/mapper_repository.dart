@@ -7,5 +7,5 @@ abstract class MapperRepository {
 
   Future<int> updateMapper(MapperDbModel mapper);
 
-  Future<void> removeMapper(MapperDbModel mapper);
+  Future<int> removeMapper(int id);
 }

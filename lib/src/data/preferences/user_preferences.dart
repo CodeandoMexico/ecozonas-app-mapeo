@@ -12,21 +12,26 @@ class UserPreferences {
     _prefs = await SharedPreferences.getInstance();
   }
 
+  final tokenKey = 'token';
+  final mapperKey = 'mapper';
+  final activityLocationKey = 'activity_location';
+  final mapatonDbIdKey = 'mapaton_id';
+
   String? get getToken {
-    return _prefs.getString('token');
+    return _prefs.getString(tokenKey);
   }
 
   set setToken(String? token) {
     if (token != null) {
-      _prefs.setString('token', token);
+      _prefs.setString(tokenKey, token);
     } else {
-      _prefs.remove('token');
+      _prefs.remove(tokenKey);
     }
   }
 
   Mapper? get getMapper {
-    if (_prefs.containsKey('mapper') && _prefs.getString('mapper') != null) {
-      return Mapper.fromJson(json.decode(_prefs.getString('mapper')!));
+    if (_prefs.containsKey(mapperKey) && _prefs.getString(mapperKey) != null) {
+      return Mapper.fromJson(json.decode(_prefs.getString(mapperKey)!));
     } else {
       return null;
     }
@@ -34,15 +39,15 @@ class UserPreferences {
 
   set setMapper(Mapper? mapper) {
     if (mapper != null) {
-      _prefs.setString('mapper', json.encode(mapper.toJson()));
+      _prefs.setString(mapperKey, json.encode(mapper.toJson()));
     } else {
-      _prefs.remove('mapper');
+      _prefs.remove(mapperKey);
     }
   }
 
   LatLng? get getActivityLocation {
-    if (_prefs.containsKey('activity_location') && _prefs.getString('activity_location') != null) {
-      final latLng = json.decode(_prefs.getString('activity_location')!);
+    if (_prefs.containsKey(activityLocationKey) && _prefs.getString(activityLocationKey) != null) {
+      final latLng = json.decode(_prefs.getString(activityLocationKey)!);
       return LatLng(latLng[0], latLng[1]);
     } else {
       return null;
@@ -51,25 +56,25 @@ class UserPreferences {
 
   set setActivityLocation(LatLng? location) {
     if (location != null) {
-      _prefs.setString('activity_location', json.encode(location.toJson()));
+      _prefs.setString(activityLocationKey, json.encode(location.toJson()));
     } else {
-      _prefs.remove('activity_location');
+      _prefs.remove(activityLocationKey);
     }
   }
 
-  int? get getMapatonId {
-    if (_prefs.containsKey('mapaton_id') && _prefs.getInt('mapaton_id') != null) {
-      return _prefs.getInt('mapaton_id');
+  int? get getMapatonDbId {
+    if (_prefs.containsKey(mapatonDbIdKey) && _prefs.getInt(mapatonDbIdKey) != null) {
+      return _prefs.getInt(mapatonDbIdKey);
     } else {
       return null;
     }
   }
 
-  set setMapatonId(int? mapatonId) {
+  set setMapatonDbId(int? mapatonId) {
     if (mapatonId != null) {
-      _prefs.setInt('mapaton_id', mapatonId);
+      _prefs.setInt(mapatonDbIdKey, mapatonId);
     } else {
-      _prefs.remove('mapaton_id');
+      _prefs.remove(mapatonDbIdKey);
     }
   }
 }

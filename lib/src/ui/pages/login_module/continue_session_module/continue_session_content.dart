@@ -6,6 +6,7 @@ import '../../../../domain/models/db/mapper_db_model.dart';
 import '../../../../domain/models/mapaton_post_model.dart';
 import '../../../../domain/use_cases/preferences_use_case.dart';
 import '../../../utils/constants.dart';
+import '../../manage_sessions_module/manage_sessions_page.dart';
 import '../../mapaton_list_module/mapaton_list_page.dart';
 import 'bloc/bloc.dart';
 
@@ -20,14 +21,10 @@ class ContinueSessionContent extends StatelessWidget {
       padding: const EdgeInsets.all(Constants.padding),
       child: Column(
         children: [
-          const Text(
-            'Selecciona una de las sesiones registradas en este dispositivo',
-            style: TextStyle(fontSize: 18, color: Constants.labelTextColor),
-            textAlign: TextAlign.center,
-          ),
+          _text(),
           const SizedBox(height: Constants.paddingLarge),
           _sessionsList(bloc),
-          const Text('Administrar sesiones'),
+          _elevatedButton(context),
         ],
       ),
     );
@@ -36,6 +33,14 @@ class ContinueSessionContent extends StatelessWidget {
   /*
    * WIDGETS
    */
+  Widget _text() {
+    return const Text(
+      'Selecciona una de las sesiones registradas en este dispositivo',
+      style: TextStyle(fontSize: 18, color: Constants.labelTextColor),
+      textAlign: TextAlign.center,
+    );
+  }
+
   Widget _sessionsList(ContinueSessionBloc bloc) {
     return StreamBuilder<List<MapperDbModel>>(
       stream: bloc.sessions,
@@ -72,7 +77,7 @@ class ContinueSessionContent extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                '#${mapperDbModel.mapperId}',
+                '${mapperDbModel.alias}#${mapperDbModel.mapperId}',
                 style: const TextStyle(
                   fontSize: 18,
                   color: Constants.labelTextColor,
@@ -87,12 +92,29 @@ class ContinueSessionContent extends StatelessWidget {
     );
   }
 
+  Widget _elevatedButton(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(color: Constants.darkBlueColor),
+          borderRadius: BorderRadius.circular(12)
+        )
+      ),
+      onPressed: () async {
+        await _manageSessions(context);
+      },
+      child: const Text('Administrar sesiones', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500))
+    );
+  }
+
   /*
    * METHODS
    */
   void _saverMapperToPreferences(BuildContext context, MapperDbModel mapperDbModel) {
     final preferencesUserCase = PreferencesUseCase(PreferencesRepositoryImpl());
     preferencesUserCase.setMapper(Mapper(
+      dbId: mapperDbModel.id!,
       id: mapperDbModel.mapperId,
       sociodemographicData: SociodemographicData(
         genre: mapperDbModel.gender,
@@ -102,5 +124,18 @@ class ContinueSessionContent extends StatelessWidget {
     ));
 
     Navigator.pushNamed(context, MapatonListPage.routeName);
+  }
+
+  Future<void> _manageSessions(BuildContext context) async {
+    final update = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ManageSessionsPage()
+      )
+    ) as bool;
+    
+    if (update && context.mounted) {
+      BlocProvider.of<ContinueSessionBloc>(context).add(GetSessions());
+    }
   }
 }

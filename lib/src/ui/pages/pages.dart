@@ -8,3 +8,4 @@ export 'form_module/form_page.dart';
 export 'form_module/view_map_page.dart';
 export 'update_map_module/update_map_page.dart';
 export 'mapaton_main_module/mapaton_main_page.dart';
+export 'manage_sessions_module/manage_sessions_page.dart';

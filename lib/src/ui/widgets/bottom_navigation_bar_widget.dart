@@ -23,8 +23,8 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       type: BottomNavigationBarType.fixed,
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined),
-          label: 'Inicio'
+          icon: Icon(Icons.map),
+          label: 'Mapa'
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_circle_outlined),

@@ -16,12 +16,12 @@ class RadioBlockWidget extends StatefulWidget {
 }
 
 class _RadioBlockWidgetState extends State<RadioBlockWidget> {
-  late int selectedRadioTile;
+  int? selectedRadioTile;
   late String selectedValue;
 
   @override
   void initState() {
-    selectedRadioTile = 0;
+    // selectedRadioTile = 0;
     super.initState();
   }
   

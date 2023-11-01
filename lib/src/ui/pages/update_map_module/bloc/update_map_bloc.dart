@@ -84,7 +84,7 @@ class UpdateMapBloc extends Bloc<UpdateMapEvent, UpdateMapState> {
     final mapatonUseCase = MapatonUseCase(MapatonRepositoryImpl());
     final activityUseCase = ActivityUseCase(ActivityRepositoryImpl());
     
-    final mapaton = await mapatonUseCase.getMapatonById(prefs.getMapatonId!);
+    final mapaton = await mapatonUseCase.getMapatonById(prefs.getMapatonDbId!);
     if (mapaton != null) {
       final activities = await activityUseCase.getMapatonActivities(mapaton.id!);
       mapaton.activities = activities;

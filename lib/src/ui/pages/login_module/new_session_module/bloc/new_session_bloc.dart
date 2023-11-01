@@ -56,11 +56,21 @@ class NewSessionBloc extends Bloc<NewSessionEvent, NewSessionState> {
    */
   Future<int> _saveSession() async {
     final rand = Random();
-    final id = rand.nextInt(10000);
+    final mapperId = rand.nextInt(10000);
+
+    final mapperUseCase = MapperUseCase(MapperRepositoryImpl());
+    int dbId = await mapperUseCase.addMapper(MapperDbModel(
+      mapperId: mapperId,
+      alias: '',
+      gender: _genderController.value,
+      age: _ageController.value,
+      disability: _disabilityController.value
+    ));
 
     final preferencesUserCase = PreferencesUseCase(PreferencesRepositoryImpl());
     preferencesUserCase.setMapper(Mapper(
-      id: id,
+      dbId: dbId,
+      id: mapperId,
       sociodemographicData: SociodemographicData(
         genre: _genderController.value,
         ageRange: _ageController.value,
@@ -68,15 +78,6 @@ class NewSessionBloc extends Bloc<NewSessionEvent, NewSessionState> {
       )
     ));
 
-    final mapperUseCase = MapperUseCase(MapperRepositoryImpl());
-    await mapperUseCase.addMapper(MapperDbModel(
-      mapperId: id,
-      alias: '',
-      gender: _genderController.value,
-      age: _ageController.value,
-      disability: _disabilityController.value
-    ));
-
-    return id;
+    return mapperId;
   }
 }

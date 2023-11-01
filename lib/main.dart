@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         ViewMapPage.routeName: (_) => const ViewMapPage(),
         UpdateMapPage.routeName: (_) => const UpdateMapPage(),
         MapatonMainPage.routeName: (_) => const MapatonMainPage(),
+        ManageSessionsPage.routeName: (_) => const ManageSessionsPage(),
       },
     );
   }

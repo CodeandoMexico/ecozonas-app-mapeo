@@ -215,9 +215,11 @@ class Choice {
 
 class ActivityCategory {
     String code;
+    String? description;
 
     ActivityCategory({
         required this.code,
+        this.description
     });
 
     factory ActivityCategory.fromJson(Map<String, dynamic> json) => ActivityCategory(

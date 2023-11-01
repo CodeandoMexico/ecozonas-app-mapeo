@@ -34,7 +34,7 @@ class _MapatonListPageState extends State<MapatonListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MyAppBar(
-        title: Text('Mapatones'),
+        title: Text('Herramientas de diagnóstico'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(Constants.padding),
@@ -98,7 +98,7 @@ class _MapatonListPageState extends State<MapatonListPage> {
                   Text(mapaton.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                   Text(mapaton.locationText),
                   MyPrimaryElevatedButton(
-                    label: 'Descargar',
+                    label: 'Mapear',
                     onPressed: () => Navigator.pushNamed(context, MapatonDetailsPage.routeName, arguments: mapaton)
                   )
                 ],
@@ -115,7 +115,7 @@ class _MapatonListPageState extends State<MapatonListPage> {
    * METHODS
    */
   void _getData() async {
-    final json = await DefaultAssetBundle.of(context).loadString("assets/json/mapaton.json");
+    final json = await DefaultAssetBundle.of(context).loadString("assets/json/mapaton_2.json");
     final data = mapatonModelFromJson(json);
     setState(() {
       _mapatons = data.mapatones;

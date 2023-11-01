@@ -36,14 +36,18 @@ void showConfirmationDialog(BuildContext context, {
     builder: (context) {
       return AlertDialog(
         title: title != null ? Text(title) : null,
-        content: Text(text),
+        content: Text(text, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
             style: TextButton.styleFrom(
-              foregroundColor: myTheme.colorScheme.primary
+              foregroundColor: myTheme.colorScheme.primary,
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(color: Colors.black),
+                borderRadius: BorderRadius.circular(12)
+              )
             ),
-            child: const Text('Cancelar'),
+            child: const Text('No', style: TextStyle(color: Constants.labelTextColor, fontSize: 18)),
           ),
           MyPrimaryElevatedButton(
             label: acceptButtonText,
@@ -52,16 +56,6 @@ void showConfirmationDialog(BuildContext context, {
               acceptCallback();
             },
           ),
-          // ElevatedButton(
-          //   onPressed: () {
-          //     Navigator.of(context).pop();
-          //     acceptCallback();
-          //   },
-          //   style: ElevatedButton.styleFrom(
-          //     backgroundColor: myTheme.colorScheme.primary
-          //   ),
-          //   child: Text(acceptButtonText),
-          // ),
         ],
       );
     }

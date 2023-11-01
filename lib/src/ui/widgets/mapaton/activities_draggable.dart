@@ -113,7 +113,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   Widget _searchTextField() {
     return MyTextFormField(
       controller: _controller,
-      hintText: 'Buscar actividad',
+      hintText: 'Buscar...',
       suffixIconData: Icons.search,
       onChanged: (value) => _search(value),
     );
@@ -149,49 +149,63 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   }
 
   Widget _page1(BuildContext context, PageController pageController) {
+    widget._filteredActivities.sort((a, b) {
+      final aInt = a.isPriority ? 1 : 0;
+      final bInt = b.isPriority ? 1 : 0;
+
+      return bInt.compareTo(aInt);
+    });
+
     return Column(
       children: [
         _filters(),
         Expanded(
           child: ListView(
             children: [
-              Container(
-                height: 50,
-                margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                decoration: BoxDecoration(
-                  color: Constants.yellowButtonColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    Image.asset('assets/icons/ic_asterisk_50.png', width: 18),
-                    Image.asset('assets/icons/ic_asterisk_50.png', width: 18),
-                    const SizedBox(width: 8.0),
-                    const Text('Actividades prioritarias')
-                  ],
-                ),
-              ),
+              _priorityLabel(),
               ...widget._filteredActivities.map((e) {
-              final category = widget._mapatone.categories.where((element) {
-                return element.code.replaceAll(' ', '_') == e.category.code;
-              }).toList();
-              if (category.isNotEmpty) {
-                e.color = category[0].color;
-                e.icon = category[0].icon;
-              }
+                final category = widget._mapatone.categories
+                  .where((element) {
+                    return element.code.replaceAll(' ', '_') == e.category.code;
+                  })
+                  .toList();
+                if (category.isNotEmpty) {
+                  e.color = category[0].color;
+                  e.icon = category[0].icon;
+                  e.category.description = category[0].name;
+                }
 
-              return ActivityItem(
-                activity: e,
-                callback: () async {
-                  await _goToFormPage(e, context);
-                },
-              );
-            }).toList()
+                return ActivityItem(
+                  activity: e,
+                  callback: () async {
+                    await _goToFormPage(e, context);
+                  },
+                );
+              }).toList()
             ],
           ),
         ),
       ],
+    );
+  }
+
+  Widget _priorityLabel() {
+    return Container(
+      height: 50,
+      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      decoration: BoxDecoration(
+        color: Constants.yellowButtonColor,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          Image.asset('assets/icons/ic_asterisk_50.png', width: 18),
+          Image.asset('assets/icons/ic_asterisk_50.png', width: 18),
+          const SizedBox(width: 8.0),
+          const Text('Objetos a mapear prioritarios')
+        ],
+      ),
     );
   }
 
@@ -239,9 +253,11 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
         builder: (context) => const FormPage(),
         settings: RouteSettings(arguments: e)
       )
-    ) as ActivityDbModel;
-    
-    widget._callback(a);
+    );
+
+    if (a != null) {
+      widget._callback(a);
+    }
     
     widget.draggableController.animateTo(
       0,

@@ -147,7 +147,7 @@ class MapatonMapContent extends StatelessWidget {
           )
         ),
         child: const Text(
-          'Actualizar mapa',
+          'Sincronizar datos',
           style: TextStyle(fontSize: 12)
         )
       ),
