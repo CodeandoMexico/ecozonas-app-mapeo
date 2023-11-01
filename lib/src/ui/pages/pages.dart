@@ -1,6 +1,6 @@
-export 'login_module/login_tab_module/login_tab_page.dart';
-export 'login_module/new_session_module/new_session_page.dart';
-export 'login_module/new_id_module/new_id_page.dart';
+export 'login_module/tabs_container/login_tab_page.dart';
+export 'login_module/new_session_tab/new_session_page.dart';
+export 'new_id_module/new_id_page.dart';
 export 'mapaton_list_module/mapaton_list_page.dart';
 export 'mapaton_map_module/mapaton_details_page.dart';
 export 'mapaton_map_module/mapaton_map_page.dart';

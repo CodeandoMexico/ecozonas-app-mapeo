@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../theme/theme.dart';
-import '../../../utils/constants.dart';
-import '../../../widgets/my_app_bar.dart';
-import '../../../widgets/my_primary_elevated_button.dart';
-import '../../../widgets/my_secondary_elevated_button.dart';
-import '../../mapaton_list_module/mapaton_list_page.dart';
-import '../../../utils/utils.dart' as utils;
+import '../../theme/theme.dart';
+import '../../utils/constants.dart';
+import '../../widgets/my_app_bar.dart';
+import '../../widgets/my_primary_elevated_button.dart';
+import '../../widgets/my_secondary_elevated_button.dart';
+import '../mapaton_list_module/mapaton_list_page.dart';
+import '../../utils/utils.dart' as utils;
 import 'bloc/bloc.dart';
 
 class NewIdContent extends StatelessWidget {

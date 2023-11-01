@@ -2,9 +2,9 @@ import 'package:ecozonas/src/data/preferences/user_preferences.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/subjects.dart';
 
-import '../../../../../data/repositories/db/mapper/mapper_repository_impl.dart';
-import '../../../../../domain/models/db/mapper_db_model.dart';
-import '../../../../../domain/use_cases/db/mapper_use_case.dart';
+import '../../../../data/repositories/db/mapper/mapper_repository_impl.dart';
+import '../../../../domain/models/db/mapper_db_model.dart';
+import '../../../../domain/use_cases/db/mapper_use_case.dart';
 import 'bloc.dart';
 
 class NewIdBloc extends Bloc<NewIdEvent, NewIdState> {

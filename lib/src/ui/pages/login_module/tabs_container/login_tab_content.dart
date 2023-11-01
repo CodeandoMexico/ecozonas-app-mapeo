@@ -1,10 +1,10 @@
-import 'package:ecozonas/src/ui/pages/login_module/login_tab_module/bloc/login_tab_event.dart';
+import 'package:ecozonas/src/ui/pages/login_module/tabs_container/bloc/login_tab_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../utils/constants.dart';
-import '../continue_session_module/continue_session_page.dart';
-import '../new_session_module/new_session_page.dart';
+import '../continue_session_tab/continue_session_page.dart';
+import '../new_session_tab/new_session_page.dart';
 import 'bloc/login_tab_bloc.dart';
 
 class LoginTabContent extends StatefulWidget {

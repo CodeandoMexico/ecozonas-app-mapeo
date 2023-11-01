@@ -8,7 +8,7 @@ import '../../../utils/dialogs.dart' as dialogs;
 import '../../../widgets/my_bottom_sheet_text_field.dart';
 import '../../../widgets/my_primary_elevated_button.dart';
 import 'bloc/bloc.dart';
-import '../new_id_module/new_id_page.dart';
+import '../../new_id_module/new_id_page.dart';
 
 class NewSessionContent extends StatefulWidget {
   final Function? callback;
