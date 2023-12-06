@@ -10,6 +10,10 @@ class MapperUseCase {
     return _repository.getMappers();
   }
 
+  Future<MapperDbModel?> getMapperById(int id) async {
+    return _repository.getMapperById(id);
+  }
+
   Future<int> addMapper(MapperDbModel mapper) async {
     return _repository.addMapper(mapper);
   }

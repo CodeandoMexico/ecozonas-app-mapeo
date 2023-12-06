@@ -1,5 +1,6 @@
-import 'package:ecozonas/src/ui/utils/constants.dart';
 import 'package:flutter/material.dart';
+
+import '../../../utils/constants.dart';
 
 class BlockTitleWidget extends StatelessWidget {
   final String title;
@@ -12,18 +13,26 @@ class BlockTitleWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: const TextStyle(fontSize: 16, color: Constants.labelTextColor, fontWeight: FontWeight.bold)
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Text(
+            title,
+            style: const TextStyle(fontSize: 16, color: Constants.labelTextColor, fontWeight: FontWeight.bold)
+          ),
         ),
-        description != null && description!.isNotEmpty ?
+        description != null && description!.trim().isNotEmpty ?
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
               description!,
-              style: const TextStyle(fontSize: 16, color: Constants.labelTextColor),
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey.shade600,
+                fontStyle: FontStyle.italic
+              ),
             ),
-          ) : Container()
+          ) :
+          Container()
       ],
     );
   }

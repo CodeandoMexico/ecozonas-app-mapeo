@@ -7,7 +7,7 @@ import '../../../../domain/models/mapaton_post_model.dart';
 import '../../../../domain/use_cases/preferences_use_case.dart';
 import '../../../utils/constants.dart';
 import '../../manage_sessions_module/manage_sessions_page.dart';
-import '../../mapaton_list_module/mapaton_list_page.dart';
+import '../../mapaton_list_module/tabs_container/mapaton_tabs_page.dart';
 import 'bloc/bloc.dart';
 
 class ContinueSessionContent extends StatelessWidget {
@@ -64,7 +64,7 @@ class ContinueSessionContent extends StatelessWidget {
 
   Widget _sessionListItem(BuildContext context, MapperDbModel mapperDbModel) {
     return GestureDetector(
-      onTap: () => _saverMapperToPreferences(context, mapperDbModel),
+      onTap: () => _saveMapperToPreferences(context, mapperDbModel),
       child: Container(
         height: 56,
         margin: const EdgeInsets.symmetric(vertical: 8),
@@ -102,7 +102,8 @@ class ContinueSessionContent extends StatelessWidget {
         )
       ),
       onPressed: () async {
-        await _manageSessions(context);
+        // await _manageSessions(context);
+        await _push(context, const ManageSessionsPage());
       },
       child: const Text('Administrar sesiones', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500))
     );
@@ -111,30 +112,44 @@ class ContinueSessionContent extends StatelessWidget {
   /*
    * METHODS
    */
-  void _saverMapperToPreferences(BuildContext context, MapperDbModel mapperDbModel) {
+  void _saveMapperToPreferences(BuildContext context, MapperDbModel mapperDbModel) {
     final preferencesUserCase = PreferencesUseCase(PreferencesRepositoryImpl());
     preferencesUserCase.setMapper(Mapper(
       dbId: mapperDbModel.id!,
       id: mapperDbModel.mapperId,
       sociodemographicData: SociodemographicData(
-        genre: mapperDbModel.gender,
+        gender: mapperDbModel.gender,
         ageRange: mapperDbModel.age,
         disability: mapperDbModel.disability
       )
     ));
 
-    Navigator.pushNamed(context, MapatonListPage.routeName);
+    // Navigator.pushNamed(context, MapatonTabsPage.routeName);
+    _push(context, const MapatonTabsPage());
   }
 
-  Future<void> _manageSessions(BuildContext context) async {
+  // Future<void> _manageSessions(BuildContext context) async {
+  //   final update = await Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => const ManageSessionsPage()
+  //     )
+  //   ) as bool;
+    
+  //   if (update && context.mounted) {
+  //     BlocProvider.of<ContinueSessionBloc>(context).add(GetSessions());
+  //   }
+  // }
+
+  Future<void> _push(BuildContext context, Widget page) async {
     final update = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const ManageSessionsPage()
+        builder: (context) => page
       )
-    ) as bool;
+    ) as bool?;
     
-    if (update && context.mounted) {
+    if ((update == null || update) && context.mounted) {
       BlocProvider.of<ContinueSessionBloc>(context).add(GetSessions());
     }
   }

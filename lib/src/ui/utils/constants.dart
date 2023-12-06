@@ -1,34 +1,44 @@
 import 'package:flutter/material.dart';
 
+class ItemModel {
+  ItemModel({
+    required this.label,
+    required this.value,
+  });
+
+  String label;
+  String value;
+}
+
 class Constants {
   /*
    * LISTS
    */
-  static const List<String> gender = [
-    'Hombre',
-    'Mujer',
-    'No binario',
-    'Otro',
-    'Prefiero no contestar',
+  static List<ItemModel> gender = [
+    ItemModel(label: 'Mujer', value: 'MUJER'),
+    ItemModel(label: 'Hombre', value: 'HOMBRE'),
+    ItemModel(label: 'No binario', value: 'NO_BINARIO'),
+    ItemModel(label: 'Otro', value: 'OTRO'),
+    ItemModel(label: 'Prefiero no contestar', value: 'NO_CONTESTO'),
   ];
 
-  static const List<String> ageRange = [
-    'Menos de 18 años',
-    '19 - 25 años',
-    '26 - 35 años',
-    '36 - 45 años',
-    '46 - 55 años',
-    '56 - 65 años',
-    '+66 años',
+  static List<ItemModel> ageRange = [
+    ItemModel(label: 'Menos de 18 años', value: 'MENOS_18'),
+    ItemModel(label: 'Entre 18 y 25 años', value: '18_25'),
+    ItemModel(label: 'Entre 26 y 35 años', value: '26_35'),
+    ItemModel(label: 'Entre 36 y 45 años', value: '36_45'),
+    ItemModel(label: 'Entre 46 y 55 años', value: '46_55'),
+    ItemModel(label: 'Entre 56 y 65 años', value: '56_65'),
+    ItemModel(label: 'Más de 65 años', value: 'MAS_65'),
   ];
 
-  static const List<String> disability = [
-    'Motriz',
-    'Visual',
-    'Auditiva',
-    'Cognitiva',
-    'Otra',
-    'Ninguna',
+  static List<ItemModel> disability = [
+    ItemModel(label: 'Ninguna', value: 'NINGUNA'),
+    ItemModel(label: 'Motriz', value: 'MOTRIZ'),
+    ItemModel(label: 'Visual', value: 'VISUAL'),
+    ItemModel(label: 'Auditiva', value: 'AUDITIVA'),
+    ItemModel(label: 'Cognitiva', value: 'COGNITIVA'),
+    ItemModel(label: 'Otra', value: 'OTRA'),
   ];
 
   /*

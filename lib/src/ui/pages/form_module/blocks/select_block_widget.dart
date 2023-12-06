@@ -8,9 +8,10 @@ class SelectBlockWidget extends StatelessWidget {
   final String title;
   final String description;
   final List<Choice> choices;
+  final bool? isRequired;
   final Function(String) callback;
 
-  const SelectBlockWidget({super.key, required this.title, required this.description, required this.choices, required this.callback});
+  const SelectBlockWidget({super.key, required this.title, required this.description, required this.choices, this.isRequired = false, required this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +27,13 @@ class SelectBlockWidget extends StatelessWidget {
           MyDropdownButton(
             labelText: '',
             items: choices.map((e) => e.label).toList(),
+            isRequired: isRequired,
             onChange: (value) {
               if (value != null) {
-                callback(value);
+                final c = choices.where((element) {
+                  return element.label == value;
+                }).toList();
+                callback(c[0].value);
               }
             },
           )

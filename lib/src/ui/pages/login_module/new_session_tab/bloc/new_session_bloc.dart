@@ -72,7 +72,7 @@ class NewSessionBloc extends Bloc<NewSessionEvent, NewSessionState> {
       dbId: dbId,
       id: mapperId,
       sociodemographicData: SociodemographicData(
-        genre: _genderController.value,
+        gender: _genderController.value,
         ageRange: _ageController.value,
         disability: _disabilityController.value
       )

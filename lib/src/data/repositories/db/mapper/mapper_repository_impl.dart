@@ -4,12 +4,6 @@ import 'mapper_repository.dart';
 
 class MapperRepositoryImpl implements MapperRepository {
   @override
-  Future<int> addMapper(MapperDbModel mapper) async {
-    final response = await MyDatabase.instance.insert(mappersTable, mapper.toJson());
-    return response;
-  }
-
-  @override
   Future<List<MapperDbModel>> getMappers() async {
     final response = await MyDatabase.instance.getAll(mappersTable);
     if (response != null) {
@@ -17,6 +11,23 @@ class MapperRepositoryImpl implements MapperRepository {
     } else {
       return [];
     }
+  }
+
+  @override
+  Future<MapperDbModel?> getMapperById(int id) async {
+    final response = await MyDatabase.instance.getById(mappersTable, id);
+    if (response != null) {
+      final mapper = MapperDbModel.fromJson(response);
+      return mapper;
+    } else {
+      return null;
+    }
+  }
+  
+  @override
+  Future<int> addMapper(MapperDbModel mapper) async {
+    final response = await MyDatabase.instance.insert(mappersTable, mapper.toJson());
+    return response;
   }
   
   @override

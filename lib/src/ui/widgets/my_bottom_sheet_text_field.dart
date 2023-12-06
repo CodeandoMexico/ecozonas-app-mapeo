@@ -6,16 +6,21 @@ import '../utils/dialogs.dart' as dialogs;
 
 class MyBottomSheetTextField extends StatelessWidget {
   final String titleText;
-  final List<String> options;
+  final List<ItemModel> options;
   final Function(String) callback;
+  final String? initialValue;
 
-  MyBottomSheetTextField({super.key, required this.titleText, required this.options, required this.callback});
+  MyBottomSheetTextField({super.key, required this.titleText, required this.options, required this.callback, this.initialValue});
 
   final textController = TextEditingController();
   final style = const TextStyle(fontSize: 18, color: Colors.black);
 
   @override
   Widget build(BuildContext context) {
+    if (initialValue != null) {
+      textController.text = initialValue!;
+    }
+
     return TextFormField(
       controller: textController,
       onTap: () => showMyBottomSheet(context),
@@ -43,7 +48,7 @@ class MyBottomSheetTextField extends StatelessWidget {
     dialogs.showMyBottomSheet(
       context: context,
       titleText: titleText,
-      options: options,
+      options: options.map((e) => e.label).toList(),
       callback: (value) {
         textController.text = value;
         callback(value);

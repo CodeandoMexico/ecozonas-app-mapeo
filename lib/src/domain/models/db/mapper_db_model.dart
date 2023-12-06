@@ -51,6 +51,23 @@ class MapperDbModel {
     MapperColumns.disability: disability,
   };
 
+  MapperDbModel copyWith({
+    int? id,
+    String? alias,
+    String? gender,
+    String? age,
+    String? disability,
+  }) {
+    return MapperDbModel(
+      mapperId: mapperId,
+      id: id ?? this.id,
+      alias: alias ?? this.alias,
+      gender: gender ?? this.gender,
+      age: age ?? this.age,
+      disability: disability ?? this.disability,
+    );
+  }
+
   @override
   String toString() {
     return '''

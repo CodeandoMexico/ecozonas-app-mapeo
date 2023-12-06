@@ -1,0 +1,1122 @@
+{
+    "surveys": [{
+        "uuid": "5823dd1f-7c23-4524-aa8f-037cbb3e9db9",
+        "mapaton_reference": "470a6475-a66e-41e3-bb22-f949bd86e353",
+        "title": "Encuesta barrial - Hermosillo",
+        "survey_url": "https://ee.kobotoolbox.org/x/K7hOru9R"
+    }],
+    "mapatones": [{
+        "uuid": "470a6475-a66e-41e3-bb22-f949bd86e353",
+        "title": "EcoZonas - La Metalera",
+        "location_text": "Colonia La Metalera, Hermosillo, Sonora",
+        "limits": {
+            "north": 29.1038,
+            "south": 29.0755,
+            "east": -110.8851,
+            "west": -110.9433
+        },
+        "updated_at": "2023-10-01 00:00:00",
+        "status": "PUBLICADO",
+        "activities": [{
+                "uuid": "bb3e2821-8de5-494f-bfb3-d6cd17f7010c",
+                "title": "Equipamientos y Servicios",
+                "description": " ",
+                "instructions": " ",
+                "is_priority": false,
+                "category": {
+                    "code": "ENTORNO_URBANO"
+                },
+                "blocks": [{
+                        "uuid": "",
+                        "block_type": "INSTRUCTIONS",
+                        "title": "Instrucciones:",
+                        "description": "Selecciona el equipamiento o servicio que quieres mapear y evalúalos según los criterios señalados."
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "SELECT",
+                        "title": "¿Qué equipamiento o servicio quieres mapear?",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "Tienda de abarrotes y alimentos",
+                                    "value": "TIENDA"
+                                },
+                                {
+                                    "label": "Farmacia",
+                                    "value": "FARMACIA"
+                                },
+                                {
+                                    "label": "Consultorio médico",
+                                    "value": "CONSULTORIO_MEDICO"
+                                },
+                                {
+                                    "label": "Guarderia",
+                                    "value": "GUARDERIA"
+                                },
+                                {
+                                    "label": "Escuela",
+                                    "value": "ESCUELA"
+                                },
+                                {
+                                    "label": "Espacio comunitario (espacios para reuniones comunitarias, servicios comunes)",
+                                    "value": "ESPACIO_COMUNITARIO"
+                                },
+                                {
+                                    "label": "Lugar cultural",
+                                    "value": "LUGAR_CULTURAL"
+                                },
+                                {
+                                    "label": "Instalacion recreativa/deportiva pública",
+                                    "value": "INSTALACION_RECREATIVA_DEPORTIVA"
+                                },
+                                {
+                                    "label": "Servicios de atención al público (bancos, pago de cuentas)",
+                                    "value": "SERVICIO_ATENCION_PUBLICO"
+                                },
+                                {
+                                    "label": "Restaurantes y/o cafés",
+                                    "value": "RESTAURANTE_CAFE"
+                                },
+                                {
+                                    "label": "Otra",
+                                    "value": "OTRA"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "SHORT_TEXT",
+                        "title": "Otra",
+                        "description": " ",
+                        "options": {
+                            "choices": []
+                        },
+                        "mandatory": false
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "INSTRUCTIONS",
+                        "title": "Conforme a tu experiencia en el equipamiento, ¿qué tan de acuerdo estás con las siguientes afirmaciones?:",
+                        "description": " "
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Inclusividad, todas las personas son bienvenidas",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "En desacuerdo",
+                                    "value": "EN_DESACUERDO"
+                                },
+                                {
+                                    "label": "Neutral",
+                                    "value": "NEUTRAL"
+                                },
+                                {
+                                    "label": "De acuerdo",
+                                    "value": "DE_ACUERDO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Accesibilidad económica, los precios son accesibles",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "En desacuerdo",
+                                    "value": "EN_DESACUERDO"
+                                },
+                                {
+                                    "label": "Neutral",
+                                    "value": "NEUTRAL"
+                                },
+                                {
+                                    "label": "De acuerdo",
+                                    "value": "DE_ACUERDO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Infraestructura accesible, todas las personas pueden acceder (en situación de discapacidad, en silla de ruedas, con cochecitos de bebé, etc.)",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "En desacuerdo",
+                                    "value": "EN_DESACUERDO"
+                                },
+                                {
+                                    "label": "Neutral",
+                                    "value": "NEUTRAL"
+                                },
+                                {
+                                    "label": "De acuerdo",
+                                    "value": "DE_ACUERDO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    }
+                ]
+            },
+            {
+                "uuid": "5a7f270d-3ed4-4a0d-8144-598fc18f96b6",
+                "title": "Paradas de transporte público existentes",
+                "description": "",
+                "instructions": "",
+                "is_priority": false,
+                "category": {
+                    "code": "CALIDAD_MEDIOAMBIENTAL"
+                },
+                "blocks": [{
+                        "uuid": "",
+                        "block_type": "INSTRUCTIONS",
+                        "title": "Instrucciones:",
+                        "description": "Evalúa los siguientes criterios para la parada de transporte."
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Techo (protección lluvia y sol)",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Elementos para sentarse y esperar (bancas)",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Espacio suficiente para las personas",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Iluminación en la parada",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Señalización (poste con ícono de autobús)",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Percepción de seguridad",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Parada de ascenso y descenso de pasajeros establecida",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "INSTRUCTIONS",
+                        "title": "¿Quieres seguir calificando otros elementos?",
+                        "description": ""
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Limpieza",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": false
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Información de recorridos (horarios, líneas)",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": false
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Elementos de seguridad (Cámaras CCTV, botones de pánico)",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": false
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Vigilancia (presencia de policia, guardias)",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": false
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Ubicación visible y cercana a equipamientos (kioskos, negocios)",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": false
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Ubicación cercana a otros medios de transporte (metro, bici-estaciones)",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": false
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "RADIO",
+                        "title": "Elementos de accesibilidad universal (rampas, plataformas, pasamanos)",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": false
+                    }
+                ]
+            },
+            {
+                "uuid": "88b12e8f-7f73-48ab-8777-0af172767226",
+                "title": "Paradas de transporte público potenciales",
+                "description": "",
+                "instructions": "Selecciona el equipamiento o servicio que quieres mapear y evalúalos según los criterios señalados",
+                "is_priority": false,
+                "category": {
+                    "code": "BIENESTAR_SOCIOECONOMICO"
+                },
+                "blocks": [{
+                        "uuid": "",
+                        "block_type": "CHECKBOX",
+                        "title": "Selecciona las razones por las cuales consideras que es necesaria una parada de transporte público aquí:",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "Actualmente se usa como un punto de espera",
+                                    "value": "SE_USA_COMO_PUNTO_ESPERA"
+                                },
+                                {
+                                    "label": "Mejorar la seguridad",
+                                    "value": "MEJORAR_SEGURIDAD"
+                                },
+                                {
+                                    "label": "Mejorar la comodidad (tener un espacio para sentarse)",
+                                    "value": "MEJORAR_COMODIDAD"
+                                },
+                                {
+                                    "label": "Protegerse de las condiciones climáticas (lluvia, sol)",
+                                    "value": "PROTEGERSE_DE_CONDICIONES"
+                                },
+                                {
+                                    "label": "Contar con información de las rutas (horarios, recorridos)",
+                                    "value": "CONTAR_CON_INFORMACION"
+                                },
+                                {
+                                    "label": "Otras",
+                                    "value": "OTRAS"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "SHORT_TEXT",
+                        "title": "Otras",
+                        "description": "",
+                        "mandatory": false
+                    }
+                ]
+            },
+            {
+                "uuid": "25a5c310-ef9e-48f7-a76f-540895ef58f3",
+                "title": "Calles con potencial para ciclovías o calles de preferencia ciclista",
+                "description": "",
+                "instructions": "",
+                "is_priority": false,
+                "category": {
+                    "code": "RIESGO_DESASTRES"
+                },
+                "blocks": [{
+                        "uuid": "",
+                        "block_type": "INSTRUCTIONS",
+                        "title": "Instrucciones:",
+                        "description": ""
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "CHECKBOX",
+                        "title": "Selecciona las razones por las cuales consideras que es necesaria una ciclovía o una calle con preferencia ciclista aquí:",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "Hay muchas personas usuarias de bicicletas",
+                                    "value": "HAY_MUCHOS_CICLISTAS"
+                                },
+                                {
+                                    "label": "Mejorar la seguridad al andar en bicicleta",
+                                    "value": "MEJORAR_SEGURIDAD"
+                                },
+                                {
+                                    "label": "Para fomentar que las niñas y niños anden en bicicleta",
+                                    "value": "FOMENTAR_USO_NINOS"
+                                },
+                                {
+                                    "label": "Para poder conectar escuelas, parques/espacios abiertos cercanos",
+                                    "value": "CONECTAR_ESPACIOS"
+                                },
+                                {
+                                    "label": "Otras",
+                                    "value": "OTRAS"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "SHORT_TEXT",
+                        "title": "Otras",
+                        "description": "",
+                        "mandatory": false
+                    }
+                ]
+            },
+            {
+                "uuid": "b6cd13b0-2576-47fe-bf53-6b41c19a1b21",
+                "title": "Biciestacionamientos existentes",
+                "description": "Analiza los estacionamientos de bicicleta y evalúalos según tu experiencia",
+                "is_priority": false,
+                "category": {
+                    "code": "ENTORNO_URBANO"
+                },
+                "blocks": [{
+                        "uuid": " ",
+                        "block_type": "INSTRUCTIONS",
+                        "title": "Instrucciones:",
+                        "description": "De acuerdo con tu experiencia con este biciestacionamiento, evalúa los siguientes elementos"
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Capacidad y espacio disponible",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Seguridad y ubicación adecuada para estacionar la bicicleta",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Facilidad para estacionar la bicicleta",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": false
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Estado y mantenimiento del biciestacionamiento",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": false
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "SHORT_TEXT",
+                        "title": "Otras",
+                        "description": " ",
+                        "mandatory": false
+                    }
+                ]
+            },
+            {
+                "uuid": "c991da23-76ed-4948-99f7-ad20969ec31c",
+                "title": "Biciestacionamientos potenciales",
+                "description": "",
+                "instructions": "",
+                "is_priority": false,
+                "category": {
+                    "code": "ENTORNO_URBANO"
+                },
+                "blocks": [{
+                        "uuid": "",
+                        "block_type": "INSTRUCTIONS",
+                        "title": "Instrucciones:",
+                        "description": ""
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "CHECKBOX",
+                        "title": "Selecciona las razones por las cuales consideras que es necesario un biciestacionamiento aquí:",
+                        "description": "",
+                        "options": {
+                            "choices": [{
+                                    "label": "Es un punto importante en el trayecto",
+                                    "value": "PUNTO_IMPORTANTE"
+                                },
+                                {
+                                    "label": "Es un punto de alta afluencia de personas",
+                                    "value": "PUNTO_ALTA_AFLUENCIA"
+                                },
+                                {
+                                    "label": "Es un espacio abierto en el que hay muchas personas ciclistas",
+                                    "value": "HAY_MUCHOS_CICLISTAS"
+                                },
+                                {
+                                    "label": "Me daría más seguridad para estacionar mi bicicleta",
+                                    "value": "ME_DARIA_SEGURIDAD"
+                                },
+                                {
+                                    "label": "Otras",
+                                    "value": "OTRAS"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": "",
+                        "block_type": "SHORT_TEXT",
+                        "title": "Otras",
+                        "description": "",
+                        "mandatory": false
+                    }
+                ]
+            },
+            {
+                "uuid": "edf278ec-cb22-4d72-9ba7-f42976096f21",
+                "title": "Cruces peatonales",
+                "description": "Lugares en las carreteras y calles donde las personas pueden atravesar de un lado al otro con mayor seguridad",
+                "is_priority": false,
+                "category": {
+                    "code": "ENTORNO_URBANO"
+                },
+                "blocks": [{
+                        "uuid": " ",
+                        "block_type": "INSTRUCTIONS",
+                        "title": "Instrucciones:",
+                        "description": "De acuerdo con tu experiencia en este cruce peatonal, evalúa los siguientes elementos"
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Seguridad vial (a salvo de siniestros viales como atropellamientos y choques)",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Señalización del cruce",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Tiempo suficiente para cruzar",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Distancia de cruce (idealmente, máximo dos carriles de automóviles)",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Accesibilidad universal para sillas de ruedas, coches y carreolas (tiene rampas, sin obstáculos como postes)",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "Semáforo peatonal en funcionamiento",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "No hay",
+                                    "value": "NO_HAY"
+                                },
+                                {
+                                    "label": "Malo",
+                                    "value": "MALO"
+                                },
+                                {
+                                    "label": "Regular",
+                                    "value": "REGULAR"
+                                },
+                                {
+                                    "label": "Bueno",
+                                    "value": "BUENO"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    }
+                ]
+            },
+            {
+                "uuid": "7d38b878-0a47-4ad0-94fe-34bcc7cdbe07",
+                "title": "Infraestructura peatonal potencial",
+                "description": "Áreas o ubicaciones donde se podría desarrollar o mejorar la infraestructura para peatones, como banquetas, cruces, entre otras",
+                "instructions": " ",
+                "is_priority": false,
+                "category": {
+                    "code": "ENTORNO_URBANO"
+                },
+                "blocks": [{
+                        "uuid": " ",
+                        "block_type": "INSTRUCTIONS",
+                        "title": "Instrucciones:",
+                        "description": "Indica los lugares potenciales (o dónde recomendarías) para instalar banqueta, cruces o calles peatonales"
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "RADIO",
+                        "title": "¿Qué elementos de infraestructura peatonal quieres proponer?",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "Banqueta",
+                                    "value": "BANQUETA"
+                                },
+                                {
+                                    "label": "Calle peatonal",
+                                    "value": "CALLE_PEATONAL"
+                                },
+                                {
+                                    "label": "Cruce peatonal",
+                                    "value": "CRUCE PEATONAL"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "CHECKBOX",
+                        "title": "Selecciona las razones por las cuales consideras que es necesario el elemento",
+                        "description": " ",
+                        "options": {
+                            "choices": [{
+                                    "label": "Hay muchas personas que caminan en esta área",
+                                    "value": "HAY_MUCHAS_PERSONAS"
+                                },
+                                {
+                                    "label": "Mejorar la seguridad y convivencia vial al caminar",
+                                    "value": "MEJORAR_SEGURIDAD"
+                                },
+                                {
+                                    "label": "Para fomentar que las niñas y niños caminen con seguridad",
+                                    "value": "FOMENTAR_SEGURIDAD_NINOS"
+                                },
+                                {
+                                    "label": "Para conectar escuelas, parques/espacios abiertos cercanos",
+                                    "value": "CONECTAR"
+                                },
+                                {
+                                    "label": "Para fomentar el comercio local",
+                                    "value": "FOMENTAR_COMERCIO_LOCAL"
+                                },
+                                {
+                                    "label": "Mejorar la apariencia del espacio público y embellecer el área",
+                                    "value": "MEJORAR_APARIENCIA"
+                                },
+                                {
+                                    "label": "Otras",
+                                    "value": "OTRAS"
+                                }
+                            ]
+                        },
+                        "mandatory": true
+                    },
+                    {
+                        "uuid": " ",
+                        "block_type": "SHORT_TEXT",
+                        "title": "Otras",
+                        "description": " ",
+                        "mandatory": false
+                    }
+                ]
+            }
+        ],
+        "categories": [{
+                "code": "ENTORNO_URBANO",
+                "name": "Entorno urbano",
+                "description": "Se enfoca en indicadores que arrojan luz sobre la dinámica y la calidad de vida en áreas urbanas. Esta dimension proporciona una visión integral del entorno en el que las comunidades urbanas se desenvuelven.",
+                "color": "#DEECFD",
+                "border_color": "#6A94C6",
+                "icon": "fa-building"
+            },
+            {
+                "code": "CALIDAD_MEDIOAMBIENTAL",
+                "name": "Calidad medioambiental",
+                "description": "Esta dimension se centra en evaluar la salud y el estado general del entorno natural dentro de un barrio o área específica. Tiene como objetivo analizar y comprender diversos indicadores clave relacionados con la sostenibilidad y el bienestar ambiental en la comunidad local.",
+                "color": "#D8E9D4",
+                "border_color": "#A8D29E",
+                "icon": "fa-leaf"
+            },
+            {
+                "code": "BIENESTAR_SOCIOECONOMICO",
+                "name": "Bienestar socioeconomico",
+                "description": "Esta dimensión se centra en evaluar el nivel de calidad de vida y el estado general de una población o individuo en función de diversos indicadores relacionados con su situación económica y social.",
+                "color": "#FCF0CB",
+                "border_color": "#FADD96",
+                "icon": "fa-people-roof"
+            },
+            {
+                "code": "RIESGO_DESASTRES",
+                "name": "Riesgo de desastres",
+                "description": "Esta dimension es una métrica diseñada para evaluar la vulnerabilidad de una comunidad o barrio ante posibles desastres naturales.",
+                "color": "#F8D8E0",
+                "border_color": "#FA8FAA",
+                "icon": "fa-volcano"
+            }
+        ]
+    }]
+}

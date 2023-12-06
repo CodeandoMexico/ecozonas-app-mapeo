@@ -5,7 +5,9 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../domain/models/db/activity_db_model.dart';
 import '../../domain/models/db/mapaton_db_model.dart';
+import '../../domain/models/db/mapaton_data_db_model.dart';
 import '../../domain/models/db/mapper_db_model.dart';
+import '../../domain/models/db/survey_data_db_model.dart';
 
 class MyDatabase {
   static final MyDatabase instance = MyDatabase._init();
@@ -66,10 +68,29 @@ class MyDatabase {
         ${ActivityColumns.id} $idType,
         ${ActivityColumns.mapatonId} $integerNotNullType,
         ${ActivityColumns.uuid} $textNotNullType,
+        ${ActivityColumns.name} $textNotNullType,
+        ${ActivityColumns.color} $textNotNullType,
+        ${ActivityColumns.borderColor} $textNotNullType,
         ${ActivityColumns.latitude} $floatNotNullType,
         ${ActivityColumns.longitude} $floatNotNullType,
         ${ActivityColumns.timestamp} $textNotNullType,
-        ${ActivityColumns.blocks} $textNotNullType
+        ${ActivityColumns.blocks} $textNotNullType,
+        ${ActivityColumns.categoryCode} $textNotNullType,
+        ${ActivityColumns.sent} $boolNotNullType
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE $mapatonsListTable (
+        ${MapatonDataColumns.id} $idType,
+        ${MapatonDataColumns.data} $textNotNullType
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE $surveyListTable (
+        ${SurveyDataColumns.id} $idType,
+        ${SurveyDataColumns.data} $textNotNullType
       )
     ''');
   }
@@ -138,33 +159,31 @@ class MyDatabase {
     );
   }
 
-  // Future<List<Map<String, dynamic>>?> getProductsByListId(String table, int listId) async {
-  //   final db = await instance.database;
+  Future<List<Map<String, dynamic>>?> getMapatonActivitiesToSend(String table, int mapatonId) async {
+    final db = await instance.database;
 
-  //   return await db.query(
-  //     table,
-  //     where: '${ProductByListColumns.listId} = ?',
-  //     whereArgs: [listId],
-  //     orderBy: '${ProductByListColumns.selected} ASC, ${ProductByListColumns.position} ASC'
-  //   );
-  // }
+    // return await db.query(
+    //   table,
+    //   where: '${ActivityColumns.mapatonId} = ?',
+    //   whereArgs: [mapatonId]
+    // );
+    final result = await db.rawQuery('''
+      SELECT * FROM $table
+      WHERE ${ActivityColumns.mapatonId} = '$mapatonId' AND sent = 0;
+    ''');
 
-  // Future<double> getNewPosition(String table, int listId) async {
-  //   final db = await instance.database;
+    return result.toList();
+  }
 
-  //   final result = await db.rawQuery('''
-  //     SELECT * FROM $table
-  //     WHERE listId = $listId
-  //     ORDER BY position DESC
-  //     LIMIT 1;
-  //   ''');
+  Future updateSentActivities(int mapatonId) async {
+    final db = await instance.database;
 
-  //   final list = result.map((e) {
-  //     return ProductsByListModel.fromMap(e);
-  //   }).toList();
-
-  //   return list.isEmpty ? 1 : list[0].position + 1;
-  // }
+    await db.rawUpdate('''
+      UPDATE $activitiesTable
+      SET sent = 1
+      WHERE ${ActivityColumns.mapatonId} = '$mapatonId' AND sent = 0;
+    ''');
+  }
 
   Future<int> update(String table, int id, Map<String, dynamic> map) async {
     final db = await instance.database;

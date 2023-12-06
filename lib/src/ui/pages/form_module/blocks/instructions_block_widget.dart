@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class InstructionsBlockWidget extends StatelessWidget {
+  final String title;
   final String description;
 
-  const InstructionsBlockWidget({super.key, required this.description});
+  const InstructionsBlockWidget({super.key, required this.title, required this.description});
 
   @override
   Widget build(BuildContext context) {
@@ -17,18 +18,27 @@ class InstructionsBlockWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.push_pin, color: Colors.red),
-              SizedBox(width: 6.0),
-              Text('Instrucciones', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Icon(Icons.push_pin, color: Colors.red),
+              const SizedBox(width: 6.0),
+              Expanded(
+                child: Text(
+                  title,
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
+                ),
+              ),
             ],
           ),
-          const SizedBox(height: 8.0),
-          Text(
-            '\u2022 \t $description',
-            style: const TextStyle(fontSize: 16)
-          )
+          description.trim().isNotEmpty ? Column(
+            children: [
+              const SizedBox(height: 8.0),
+              Text(
+                '\u2022 \t $description',
+                style: const TextStyle(fontSize: 16)
+              )
+            ],
+          ) : Container()
         ],
       ),
     );

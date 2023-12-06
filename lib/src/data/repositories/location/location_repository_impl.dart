@@ -4,7 +4,9 @@ import 'package:location/location.dart';
 import 'location_repository.dart';
 
 class LocationRepositoryImpl implements LocationRepository {
-  static final Location _location = Location();
+  final Location _location;
+
+  LocationRepositoryImpl(this._location);
 
   @override
   Future<bool> checkLocationPermission() async {

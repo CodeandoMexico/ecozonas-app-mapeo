@@ -10,6 +10,12 @@ class ActivityRepositoryImpl implements ActivityRepository {
   }
 
   @override
+  Future<int> removeActivity(ActivityDbModel activity) async {
+    final response = await MyDatabase.instance.delete(activitiesTable, activity.id!);
+    return response;
+  }
+
+  @override
   Future<List<ActivityDbModel>> getMapatonActivities(int mapatonId) async {
     final response = await MyDatabase.instance.getMapatonActivities(activitiesTable, mapatonId);
     if (response != null) {
@@ -17,5 +23,20 @@ class ActivityRepositoryImpl implements ActivityRepository {
     } else {
       return [];
     }
+  }
+
+  @override
+  Future<List<ActivityDbModel>> getActivitiesToSend(int mapatonId) async {
+    final response = await MyDatabase.instance.getMapatonActivitiesToSend(activitiesTable, mapatonId);
+    if (response != null) {
+      return activityDbModelListFromJson(response);
+    } else {
+      return [];
+    }
+  }
+  
+  @override
+  Future updateSentActivities(int mapatonId) async {
+    await MyDatabase.instance.updateSentActivities(mapatonId);
   }
 }

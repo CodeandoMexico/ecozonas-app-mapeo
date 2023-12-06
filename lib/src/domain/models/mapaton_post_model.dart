@@ -1,27 +1,25 @@
 import 'dart:convert';
 
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 MapatonPostModel mapatonPostModelFromJson(String str) => MapatonPostModel.fromJson(json.decode(str));
 
 String mapatonPostModelToJson(MapatonPostModel data) => json.encode(data.toJson());
 
 class MapatonPostModel {
-    MapatonActivities mapaton;
+    List<PostActivity> activities;
     Mapper mapper;
 
     MapatonPostModel({
-        required this.mapaton,
+        required this.activities,
         required this.mapper,
     });
 
     factory MapatonPostModel.fromJson(Map<String, dynamic> json) => MapatonPostModel(
-        mapaton: MapatonActivities.fromJson(json["mapaton"]),
+        activities: List<PostActivity>.from(json["activities"].map((x) => PostActivity.fromJson(x))),
         mapper: Mapper.fromJson(json["mapper"]),
     );
 
     Map<String, dynamic> toJson() => {
-        "mapaton": mapaton.toJson(),
+        "activities": List<dynamic>.from(activities.map((x) => x.toJson())),
         "mapper": mapper.toJson(),
     };
 }
@@ -46,31 +44,71 @@ class MapatonActivities {
     };
 }
 
+class Geometry {
+  Geometry({
+    required this.type,
+    required this.coordinates
+  });
+
+  String type;
+  GeometryLatLng coordinates;
+
+  factory Geometry.fromJson(Map<String, dynamic> json) => Geometry(
+      type: json["type"],
+      coordinates: json["coordinates"],
+  );
+
+  Map<String, dynamic> toJson() => {
+      "type": type,
+      "coordinates": coordinates,
+  };
+}
+
+class GeometryLatLng {
+  GeometryLatLng({
+    required this.latitude,
+    required this.longitude
+  });
+
+  double latitude;
+  double longitude;
+
+  factory GeometryLatLng.fromJson(Map<String, dynamic> json) => GeometryLatLng(
+      latitude: json["latitude"],
+      longitude: json["longitude"],
+  );
+
+  Map<String, dynamic> toJson() => {
+      "latitude": latitude,
+      "longitude": longitude,
+  };
+}
+
 class PostActivity {
     String uuid;
-    LatLng location;
+    Geometry geometry;
     String timestamp;
-    List<AnswerBlock> blocks;
+    Map<String, dynamic> data;
 
     PostActivity({
         required this.uuid,
-        required this.location,
+        required this.geometry,
         required this.timestamp,
-        required this.blocks,
+        required this.data,
     });
 
     factory PostActivity.fromJson(Map<String, dynamic> json) => PostActivity(
         uuid: json["uuid"],
-        location: json["location"] as LatLng,
+        geometry: json["geometry"] as Geometry,
         timestamp: json["timestamp"] as String,
-        blocks: List<AnswerBlock>.from(json["blocks"].map((x) => AnswerBlock.fromJson(x))),
+        data: json["data"],
     );
 
     Map<String, dynamic> toJson() => {
         "uuid": uuid,
-        "location": location,
+        "geometry": geometry,
         "timestamp": timestamp,
-        "blocks": List<dynamic>.from(blocks.map((x) => x.toJson())),
+        "data": data,
     };
 }
 
@@ -139,24 +177,24 @@ class Mapper {
 }
 
 class SociodemographicData {
-    String genre;
+    String gender;
     String ageRange;
     String disability;
 
     SociodemographicData({
-        required this.genre,
+        required this.gender,
         required this.ageRange,
         required this.disability,
     });
 
     factory SociodemographicData.fromJson(Map<String, dynamic> json) => SociodemographicData(
-        genre: json["genre"],
+        gender: json["gender"],
         ageRange: json["age_range"],
         disability: json["disability"],
     );
 
     Map<String, dynamic> toJson() => {
-        "genre": genre,
+        "gender": gender,
         "age_range": ageRange,
         "disability": disability,
     };

@@ -53,7 +53,7 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
     return ElevatedButton(
       onPressed: () => _getImage(),
       style: MyButtonStyles.secondaryButton,
-      child: const Text('Tomar otra foto', style: TextStyle(color: Constants.whiteLabelTextColor))
+      child: const Text('Tomar foto', style: TextStyle(color: Constants.whiteLabelTextColor))
     );
   }
 
@@ -64,7 +64,6 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
       child: Stack(
         children: [
           Positioned.fill(
-            // child: Image.asset('assets/images/map_placeholder.jpg', fit: BoxFit.cover),
             child: _imagePath != null ? Image.file(File(_imagePath!)) : Container()
           ),
           _deleteButton()
@@ -95,7 +94,7 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
    */
   void _getImage() async {
     var picker = ImagePicker();
-    XFile? image = await picker.pickImage(source: ImageSource.camera);
+    XFile? image = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
     if (image != null) {
       setState(() { _imagePath = image.path; });
       widget.callback(_imagePath!);

@@ -1,114 +1,113 @@
 import 'dart:convert';
 
-MapatonModel mapatonModelFromJson(String str) => MapatonModel.fromJson(json.decode(str));
+List<MapatonModel> mapatonListFromJson(String str) => List<MapatonModel>.from(json.decode(str).map((x) => MapatonModel.fromJson(x)));
 
-String mapatonModelToJson(MapatonModel data) => json.encode(data.toJson());
+String mapatonModelToJson(List<MapatonModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class MapatonModel {
-    List<Mapaton> mapatones;
-
-    MapatonModel({
-        required this.mapatones,
-    });
-
-    factory MapatonModel.fromJson(Map<String, dynamic> json) => MapatonModel(
-        mapatones: List<Mapaton>.from(json["mapatones"].map((x) => Mapaton.fromJson(x))),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "mapatones": List<dynamic>.from(mapatones.map((x) => x.toJson())),
-    };
-}
-
-class Mapaton {
+    List<Activity> activities;
+    List<Category> categories;
     String uuid;
     String title;
     String locationText;
-    Limits limits;
+    String limitNorth;
+    String limitEast;
+    String limitSouth;
+    String limitWest;
+    DateTime createdAt;
     DateTime updatedAt;
     String status;
-    List<Activity> activities;
-    List<CategoryElement> categories;
 
-    Mapaton({
+    MapatonModel({
+        required this.activities,
+        required this.categories,
         required this.uuid,
         required this.title,
         required this.locationText,
-        required this.limits,
+        required this.limitNorth,
+        required this.limitEast,
+        required this.limitSouth,
+        required this.limitWest,
+        required this.createdAt,
         required this.updatedAt,
         required this.status,
-        required this.activities,
-        required this.categories,
     });
 
-    factory Mapaton.fromJson(Map<String, dynamic> json) => Mapaton(
+    factory MapatonModel.fromJson(Map<String, dynamic> json) => MapatonModel(
+        activities: List<Activity>.from(json["activities"].map((x) => Activity.fromJson(x))),
+        categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
         uuid: json["uuid"],
         title: json["title"],
         locationText: json["location_text"],
-        limits: Limits.fromJson(json["limits"]),
+        limitNorth: json["limit_north"],
+        limitEast: json["limit_east"],
+        limitSouth: json["limit_south"],
+        limitWest: json["limit_west"],
+        createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         status: json["status"],
-        activities: List<Activity>.from(json["activities"].map((x) => Activity.fromJson(x))),
-        categories: List<CategoryElement>.from(json["categories"].map((x) => CategoryElement.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
+        "activities": List<dynamic>.from(activities.map((x) => x.toJson())),
+        "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
         "uuid": uuid,
         "title": title,
         "location_text": locationText,
-        "limits": limits.toJson(),
+        "limit_north": limitNorth,
+        "limit_east": limitEast,
+        "limit_south": limitSouth,
+        "limit_west": limitWest,
+        "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "status": status,
-        "activities": List<dynamic>.from(activities.map((x) => x.toJson())),
-        "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
     };
 }
 
 class Activity {
+    List<Block> blocks;
+    Category category;
     String uuid;
     String title;
     String description;
     bool isPriority;
-    ActivityCategory category;
-    List<Block> blocks;
     String? mapatonUuid;
     String? mapatonTitle;
     String? mapatonLocationText;
     String? color;
+    String? borderColor;
     String? icon;
+    int? counter;
+    String blocksJson;
 
     Activity({
+        required this.blocks,
+        required this.category,
         required this.uuid,
         required this.title,
         required this.description,
         required this.isPriority,
-        required this.category,
-        required this.blocks,
+        required this.blocksJson,
     });
 
     factory Activity.fromJson(Map<String, dynamic> json) => Activity(
+        blocks: List<Block>.from(json["blocks"].map((x) => Block.fromJson(x))),
+        category: Category.fromJson(json["category"]),
         uuid: json["uuid"],
         title: json["title"],
         description: json["description"],
         isPriority: json["is_priority"],
-        category: ActivityCategory.fromJson(json["category"]),
-        blocks: List<Block>.from(json["blocks"].map((x) => Block.fromJson(x))),
+        blocksJson: json["blocks"].toString()
     );
 
     Map<String, dynamic> toJson() => {
+        "blocks": List<dynamic>.from(blocks.map((x) => x.toJson())),
+        "category": category.toJson(),
         "uuid": uuid,
         "title": title,
         "description": description,
         "is_priority": isPriority,
-        "category": category.toJson(),
-        "blocks": List<dynamic>.from(blocks.map((x) => x.toJson())),
     };
-
-    @override
-  String toString() {
-    // return "uuid: $uuid title: $title description: $description is_priority: $isPriority category: ${category.toJson()} blocks: ${List<dynamic>.from(blocks.map((x) => x.toJson()))}";
-    return "---> blocks: ${List<dynamic>.from(blocks.map((x) => x.toJson()))}";
-  }
 }
 
 List<Block> blockListFromJson(String str) {
@@ -124,9 +123,8 @@ class Block {
     String blockType;
     String title;
     String description;
+    bool isRequired;
     Options? options;
-    bool? isDecimal;
-    bool? mandatory;
     dynamic value;
 
     Block({
@@ -134,9 +132,8 @@ class Block {
         required this.blockType,
         required this.title,
         required this.description,
-        this.options,
-        this.isDecimal = false,
-        this.mandatory = false,
+        required this.isRequired,
+        required this.options,
         this.value
     });
 
@@ -145,9 +142,8 @@ class Block {
         blockType: json["block_type"],
         title: json["title"],
         description: json["description"],
+        isRequired: json["is_required"],
         options: json["options"] == null ? null : Options.fromJson(json["options"]),
-        isDecimal: json["is_decimal"],
-        mandatory: json["mandatory"],
         value: json["value"],
     );
 
@@ -156,23 +152,10 @@ class Block {
         "block_type": blockType,
         "title": title,
         "description": description,
+        "is_required": isRequired,
         "options": options?.toJson(),
-        "mandatory": mandatory,
         "value": value,
     };
-
-    @override
-  String toString() {
-    return '''
-      "uuid": $uuid,
-      "block_type": $blockType,
-      "title": $title,
-      "description": $description,
-      "options": $options,
-      "mandatory": $mandatory,
-      "value": $value,
-    ''';
-  }
 }
 
 class Options {
@@ -213,80 +196,42 @@ class Choice {
     };
 }
 
-class ActivityCategory {
-    String code;
-    String? description;
-
-    ActivityCategory({
-        required this.code,
-        this.description
-    });
-
-    factory ActivityCategory.fromJson(Map<String, dynamic> json) => ActivityCategory(
-        code: json["code"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "code": code,
-    };
-}
-
-class CategoryElement {
-    String code;
+class Category {
+    String uuid;
     String name;
+    String code;
     String description;
     String color;
+    String? borderColor;
     String icon;
 
-    CategoryElement({
-        required this.code,
+    Category({
+        required this.uuid,
         required this.name,
+        required this.code,
         required this.description,
         required this.color,
+        this.borderColor,
         required this.icon,
     });
 
-    factory CategoryElement.fromJson(Map<String, dynamic> json) => CategoryElement(
-        code: json["code"],
+    factory Category.fromJson(Map<String, dynamic> json) => Category(
+        uuid: json["uuid"],
         name: json["name"],
+        code: json["code"],
         description: json["description"],
         color: json["color"],
+        borderColor: json["border_color"],
         icon: json["icon"],
     );
 
     Map<String, dynamic> toJson() => {
-        "code": code,
+        "uuid": uuid,
         "name": name,
+        "code": code,
         "description": description,
         "color": color,
+        "border_color": borderColor,
         "icon": icon,
-    };
-}
-
-class Limits {
-    double north;
-    double south;
-    double east;
-    double west;
-
-    Limits({
-        required this.north,
-        required this.south,
-        required this.east,
-        required this.west,
-    });
-
-    factory Limits.fromJson(Map<String, dynamic> json) => Limits(
-        north: json["north"]?.toDouble(),
-        south: json["south"]?.toDouble(),
-        east: json["east"]?.toDouble(),
-        west: json["west"]?.toDouble(),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "north": north,
-        "south": south,
-        "east": east,
-        "west": west,
     };
 }

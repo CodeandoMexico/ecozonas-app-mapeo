@@ -11,7 +11,20 @@ class ActivityUseCase {
     return response;
   }
 
+  Future<int> removeActivity(ActivityDbModel activity) async {
+    final response = await _repository.removeActivity(activity);
+    return response;
+  }
+
   Future<List<ActivityDbModel>> getMapatonActivities(int mapatonId) async {
     return await _repository.getMapatonActivities(mapatonId);
+  }
+
+  Future<List<ActivityDbModel>> getActivitiesToSend(int mapatonId) async {
+    return await _repository.getActivitiesToSend(mapatonId);
+  }
+
+  Future updateSentActivities(int mapatonId) async {
+    return await _repository.updateSentActivities(mapatonId);
   }
 }

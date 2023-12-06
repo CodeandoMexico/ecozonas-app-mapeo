@@ -46,7 +46,7 @@ class NewIdBloc extends Bloc<NewIdEvent, NewIdState> {
       id: prefs.getMapper!.dbId,
       mapperId: prefs.getMapper!.id,
       alias: alias,
-      gender: prefs.getMapper!.sociodemographicData.genre,
+      gender: prefs.getMapper!.sociodemographicData.gender,
       age: prefs.getMapper!.sociodemographicData.ageRange,
       disability: prefs.getMapper!.sociodemographicData.disability
     ));

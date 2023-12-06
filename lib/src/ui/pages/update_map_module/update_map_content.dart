@@ -19,7 +19,7 @@ class UpdateMapContent extends StatelessWidget {
 
     return Scaffold(
       appBar: const MyAppBar(
-        title: Text('Sincronizar datos'),
+        title: Text('Enviar datos'),
       ),
       body: _body(context, bloc),
       backgroundColor: Colors.white,
@@ -39,6 +39,10 @@ class UpdateMapContent extends StatelessWidget {
         }
         if (state is MapatonSent) {
           utils.showSnackBarSuccess(context, 'Los objetos fueron enviados correctamente');
+          BlocProvider.of<UpdateMapBloc>(context).add(GetMapatonById());
+        }
+        if (state is ErrorSendingMapaton) {
+          utils.showSnackBarError(context, state.error);
         }
       },
       child: _sendButton(context, bloc),
@@ -61,7 +65,7 @@ class UpdateMapContent extends StatelessWidget {
                 Text('Hay $count objeto$s mapeado$s por enviar'),
                 const SizedBox(height: 8.0),
                 MyPrimaryElevatedButton(
-                  onPressed: () => _postMapaton(context, mapaton),
+                  onPressed: count != 0 ? () => _postMapaton(context, mapaton) : null,
                   label: 'Enviar mapeos',
                   fullWidth: true,
                 ),
@@ -81,8 +85,8 @@ class UpdateMapContent extends StatelessWidget {
   Future<void> _postMapaton(BuildContext context, MapatonDbModel mapaton) async {
     dialogs.showConfirmationDialog(
       context,
-      title: '¿Enviar los objetos ahora?',
-      text: 'Al enviar los objetos ya no serán visibles en el mapa.',
+      // title: '¿Enviar los objetos ahora?',
+      text: '¿Enviar los objetos ahora?',
       acceptButtonText: 'Enviar',
       acceptCallback: () {
         BlocProvider.of<UpdateMapBloc>(context).add(SendMapaton(mapaton));

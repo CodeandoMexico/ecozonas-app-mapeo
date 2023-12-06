@@ -16,6 +16,7 @@ class MyTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      cursorColor: Colors.black,
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: prefixIconData != null ? Icon(prefixIconData) : null,

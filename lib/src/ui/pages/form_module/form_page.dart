@@ -5,7 +5,6 @@ import '../../../data/repositories/db/activity/activity_repository_impl.dart';
 import '../../../data/repositories/db/mapaton/mapaton_repository_impl.dart';
 import '../../../domain/models/db/activity_db_model.dart';
 import '../../../domain/models/mapaton_model.dart';
-import '../../../domain/models/mapaton_post_model.dart';
 import '../../../domain/use_cases/db/activity_use_case.dart';
 import '../../../domain/use_cases/db/mapaton_use_case.dart';
 import '../../theme/theme.dart';
@@ -15,38 +14,18 @@ import '../../utils/utils.dart' as utils;
 import 'blocks/blocks.dart';
 import 'blocks/select_block_widget.dart';
 
-class FormPage extends StatefulWidget {
+class FormPage extends StatelessWidget {
   static String routeName = 'form';
 
   const FormPage({super.key});
 
   @override
-  State<FormPage> createState() => _FormPageState();
-}
-
-class _FormPageState extends State<FormPage> {
-  late MapatonPostModel _mapatonPost;
-
-  @override
-  void initState() {
-    final prefs = UserPreferences();
-
-    _mapatonPost = MapatonPostModel(
-      mapaton: MapatonActivities(
-        activities: []
-      ),
-      mapper: prefs.getMapper!
-    );
-    super.initState();
-  }
-  @override
   Widget build(BuildContext context) {
     final activity = ModalRoute.of(context)!.settings.arguments as Activity;
-    _mapatonPost.mapaton.uuid = activity.mapatonUuid;
 
     return Scaffold(
       appBar: _appBar(activity),
-      body: _body(activity, context),
+      body: _body(context, activity),
       backgroundColor: myTheme.primaryColor,
     );
   }
@@ -64,26 +43,27 @@ class _FormPageState extends State<FormPage> {
     );
   }
 
-  Widget _body(Activity activity, BuildContext context) {
+  Widget _body(BuildContext context, Activity activity) {
     return SingleChildScrollView(
       child:  Column(
         children: [
           ...activity.blocks.map((e) {
-            if (e.blockType == 'INSTRUCTIONS') {
+            e.value = null;
+            if (e.blockType == 'instructions') {
               return _instructions(e.title, e.description);
-            } else if (e.blockType == 'SHORT_TEXT') {
+            } else if (e.blockType == 'short_text') {
               return _shortText(e);
-            } else if (e.blockType == 'LONG_TEXT') {
+            } else if (e.blockType == 'long_text') {
               return _longText(e);
-            } else if (e.blockType == 'NUMBER') {
-              return e.isDecimal == true ? _decimalText(e) : _numberText(e);
-            } else if (e.blockType == 'CHECKBOX') {
+            } else if (e.blockType == 'number') {
+              return _numberText(e);
+            } else if (e.blockType == 'checkbox') {
               return _checkbox(e);
-            } else if (e.blockType == 'SELECT') {
+            } else if (e.blockType == 'select') {
               return _select(e);
-            } else if (e.blockType == 'RADIO') {
+            } else if (e.blockType == 'radio') {
               return _radio(e);
-            } else if (e.blockType == 'PICTURE') {
+            } else if (e.blockType == 'picture') {
               return _picture(e);
             }
             // if (e.blockType == 'POINT') {
@@ -93,7 +73,7 @@ class _FormPageState extends State<FormPage> {
             // return _checkboxImage();
             return Container();
           }),
-          _buttons(activity)
+          _buttons(context, activity)
         ]
       ),
     );
@@ -102,14 +82,14 @@ class _FormPageState extends State<FormPage> {
   /*
    * WIDGETS
    */
-  Widget _buttons(Activity activity) {
+  Widget _buttons(BuildContext context, Activity activity) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: MyDoubleButtonRow(
         cancelText: 'Salir',
         cancelCallback: () => Navigator.pop(context),
         acceptText: 'Guardar mapeo',
-        acceptCallback: () => _save(activity),
+        acceptCallback: () => _save(context, activity),
       ),
     );
   }
@@ -119,6 +99,7 @@ class _FormPageState extends State<FormPage> {
    */
   Widget _instructions(String title, String description) {
     return InstructionsBlockWidget(
+      title: title,
       description: description,
     );
   }
@@ -127,6 +108,7 @@ class _FormPageState extends State<FormPage> {
     return TextBlockWidget(
       title: block.title,
       description: block.description,
+      isRequired: block.isRequired,
       onChanged: (value) => block.value = value,
     );
   }
@@ -136,6 +118,7 @@ class _FormPageState extends State<FormPage> {
       title: block.title,
       description: block.description,
       maxLines: 8,
+      isRequired: block.isRequired,
       onChanged: (value) => block.value = value,
     );
   }
@@ -145,16 +128,8 @@ class _FormPageState extends State<FormPage> {
       title: block.title,
       description: block.description,
       textInputType: TextInputType.number,
-      onChanged: (value) => block.value = value,
-    );
-  }
-
-  Widget _decimalText(Block block) {
-    return TextBlockWidget(
-      title: block.title,
-      description: block.description,
-      textInputType: const TextInputType.numberWithOptions(decimal: true),
-      onChanged: (value) => block.value = value,
+      isRequired: block.isRequired,
+      onChanged: (value) => block.value = int.parse(value),
     );
   }
 
@@ -169,6 +144,7 @@ class _FormPageState extends State<FormPage> {
       title: block.title,
       description: block.description,
       choices: block.options!.choices,
+      isRequired: block.isRequired,
       callback: (value) => block.value = value,
     );
   }
@@ -178,6 +154,7 @@ class _FormPageState extends State<FormPage> {
       title: block.title,
       description: block.description,
       choices: block.options!.choices,
+      isRequired: block.isRequired,
       callback: (value) => block.value = value,
     );
   }
@@ -187,6 +164,7 @@ class _FormPageState extends State<FormPage> {
       title: block.title,
       description: block.description,
       choices: block.options!.choices,
+      isRequired: block.isRequired,
       callback: (value) => block.value = value,
     );
   }
@@ -206,36 +184,50 @@ class _FormPageState extends State<FormPage> {
   /*
    * METHODS
    */
-  void _save(Activity activity) async {
-    for (var element in activity.blocks) {
+  void _save(BuildContext context, Activity activity) async {
+    final mandatoryCount = activity.blocks.where((element) {
       debugPrint(element.toString());
+      return element.isRequired && (element.value == null || (element.blockType == 'checkbox' && element.value.isEmpty));
+    }).length;
+
+    if (mandatoryCount > 0) {
+      utils.showSnackBarError(context, 'Por favor, revise los campos obligatorios');
+      return;
     }
 
-    // return;
+    try {
+      final prefs = UserPreferences();
 
-    final prefs = UserPreferences();
+      final useCase = MapatonUseCase(MapatonRepositoryImpl());
+      final m = await useCase.getMapatonsByUuidAndMapper(activity.mapatonUuid!, prefs.getMapper!.id.toString());
 
-    final useCase = MapatonUseCase(MapatonRepositoryImpl());
-    final m = await useCase.getMapatonsByUuidAndMapper(activity.mapatonUuid!, prefs.getMapper!.id.toString());
+      double lat = prefs.getActivityLocation != null ? prefs.getActivityLocation!.latitude : 0;
+      double lng = prefs.getActivityLocation != null ? prefs.getActivityLocation!.longitude : 0;
 
-    double lat = prefs.getActivityLocation != null ? prefs.getActivityLocation!.latitude : 0;
-    double lng = prefs.getActivityLocation != null ? prefs.getActivityLocation!.longitude : 0;
+      final activityUseCase = ActivityUseCase(ActivityRepositoryImpl());
+      final a = ActivityDbModel(
+        mapatonId: m!.id!,
+        uuid: activity.uuid,
+        name: activity.title,
+        color: activity.category.color,
+        borderColor: activity.category.borderColor!,
+        latitude: lat,
+        longitude: lng,
+        timestamp: utils.formatDate(DateTime.now().toUtc(), strFormat: "yyyy-MM-dd HH:mm:ssZ"),
+        blocks: blockListToJson(activity.blocks),
+        categoryCode: activity.category.code
+      );
 
-    final activityUseCase = ActivityUseCase(ActivityRepositoryImpl());
-    final a = ActivityDbModel(
-      mapatonId: m!.id!,
-      uuid: activity.uuid,
-      latitude: lat,
-      longitude: lng,
-      timestamp: utils.formatDate(DateTime.now(), strFormat: "yyyy-MM-dd HH:mm:ss"),
-      blocks: blockListToJson(activity.blocks)
-    );
+      int id = await activityUseCase.addActivity(a);
+      a.id = id;
 
-    int id = await activityUseCase.addActivity(a);
-    a.id = id;
-
-    if (context.mounted) {
-      Navigator.pop(context, a);
+      if (context.mounted) {
+        Navigator.pop(context, a);
+      }
+    } catch (err) {
+      if (context.mounted) {
+        utils.showSnackBarError(context, err.toString());
+      }
     }
   }
 }

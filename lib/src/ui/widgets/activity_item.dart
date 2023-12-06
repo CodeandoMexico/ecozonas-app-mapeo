@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../domain/models/mapaton_model.dart';
 import '../../ui/utils/color_extension.dart';
 import '../../ui/utils/constants.dart';
+import '../../ui/utils/utils.dart' as utils;
 
 class ActivityItem extends StatelessWidget {
   final Activity activity;
@@ -13,11 +14,11 @@ class ActivityItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: activity.color != null ? activity.color!.toColor() : const Color(0xFFC2D2E7),
-      margin:const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      color: activity.color!.toColor(),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
-        // side: const BorderSide(color: Color(0xFF6A94C6), width: 2)
+        side: BorderSide(color: activity.borderColor!.toColor(), width: 2)
       ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
@@ -26,19 +27,20 @@ class ActivityItem extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(16.0),
+                  height: 92,
+                  width: 92,
+                  padding: const EdgeInsets.all(20.0),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white
                   ),
-                  child: const Icon(Icons.abc, size: 60)
-                  // child: const FaIcon(FontAwesomeIcons.adn, size: 60)
+                  child: utils.getCategoryIcon(code: activity.category.code, size: 60)
                 ),
                 const SizedBox(width: 16.0),
                 _activityDetails()
               ],
             ),
-            _activityButton(activity.isPriority)
+            _activityButton(activity)
           ],
         ),
       ),
@@ -56,31 +58,31 @@ class ActivityItem extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: Constants.paddingSmall),
           Text(
             activity.description,
-            style: const TextStyle(fontSize: 12),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 12)
           ),
+          const SizedBox(height: Constants.paddingSmall),
+          activity.counter != null ?
+            Text('Mapeos realizados: ${activity.counter}') :
+            Container()
         ],
       ),
     );
   }
 
-  Widget _activityButton(bool isPriority) {
+  Widget _activityButton(Activity activity) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
           child: Row(
             children: [
-              isPriority ? Image.asset('assets/icons/ic_asterisk_50.png', width: 18) : Container(),
-              isPriority ? Image.asset('assets/icons/ic_asterisk_50.png', width: 18) : Container(),
-              SizedBox(width: isPriority ? 8.0 : 0),
-              const Icon(Icons.business_outlined, size: 15),
-              const SizedBox(width: 4.0),
-              Flexible(child: Text(activity.category.description!, style: const TextStyle(fontSize: 10)))
+              activity.isPriority ? Image.asset('assets/icons/ic_asterisk_50.png', width: 18) : Container(),
+              activity.isPriority ? Image.asset('assets/icons/ic_asterisk_50.png', width: 18) : Container(),
+              SizedBox(width: activity.isPriority ? 8.0 : 0),
+              Flexible(child: Text(activity.category.description, style: const TextStyle(fontSize: 10)))
             ],
           ),
         ),

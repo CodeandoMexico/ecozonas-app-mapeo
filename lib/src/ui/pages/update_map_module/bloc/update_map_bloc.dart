@@ -1,18 +1,23 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+
+import 'package:ecozonas/src/domain/models/api_response_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rxdart/subjects.dart';
+import 'package:path/path.dart' as path;
 
 import '../../../../data/preferences/user_preferences.dart';
-import '../../../../data/repositories/apis/post_mapaton_repository_impl.dart';
+import '../../../../data/repositories/apis/mapaton_survey_api_repository_impl.dart';
 import '../../../../data/repositories/db/activity/activity_repository_impl.dart';
 import '../../../../data/repositories/db/mapaton/mapaton_repository_impl.dart';
 import '../../../../domain/models/db/mapaton_db_model.dart';
+import '../../../../domain/models/image_api_response_model.dart';
 import '../../../../domain/models/mapaton_model.dart';
 import '../../../../domain/models/mapaton_post_model.dart';
-import '../../../../domain/use_cases/apis/post_mapaton_use_case.dart';
+import '../../../../domain/models/multipart_file_model.dart';
+import '../../../../domain/use_cases/apis/mapaton_api_use_case.dart';
 import '../../../../domain/use_cases/db/activity_use_case.dart';
 import '../../../../domain/use_cases/db/mapaton_use_case.dart';
+import '../../../utils/constants.dart';
 import 'bloc.dart';
 
 class UpdateMapBloc extends Bloc<UpdateMapEvent, UpdateMapState> {
@@ -53,10 +58,15 @@ class UpdateMapBloc extends Bloc<UpdateMapEvent, UpdateMapState> {
   void _mapSendMapatonToState(Emitter<UpdateMapState> emit, MapatonDbModel mapaton) async {
     emit(SendingMapaton());
     try {
-      await _sendMapaton(mapaton);
-      emit(MapatonSent());
+      final response = await _sendMapaton(mapaton);
+      if (response.isSuccess) {
+        await _updateSentActivities(mapaton);
+        emit(MapatonSent());
+      } else {
+        emit(ErrorSendingMapaton(response.error!));
+      }
     } catch (err) {
-      emit(ErrorSendingMapaton());
+      emit(ErrorSendingMapaton(err.toString()));
     }
   }
 
@@ -86,7 +96,7 @@ class UpdateMapBloc extends Bloc<UpdateMapEvent, UpdateMapState> {
     
     final mapaton = await mapatonUseCase.getMapatonById(prefs.getMapatonDbId!);
     if (mapaton != null) {
-      final activities = await activityUseCase.getMapatonActivities(mapaton.id!);
+      final activities = await activityUseCase.getActivitiesToSend(mapaton.id!);
       mapaton.activities = activities;
 
       return mapaton;
@@ -95,48 +105,80 @@ class UpdateMapBloc extends Bloc<UpdateMapEvent, UpdateMapState> {
     }
   }
   
-  Future<void> _sendMapaton(MapatonDbModel mapaton) async {
+  Future<ApiResponseModel> _sendMapaton(MapatonDbModel mapaton) async {
     final prefs = UserPreferences();
     final activityUseCase = ActivityUseCase(ActivityRepositoryImpl());
-    final activities = await activityUseCase.getMapatonActivities(mapaton.id!);
+    final activities = await activityUseCase.getActivitiesToSend(mapaton.id!);
+    final s = prefs.getMapper!.sociodemographicData;
     mapaton.activities = activities;
+
+    final postMapatonUseCase = MapatonSurveyApiUseCase(MapatonSurveyApiRepositoryImpl());
+
+    for (var a in activities) {
+      final blocks = blockListFromJson(a.blocks);
+      blocks.removeWhere((element) {
+        return element.blockType == 'instructions' ||
+        element.blockType == 'point' ||
+        element.blockType == 'line' ||
+        element.blockType == 'polygon';
+      });
+
+      for (var b in blocks) {
+        if (b.blockType == 'picture' && b.value != null) {
+          final extension = path.extension(b.value);
+          final name = DateTime.now().millisecondsSinceEpoch;
+
+          final response = await postMapatonUseCase.postPhoto(MultipartFileModel(
+            mapatonUuid: mapaton.uuid,
+            field: 'image',
+            bytes: File(b.value).readAsBytesSync(),
+            filename: '$name$extension',
+            path: b.value,
+          ));
+
+          if (response.isSuccess) {
+            final image = imageApiResponseModelFromJson(response.result);
+            b.value = image.uuid;
+          } else {
+            b.value = null;
+          }
+        }
+      }
+
+      a.blockList ??= [];
+      a.blockList!.addAll(blocks);
+    }
 
     final postMapaton = MapatonPostModel(
       mapper: Mapper(
         id: prefs.getMapper!.id,
         sociodemographicData: SociodemographicData(
-          genre: prefs.getMapper!.sociodemographicData.genre,
-          ageRange: prefs.getMapper!.sociodemographicData.ageRange,
-          disability: prefs.getMapper!.sociodemographicData.disability
+          gender: Constants.gender.firstWhere((e) => e.label == s.gender).value,
+          ageRange: Constants.ageRange.firstWhere((e) => e.label == s.ageRange).value,
+          disability: Constants.disability.firstWhere((e) => e.label == s.disability).value,
         )
       ),
-      mapaton: MapatonActivities(
-        uuid: mapaton.uuid,
-        activities: activities.map((e) {
-          List<Block> blocks = blockListFromJson(e.blocks);
-          blocks.removeWhere((element) {
-            return element.blockType == 'INSTRUCTIONS' ||
-            element.blockType == 'POINT' ||
-            element.blockType == 'LINE' ||
-            element.blockType == 'POLYGON';
-          });
-
-          debugPrint('Count: ${blocks.length}');
-          debugPrint(blocks.toString());
-          
-          return PostActivity(
-            uuid: e.uuid,
-            location: LatLng(e.latitude, e.longitude),
-            timestamp: e.timestamp,
-            blocks: blocks.map((b) {
-              return AnswerBlock(uuid: b.uuid, answer: b.value);
-            }).toList()
-          );
-        }).toList()
-      )
+      activities: activities.map((e) {
+        return PostActivity(
+          uuid: e.uuid,
+          geometry: Geometry(
+            type: 'point',
+            coordinates: GeometryLatLng(
+              latitude: e.latitude,
+              longitude: e.longitude
+            )
+          ),
+          timestamp: e.timestamp,
+          data: { for (var v in e.blockList!) v.uuid : v.value }
+        );
+      }).toList()
     );
+    
+    return await postMapatonUseCase.sendMapaton(postMapaton);
+  }
 
-    final postMapatonUseCase = PostMapatonUseCase(PostMapatonRepositoryImpl());
-    await postMapatonUseCase.sendMapaton(postMapaton);
+  Future _updateSentActivities(MapatonDbModel mapaton) async {
+    final activityUseCase = ActivityUseCase(ActivityRepositoryImpl());
+    await activityUseCase.updateSentActivities(mapaton.id!);
   }
 }
