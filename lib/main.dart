@@ -24,7 +24,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static const String accessToken = 'sk.eyJ1Ijoib3NjYXJjbXgiLCJhIjoiY2xvOHk4eHI2MDUyNTJtcWY0cGNvYjd4NCJ9.MTaSSc-yq8sUpQXWCbhT9w';//String.fromEnvironment("ACCESS_TOKEN");
+  static const String accessToken = String.fromEnvironment("ACCESS_TOKEN");
   
   const MyApp({super.key});
 
