@@ -34,7 +34,7 @@ class InstructionsBlockWidget extends StatelessWidget {
             children: [
               const SizedBox(height: 8.0),
               Text(
-                '\u2022 \t $description',
+                description,
                 style: const TextStyle(fontSize: 16)
               )
             ],

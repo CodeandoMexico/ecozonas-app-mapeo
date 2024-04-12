@@ -32,7 +32,7 @@ class CheckBlockWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Text('Si'),
+                    const Text('Sí'),
                     Checkbox(
                       value: false,
                       onChanged: (value) {}

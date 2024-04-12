@@ -16,6 +16,7 @@ class UserPreferences {
   final mapperKey = 'mapper';
   final activityLocationKey = 'activity_location';
   final mapatonDbIdKey = 'mapaton_id';
+  final onboardingTextShownIdsKey = 'onboarding_text_shown_ids';
 
   String? get getToken {
     return _prefs.getString(tokenKey);
@@ -76,5 +77,17 @@ class UserPreferences {
     } else {
       _prefs.remove(mapatonDbIdKey);
     }
+  }
+
+  String? get getOnboardingTextShownIds {
+    if (_prefs.containsKey(onboardingTextShownIdsKey)) {
+      return _prefs.getString(onboardingTextShownIdsKey)!;
+    } else {
+      return null;
+    }
+  }
+
+  set setOnboardingTextShownIds(String onboardingTextShownIds) {
+    _prefs.setString(onboardingTextShownIdsKey, onboardingTextShownIds);
   }
 }

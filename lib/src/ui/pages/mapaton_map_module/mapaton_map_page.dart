@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/bottom_navigation_bar_bloc.dart';
 import 'bloc/bloc.dart';
 import 'mapaton_map_content.dart';
 
-class MapatonMapPage extends StatelessWidget implements BottomNavigationBarState {
+class MapatonMapPage extends StatelessWidget {
   static String routeName = 'mapatonMap';
   
   const MapatonMapPage({super.key});

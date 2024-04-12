@@ -68,7 +68,7 @@ class NewSessionConfirmDialog extends StatelessWidget {
                 callback();
               },
               fullWidth: true,
-              label: 'Si',
+              label: 'Sí',
             ),
           ),
         ],

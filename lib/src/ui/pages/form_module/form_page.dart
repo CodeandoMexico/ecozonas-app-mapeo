@@ -8,10 +8,12 @@ import '../../../domain/models/mapaton_model.dart';
 import '../../../domain/use_cases/db/activity_use_case.dart';
 import '../../../domain/use_cases/db/mapaton_use_case.dart';
 import '../../theme/theme.dart';
+import '../../utils/constants.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/my_double_button_row.dart';
 import '../../utils/utils.dart' as utils;
 import 'blocks/blocks.dart';
+import 'blocks/radio_horizontal_block_widget.dart';
 import 'blocks/select_block_widget.dart';
 
 class FormPage extends StatelessWidget {
@@ -31,13 +33,13 @@ class FormPage extends StatelessWidget {
   }
 
   MyAppBar _appBar(Activity activity) {
-    const style = TextStyle(fontSize: 14);
-
     return MyAppBar(
-      title: Column(
+      title: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(activity.mapatonTitle!, style: style),
-          Text(activity.mapatonLocationText!, style: style),
+          utils.getCategoryIcon(code: activity.category.code, size: 20),
+          const SizedBox(width: Constants.paddingMedium),
+          Flexible(child: Text(activity.title, maxLines: 2, style: const TextStyle(fontSize: 16))),
         ],
       ),
     );
@@ -63,6 +65,8 @@ class FormPage extends StatelessWidget {
               return _select(e);
             } else if (e.blockType == 'radio') {
               return _radio(e);
+            } else if (e.blockType == 'radio_horizontal') {
+              return _radioHorizontal(e);
             } else if (e.blockType == 'picture') {
               return _picture(e);
             }
@@ -161,6 +165,16 @@ class FormPage extends StatelessWidget {
 
   Widget _radio(Block block) {
     return RadioBlockWidget(
+      title: block.title,
+      description: block.description,
+      choices: block.options!.choices,
+      isRequired: block.isRequired,
+      callback: (value) => block.value = value,
+    );
+  }
+
+  Widget _radioHorizontal(Block block) {
+    return RadioHorizontalBlockWidget(
       title: block.title,
       description: block.description,
       choices: block.options!.choices,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../data/preferences/user_preferences.dart';
 import '../../theme/theme.dart';
 import '../../utils/constants.dart';
 import '../../widgets/alias_text_fields.dart';
@@ -9,7 +10,7 @@ import '../../widgets/my_app_bar.dart';
 import '../../widgets/my_primary_elevated_button.dart';
 import '../../widgets/my_secondary_elevated_button.dart';
 import '../../utils/utils.dart' as utils;
-import '../mapaton_list_module/tabs_container/mapaton_tabs_page.dart';
+import '../pages.dart';
 import 'bloc/bloc.dart';
 
 class NewIdContent extends StatelessWidget {
@@ -56,7 +57,20 @@ class NewIdContent extends StatelessWidget {
     return MyPrimaryElevatedButton(
       onPressed: () {
         BlocProvider.of<NewIdBloc>(context).add(AddAlias(aliasController.text));
-        Navigator.pushReplacementNamed(context, MapatonTabsPage.routeName);
+        
+        final prefs = UserPreferences();
+        final userId = prefs.getMapper!.id;
+        final ids = prefs.getOnboardingTextShownIds;
+        if (ids != null) {
+          final list = ids.split(',');
+          if (list.contains(userId.toString())) {
+            Navigator.pushReplacementNamed(context, MapatonTabsPage.routeName);
+          } else {
+            Navigator.pushReplacementNamed(context, MapatonTextOnboardingPage.routeName, arguments: true);
+          }
+        } else {
+          Navigator.pushReplacementNamed(context, MapatonTextOnboardingPage.routeName, arguments: true);
+        }
       },
       fullWidth: true,
       label: 'Continuar',

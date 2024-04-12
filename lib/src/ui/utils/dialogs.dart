@@ -34,29 +34,48 @@ void showConfirmationDialog(BuildContext context, {
   await showDialog(
     context: context,
     builder: (context) {
-      return AlertDialog(
-        title: title != null ? Text(title) : null,
-        content: Text(text, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            style: TextButton.styleFrom(
-              foregroundColor: myTheme.colorScheme.primary,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(color: Colors.black),
-                borderRadius: BorderRadius.circular(12)
+      return Dialog(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+          child: Wrap(
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  text,
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(height: 48.0),
+              Row(
+                children: [
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: TextButton.styleFrom(
+                      foregroundColor: myTheme.colorScheme.primary,
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.circular(12)
+                      )
+                    ),
+                    child: const Text('No', style: TextStyle(color: Constants.labelTextColor, fontSize: 18)),
+                  ),
+                  const SizedBox(width: 16.0),
+                  MyPrimaryElevatedButton(
+                    label: acceptButtonText,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      acceptCallback();
+                    },
+                  ),
+                  const Spacer(),
+                ],
               )
-            ),
-            child: const Text('No', style: TextStyle(color: Constants.labelTextColor, fontSize: 18)),
+            ],
           ),
-          MyPrimaryElevatedButton(
-            label: acceptButtonText,
-            onPressed: () {
-              Navigator.of(context).pop();
-              acceptCallback();
-            },
-          ),
-        ],
+        ),
       );
     }
   );

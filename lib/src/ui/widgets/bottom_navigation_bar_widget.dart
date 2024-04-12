@@ -24,11 +24,15 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.map),
-          label: 'Mapa'
+          label: 'Herramientas'
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_circle_outlined),
           label: 'Mi sesión'
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.account_circle_outlined),
+          label: 'Sobre EcoZonas'
         ),
       ],
       currentIndex: _currentIndex,

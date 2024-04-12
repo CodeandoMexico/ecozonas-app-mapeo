@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:collection/collection.dart';
 
 import '../../../data/repositories/db/activity/activity_repository_impl.dart';
 import '../../../domain/models/category_option_model.dart';
@@ -52,9 +53,9 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   final useCase = ActivityUseCase(ActivityRepositoryImpl());
 
   String _searchText = '';
-  String _selectedCategory = 'Todas las dimensiones';
+  String _selectedCategory = 'Selecciona una dimensión';
   final _options = [
-    CategoryOptionModel(text: 'Todas las dimensiones'),
+    CategoryOptionModel(text: 'Selecciona una dimensión'),
     CategoryOptionModel(text: 'Entorno urbano', code: 'ENTORNO_URBANO'),
     CategoryOptionModel(text: 'Calidad medioambiental', code: 'CALIDAD_MEDIOAMBIENTAL'),
     CategoryOptionModel(text: 'Bienestar socioeconómico', code: 'BIENESTAR_SOCIOECONOMICO'),
@@ -64,8 +65,6 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<MapatonBloc>();
-
-    final pageController = PageController(initialPage: 0);
 
     return DraggableScrollableSheet(
       controller: widget.draggableController,
@@ -92,14 +91,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
                 ),
               ),
               SliverFillRemaining(
-                child: PageView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: pageController,
-                  children: [
-                    _page1(context, bloc, pageController),
-                    // _page2(pageController),
-                  ],
-                ),
+                child: _page1(context, bloc),
               ),
             ],
           ),
@@ -149,19 +141,33 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
     );
   }
 
-  Widget _page1(BuildContext context, MapatonBloc bloc, PageController pageController) {
+  Widget _page1(BuildContext context, MapatonBloc bloc) {
+    widget._filteredActivities.sort((a, b) {
+      return a.title.compareTo(b.title);
+    });
+
+    widget._filteredActivities.sort((a, b) {
+      return a.category.code.compareTo(b.category.code);
+    });
+
     widget._filteredActivities.sort((a, b) {
       final aInt = a.isPriority ? 1 : 0;
       final bInt = b.isPriority ? 1 : 0;
 
       return bInt.compareTo(aInt);
     });
-    final c = widget._activities.firstWhere((element) => element.category.code == 'OTRA');
-    c.color = c.category.color;
-    c.color = c.category.color;
-    c.borderColor = c.category.borderColor;
-    c.icon = c.category.icon;
-    c.category.description = c.category.name;
+    
+    Activity? c = widget._activities.firstWhereOrNull((element) => element.category.code == 'OTRA');
+    if (c != null) {
+      c.color = c.category.color;
+      c.color = c.category.color;
+      c.borderColor = c.category.borderColor;
+      c.icon = c.category.icon;
+      c.category.description = c.category.name;
+    }
+
+    final withPriority = widget._filteredActivities.where((e) => e.isPriority == true);
+    bool showPriorityLabel = withPriority.isNotEmpty;
 
     return StreamBuilder(
       stream: bloc.activities,
@@ -174,7 +180,9 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
               Expanded(
                 child: ListView(
                   children: [
-                    _priorityLabel(),
+                    if (showPriorityLabel) ...[
+                      _priorityLabel()
+                    ],
                     ...widget._filteredActivities.where((element) {
                       return element.category.code != 'OTRA';
                     }).map((e) {
@@ -200,7 +208,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
                         },
                       );
                     }).toList(),
-                    ActivityItem(
+                    if (c != null) ActivityItem(
                       activity: c,
                       callback: () async {
                         await _goToFormPage(c, context);
@@ -265,6 +273,9 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
             return _matchCategory(element) && _matchText(element);
           }
         }).toList();
+        widget._filteredActivities.sort((a, b) {
+          return a.title.compareTo(b.title);
+        });
       } else {
         if (_searchText.isEmpty) {
           widget._filteredActivities = widget._activities;

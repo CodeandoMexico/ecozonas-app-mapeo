@@ -14,27 +14,32 @@ class MyModalBottomSheet extends StatelessWidget {
     return Wrap(
       children: [
         titleText != null ? ListTile(
-          title: Text(
-            titleText!,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+          title: Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Text(
+              titleText!,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+            ),
           ),
         ) : Container(margin: const EdgeInsets.only(top: 12.0)),
         ...options.map((e) {
           return ListTile(
-            onTap: () {
-              Navigator.pop(context);
-              textController.text = e;
-              callback(e);
-            },
+            onTap: () => _onTap(context, e),
             leading: Radio(
               value: false,
               groupValue: 'options',
-              onChanged: (value) {}
+              onChanged: (value) => _onTap(context, e)
             ),
             title: Text(e, style: const TextStyle(fontSize: 18)),
           );
         }).toList(),
       ],
     );
+  }
+
+  void _onTap(BuildContext context, String e) {
+    Navigator.pop(context);
+    textController.text = e;
+    callback(e);
   }
 }

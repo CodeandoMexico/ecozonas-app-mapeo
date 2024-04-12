@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../data/preferences/user_preferences.dart';
 import '../../../../data/repositories/preferences/preferences_repository_impl.dart';
 import '../../../../domain/models/db/mapper_db_model.dart';
 import '../../../../domain/models/mapaton_post_model.dart';
 import '../../../../domain/use_cases/preferences_use_case.dart';
 import '../../../utils/constants.dart';
 import '../../manage_sessions_module/manage_sessions_page.dart';
-import '../../mapaton_list_module/tabs_container/mapaton_tabs_page.dart';
+import '../../mapaton_main_module/mapaton_main_page.dart';
+import '../../mapaton_map_module/mapaton_text_onboarding_page.dart';
 import 'bloc/bloc.dart';
 
 class ContinueSessionContent extends StatelessWidget {
@@ -102,7 +104,6 @@ class ContinueSessionContent extends StatelessWidget {
         )
       ),
       onPressed: () async {
-        // await _manageSessions(context);
         await _push(context, const ManageSessionsPage());
       },
       child: const Text('Administrar sesiones', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500))
@@ -124,28 +125,29 @@ class ContinueSessionContent extends StatelessWidget {
       )
     ));
 
-    // Navigator.pushNamed(context, MapatonTabsPage.routeName);
-    _push(context, const MapatonTabsPage());
+    final prefs = UserPreferences();
+    final userId = prefs.getMapper!.id;
+    final ids = prefs.getOnboardingTextShownIds;
+    if (ids != null) {
+      final list = ids.split(',');
+      if (list.contains(userId.toString())) {
+        _push(context, const MapatonMainPage());
+      } else {
+        _push(context, const MapatonTextOnboardingPage(), showContinueButton: true);
+      }
+    } else {
+      _push(context, const MapatonTextOnboardingPage(), showContinueButton: true);
+    }
   }
 
-  // Future<void> _manageSessions(BuildContext context) async {
-  //   final update = await Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => const ManageSessionsPage()
-  //     )
-  //   ) as bool;
-    
-  //   if (update && context.mounted) {
-  //     BlocProvider.of<ContinueSessionBloc>(context).add(GetSessions());
-  //   }
-  // }
-
-  Future<void> _push(BuildContext context, Widget page) async {
+  Future<void> _push(BuildContext context, Widget page, {bool? showContinueButton}) async {
     final update = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => page
+        builder: (context) => page,
+        settings: RouteSettings(
+          arguments: showContinueButton
+        )
       )
     ) as bool?;
     

@@ -22,6 +22,7 @@ class PictureBlockWidget extends StatefulWidget {
 
 class _PictureBlockWidgetState extends State<PictureBlockWidget> {
   String? _imagePath;
+  String _buttonText = 'Tomar foto';
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +37,10 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
           ),
           Column(
             children: [
-              _image(),
-              const SizedBox(height: 16.0),
+              if (_imagePath != null) ...[
+                _image(),
+                const SizedBox(height: 16.0),
+              ],
               _takePictureButton()
             ],
           )
@@ -53,7 +56,7 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
     return ElevatedButton(
       onPressed: () => _getImage(),
       style: MyButtonStyles.secondaryButton,
-      child: const Text('Tomar foto', style: TextStyle(color: Constants.whiteLabelTextColor))
+      child: Text(_buttonText, style: const TextStyle(color: Constants.whiteLabelTextColor))
     );
   }
 
@@ -82,7 +85,10 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
           borderRadius: BorderRadius.circular(12.0)
         ),
         child: IconButton(
-          onPressed: () => setState(() { _imagePath = null; }),
+          onPressed: () => setState(() {
+            _imagePath = null;
+            _buttonText = 'Tomar foto';
+          }),
           icon: const Icon(Icons.delete_outline, size: 30),
         ),
       ),
@@ -96,7 +102,10 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
     var picker = ImagePicker();
     XFile? image = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
     if (image != null) {
-      setState(() { _imagePath = image.path; });
+      setState(() { 
+        _imagePath = image.path;
+        _buttonText = 'Tomar otra foto';
+      });
       widget.callback(_imagePath!);
     }
   }

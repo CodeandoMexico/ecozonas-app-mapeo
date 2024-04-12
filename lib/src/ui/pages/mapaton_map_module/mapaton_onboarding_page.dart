@@ -62,15 +62,6 @@ class MapatonOnboardingPage extends StatelessWidget {
    * WIDGETS
    */
   Widget _buttons(BuildContext context, MapatonModel mapaton) {
-    // return Container(
-    //   margin: const EdgeInsets.all(Constants.padding),
-    //   child: MyDoubleButtonRow(
-    //     cancelText: 'Cancelar descarga',
-    //     cancelCallback: () => Navigator.pop(context),
-    //     acceptText: 'Empezar mapeo',
-    //     acceptCallback: () => _continue(context, mapaton),
-    //   ),
-    // );
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: MyPrimaryElevatedButton(
@@ -106,7 +97,20 @@ class MapatonOnboardingPage extends StatelessWidget {
     }
     
     if (context.mounted) {
-      Navigator.pushNamed(context, MapatonMainPage.routeName, arguments: mapaton);
+      final prefs = UserPreferences();
+      final userId = prefs.getMapper!.id;
+      final ids = prefs.getOnboardingTextShownIds;
+      if (ids != null) {
+        final list = ids.split(',');
+        list.add(userId.toString());
+        prefs.setOnboardingTextShownIds = list.join(',');
+      } else {
+        final l = [];
+        l.add(userId);
+        prefs.setOnboardingTextShownIds = l.join(',');
+      }
+      
+      Navigator.pushNamed(context, MapatonMainPage.routeName);
     }
   }
 }

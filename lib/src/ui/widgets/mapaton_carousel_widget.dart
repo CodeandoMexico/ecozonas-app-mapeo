@@ -81,8 +81,6 @@ class _MapatonCarouselWidgetState extends State<MapatonCarouselWidget> {
       children: [
         _header(context, category),
         const SizedBox(height: Constants.paddingXLarge),
-        _sectionTitle(category.name),
-        const SizedBox(height: Constants.paddingXLarge),
         _details(category.description)
       ],
     );
@@ -97,14 +95,7 @@ class _MapatonCarouselWidgetState extends State<MapatonCarouselWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const Text(
-            'Dimensiones evaluadas durante el mapeo',
-            style: TextStyle(
-              fontSize: 15,
-              color: Color(0xFF29496E),
-              fontWeight: FontWeight.bold
-            )
-          ),
+          _sectionTitle('Dimensión ${category.name}'),
           utils.getCategoryIcon(
             code: category.code,
             size: 120,
@@ -120,7 +111,8 @@ class _MapatonCarouselWidgetState extends State<MapatonCarouselWidget> {
       title,
       style: const TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 25,
+        // fontSize: 25,
+        fontSize: 18,
         color: Color(0xFF29496E))
     );
   }

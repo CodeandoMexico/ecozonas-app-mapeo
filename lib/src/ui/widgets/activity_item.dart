@@ -13,35 +13,38 @@ class ActivityItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: activity.color!.toColor(),
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(color: activity.borderColor!.toColor(), width: 2)
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  height: 92,
-                  width: 92,
-                  padding: const EdgeInsets.all(20.0),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white
+    return GestureDetector(
+      onTap: () => callback!(),
+      child: Card(
+        color: activity.color!.toColor(),
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(color: activity.borderColor!.toColor(), width: 2)
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Container(
+                    height: 92,
+                    width: 92,
+                    padding: const EdgeInsets.all(20.0),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white
+                    ),
+                    child: utils.getCategoryIcon(code: activity.category.code, size: 60)
                   ),
-                  child: utils.getCategoryIcon(code: activity.category.code, size: 60)
-                ),
-                const SizedBox(width: 16.0),
-                _activityDetails()
-              ],
-            ),
-            _activityButton(activity)
-          ],
+                  const SizedBox(width: 16.0),
+                  _activityDetails()
+                ],
+              ),
+              _activityButton(activity)
+            ],
+          ),
         ),
       ),
     );

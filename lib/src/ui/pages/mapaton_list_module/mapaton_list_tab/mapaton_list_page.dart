@@ -6,7 +6,7 @@ import '../../../utils/constants.dart';
 import '../../../widgets/my_primary_elevated_button.dart';
 import '../../../widgets/my_text_form_field.dart';
 import '../../../widgets/no_data_widget.dart';
-import '../../mapaton_map_module/mapaton_onboarding_page.dart';
+import '../../mapaton_map_module/mapaton_map_page.dart';
 import '../mapaton_survey_provider.dart';
 
 class MapatonListPage extends StatefulWidget {
@@ -90,7 +90,7 @@ class _MapatonListPageState extends State<MapatonListPage> {
                   Text(mapaton.locationText),
                   MyPrimaryElevatedButton(
                     label: 'Mapear',
-                    onPressed: () => Navigator.pushNamed(context, MapatonOnboardingPage.routeName, arguments: mapaton)
+                    onPressed: () => Navigator.pushNamed(context, MapatonMapPage.routeName, arguments: mapaton)
                   )
                 ],
               ),

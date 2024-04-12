@@ -11,6 +11,7 @@ import '../../../../domain/models/mapaton_model.dart';
 import '../../../../domain/models/survey_model.dart';
 import '../../../../domain/use_cases/apis/mapaton_api_use_case.dart';
 import '../../../../domain/use_cases/db/mapaton_survey_use_case.dart';
+import '../../../bloc/bottom_navigation_bar_bloc.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/dialogs.dart' as dialogs;
 import '../../../utils/utils.dart' as utils;
@@ -18,7 +19,7 @@ import '../mapaton_survey_provider.dart';
 import '../mapaton_list_tab/mapaton_list_page.dart';
 import '../survey_list_tab/survey_list_page.dart';
 
-class MapatonTabsPage extends StatelessWidget {
+class MapatonTabsPage extends StatelessWidget implements BottomNavigationBarState {
   static const routeName = 'mapatonList';
 
   const MapatonTabsPage({super.key});
@@ -55,8 +56,8 @@ class MapatonTabsPage extends StatelessWidget {
         indicatorColor: Constants.darkBlueColor,
         indicatorWeight: 3,
         tabs: [
-          _tab('Mapeo'),
-          _tab('Encuesta')
+          _tab('Encuesta'),
+          _tab('Mapeo')
         ],
       ),
       elevation: 0,
@@ -78,8 +79,8 @@ class MapatonTabsPage extends StatelessWidget {
   Widget _body() {
     return const TabBarView(
       children: [
-        MapatonListPage(),
-        SurveyListPage()
+        SurveyListPage(),
+        MapatonListPage()
       ],
     );
   }

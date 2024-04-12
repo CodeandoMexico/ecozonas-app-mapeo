@@ -48,22 +48,6 @@ class _RadioBlockWidgetState extends State<RadioBlockWidget> {
               runAlignment: WrapAlignment.center,
               alignment: WrapAlignment.center,
               children: widget.choices.asMap().entries.map((e) {
-                // return RadioListTile(
-                //   value: e.key,
-                //   title: Text(e.value.label),
-                //   groupValue: selectedRadioTile,
-                //   contentPadding: const EdgeInsets.only(left: 6.0),
-                //   visualDensity: VisualDensity.compact,
-                //   onChanged: (value) {
-                //     selectedValue = e.value.label;
-                //     setState(() {
-                //       setSelectedRadioTile(value!);
-                //       showError = false;
-                //     });
-                //     widget.callback(e.value.value);
-                //   },
-                // );
-
                 return GestureDetector(
                   onTap: () => _onChanged(e, e.key),
                   child: Row(

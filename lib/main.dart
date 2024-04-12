@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -13,14 +14,15 @@ void main() async {
   
   await UserPreferences.initPrefs();
 
-  runApp(MultiBlocProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => MapatonSurveyProvider()),
-      BlocProvider(create: (context) => MapatonBloc()),
-    ],
-    child: const MyApp())
-  );
-  // runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) {
+    return runApp(MultiBlocProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => MapatonSurveyProvider()),
+        BlocProvider(create: (context) => MapatonBloc()),
+      ],
+      child: const MyApp())
+    );
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -46,6 +48,7 @@ class MyApp extends StatelessWidget {
         UpdateMapPage.routeName: (_) => const UpdateMapPage(),
         MapatonMainPage.routeName: (_) => const MapatonMainPage(),
         ManageSessionsPage.routeName: (_) => const ManageSessionsPage(),
+        MapatonTextOnboardingPage.routeName: (_) => const MapatonTextOnboardingPage(),
       },
     );
   }

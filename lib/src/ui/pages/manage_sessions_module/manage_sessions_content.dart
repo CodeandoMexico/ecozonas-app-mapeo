@@ -106,7 +106,7 @@ class ManageSessionsContent extends StatelessWidget {
     dialogs.showConfirmationDialog(
       context,
       text: '¿Eliminar la sesión?',
-      acceptButtonText: 'Si',
+      acceptButtonText: 'Sí',
       acceptCallback: () {
         BlocProvider.of<ManageSessionsBloc>(context).add(DeleteSession(id));
       },
