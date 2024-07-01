@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../data/preferences/user_preferences.dart';
-import '../../../data/repositories/db/mapaton/mapaton_repository_impl.dart';
-import '../../../domain/models/db/mapaton_db_model.dart';
 import '../../../domain/models/mapaton_model.dart';
-import '../../../domain/use_cases/db/mapaton_use_case.dart';
 import '../../theme/theme.dart';
 import '../../utils/constants.dart';
 import '../../widgets/mapaton_carousel_widget.dart';
@@ -65,7 +63,7 @@ class MapatonOnboardingPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: MyPrimaryElevatedButton(
-        label: 'Empezar mapeo',
+        label: AppLocalizations.of(context)!.goToTools,
         fullWidth: true,
         onPressed: () => _continue(context, mapaton)
       ),
@@ -76,26 +74,6 @@ class MapatonOnboardingPage extends StatelessWidget {
    * METHODS
    */
   Future<void> _continue(BuildContext context, MapatonModel mapaton) async {
-    final prefs = UserPreferences();
-    final mapper = prefs.getMapper;
-
-    final useCase = MapatonUseCase(MapatonRepositoryImpl());
-    final m = await useCase.getMapatonsByUuidAndMapper(mapaton.uuid, mapper!.id.toString());
-    
-    if (m == null) {
-      final id = await useCase.addMapaton(MapatonDbModel(
-        uuid: mapaton.uuid,
-        dateTime: DateTime.now(),
-        mapperId: mapper.id,
-        mapperGender: mapper.sociodemographicData.gender,
-        mapperAge: mapper.sociodemographicData.ageRange,
-        mapperDisability: mapper.sociodemographicData.disability,
-      ));
-      prefs.setMapatonDbId = id;
-    } else {
-      prefs.setMapatonDbId = m.id;
-    }
-    
     if (context.mounted) {
       final prefs = UserPreferences();
       final userId = prefs.getMapper!.id;

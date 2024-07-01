@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../domain/models/mapaton_model.dart';
 import '../../bloc/bottom_navigation_bar_bloc.dart';
@@ -29,6 +30,7 @@ class MapatonTextOnboardingPage extends StatelessWidget implements BottomNavigat
           'assets/images/ecozonas_logo.png',
           height: 35,
         ),
+        hideBackButton: showContinueButton != true,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -42,48 +44,67 @@ class MapatonTextOnboardingPage extends StatelessWidget implements BottomNavigat
                     height: _height
                   ),
                   children: [
-                    const TextSpan(
-                      text: '''
-Las EcoZonas son un tipo de barrio que fomenta la colaboración y solidaridad, la sostenibilidad y la prosperidad.
 
-Esta aplicación te permitirá identificar los desafíos y oportunidades de tu barrio en cuatro dimensiones: Entorno urbano, Calidad ambiental, Bienestar socioeconómico y Riesgo de Desastres, a través de dos herramientas: una encuesta barrial y mapeo colaborativo.
+                    // ESPAÑOL
+                    // HECHO - "Las EcoZonas son barrios que promueven colaboración, sostenibilidad y prosperidad. Esta aplicación te ayudará a identificar los desafíos y oportunidades en tu barrio en cuatro dimensiones: entorno urbano, calidad ambiental, bienestar socioeconómico y riesgo de desastres.
+                    // HECHO - Realiza la encuesta barrial y el mapeo colaborativo para identificar estos desafíos. Los resultados generarán un reporte de tu barrio junto con una priorización de Soluciones Urbanas Sostenibles (SUS) de rápida implementación y bajo costo para tu comunidad. Podrás visualizar y descargar este reporte en la página  www.ecozonas.org, junto con otros recursos y detalles sobre las Soluciones Urbanas Sostenibles.
+                    // HECHO - Para un diagnóstico completo, sigue estos pasos:
+                    // HECHO - 1. Completa la encuesta y anima a otras personas a hacerlo.
+                    // HECHO - 2. Mapea los desafíos y oportunidades en tu barrio y envía la información.
+                    // HECHO - 3. Descarga el reporte con el diagnóstico y las soluciones en la página www.ecozonas.org
+                    
+                    // HECHO - Esta herramienta es parte del proyecto ""EcoZonas"", implementado por WRI México y el Instituto Wuppertal, apoyado por el Ministerio Federal de Economía y Protección del Clima Alemán y la Iniciativa Internacional del Clima (IKI)."
 
-Los resultados de este ejercicio generarán un reporte con los principales desafíos y oportunidades, así como opciones de Soluciones Urbanas Sostenibles (SUS) de rápida implementación y bajo costo. Por último, proporciona un plan de acción a mediano y largo plazo, para abordar los principales problemas. Puedes visualizar y descargar los resultados y el reporte en el tablero, en el que también encontrarás una biblioteca con varios recursos sobre cómo aplicar las SUS priorizadas para tu comunidad. Toda la información sobre la metodología de EcoZonas la encuentras aquí. 
+                    // INGLES
+                    // HECHO - EcoZones are neighborhoods that promote collaboration, sustainability, and prosperity. This app will help you identify the challenges and opportunities in your neighborhood across four dimensions: urban environment, environmental quality, socioeconomic well-being, and disaster risk.
+                    // HECHO - Complete the neighborhood survey and collaborative mapping to identify these challenges. The results will generate a report for your neighborhood, prioritizing Sustainable Urban Solutions (SUS) of short-term and low-cost implementation that can be applied in your community. You can view and download this report on the website: www.ecozonas.org, along with other resources and a catalogue of Sustainable Urban Solutions.
+                    // HECHO - For a complete assessment, follow these steps:
+                    // HECHO - 1. Complete the survey and encourage others to do it as well.
+                    // HECHO - 2. Map the challenges and opportunities in your neighborhood and submit the information.
+                    // HECHO - 3. Download the report with the diagnosis and solutions from the website www.ecozonas.org.
+                    //
+                    // HECHO - This tool is part of the "EcoZones" project, implemented by WRI Mexico and the Wuppertal Institute, supported by the German Federal Ministry for Economic Affairs and Climate Action and the International Climate Initiative (IKI).
 
-Puedes utilizar las herramientas por separado, pero para obtener un diagnóstico completo, te sugerimos que:\n\n'''
+
+                    TextSpan(
+                      text: '''${AppLocalizations.of(context)!.onboardingIntro1}
+
+${AppLocalizations.of(context)!.onboardingIntro2}
+
+${AppLocalizations.of(context)!.onboardingIntro3}\n\n'''
                     ),
                     _numberIndent(
                       1,
-                      'Completes la encuesta para identificar los principales desafíos y oportunidades en tu comunidad. Una vez que un número importante de personas vecinas de tu comunidad hayan respondido la encuesta, podrás descargar el reporte con el diagnóstico y posibles soluciones aquí.\n'
+                      '${AppLocalizations.of(context)!.onboarding1}\n'
                     ),
                     _numberIndent(
                       2,
-                      'Mapees los principales desafíos y oportunidades en tu barrio para saber donde están y poder solucionarlos.'
+                      AppLocalizations.of(context)!.onboarding2
                     ),
-                    _letterIndent(
-                      'a',
-                      'Selecciona el punto que quieres mapear. Puede ser un lugar (plaza, negocio, etc), un elemento (estacionamientos de bicicleta, paradas de buses) o un evento (riesgo de inundación, actividad deportiva). Si el elemento no existe, puedes incorporar tus sugerencias.'
-                    ),
-                    _letterIndent(
-                      'b',
-                      'Completa la información requerida. ¿Es seguro? ¿En qué estado se encuentra? ¿Cuáles son sus impactos? ¡Puedes agregar fotografías!'
-                    ),
-                    _letterIndent(
-                      'c',
-                      'Envía la información y continúa tu mapeo\n'
-                    ),
+                    // _letterIndent(
+                    //   'a',
+                    //   AppLocalizations.of(context)!.onboarding2a
+                    // ),
+                    // _letterIndent(
+                    //   'b',
+                    //   AppLocalizations.of(context)!.onboarding2b
+                    // ),
+                    // _letterIndent(
+                    //   'c',
+                    //   '${AppLocalizations.of(context)!.onboarding2b}\n'
+                    // ),
                     _numberIndent(
                       3,
-                      'Una vez completados los pasos anteriores, visualiza y descarga el reporte con el diagnóstico y las soluciones priorizadas aquí\n'
+                      '${AppLocalizations.of(context)!.onboarding3}\n'
                     ),
-                    const TextSpan(
-                      text: 'Sobre Ecozonas\n\n',
-                      style: TextStyle(
+                    TextSpan(
+                      text: '${AppLocalizations.of(context)!.aboutEcozonas}\n\n',
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       )
                     ),
-                    const TextSpan(
-                      text: 'El proyecto “EcoZonas: Una metodología para co-diseñar, escalar y replicar la acción climática inclusiva a nivel de barrio” es implementado por WRI México y el Instituto Wuppertal de Clima, Medio Ambiente y Energía, y fomentado por el Ministerio Federal de Economía y Protección del Clima Alemán y la Iniciativa Internacional del Clima IKI.'
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.onboardingOutro
                     )
                   ]
                 ),
@@ -91,7 +112,7 @@ Puedes utilizar las herramientas por separado, pero para obtener un diagnóstico
               if (showContinueButton == true) ...[
                 const SizedBox(height: 20.0),
                 MyPrimaryElevatedButton(
-                  label: 'Continuar',
+                  label: AppLocalizations.of(context)!.continueText,
                   fullWidth: true,
                   onPressed: () {
                     _goToMain(context);
@@ -152,36 +173,36 @@ Puedes utilizar las herramientas por separado, pero para obtener un diagnóstico
       categories: [
         Category(
           uuid: "644c2ebe-a82e-4c23-a111-7bdc6f95e09d",
-          name: "Entorno urbano",
+          name: AppLocalizations.of(context)!.urbanEnvironment,
           code: "ENTORNO_URBANO",
-          description: "Son los elementos que se encuentran en un barrio y que permiten que funcione, como espacios públicos (plazas, parques y jardines), el transporte público, calles en las que se pueda caminar o andar en bicicleta, las escuelas, centros de salud, comercios, y más. Un entorno urbano es adecuado cuando es seguro, todas las personas son bienvenidas y se cuida el medio ambiente.",
+          description: AppLocalizations.of(context)!.urbanEnvironmentText,
           color: "#deecfd",
           borderColor: "#6a94c6",
           icon: "building"
         ),
         Category(
           uuid: "3a06b95b-a571-43fa-af49-62e38e3719bc",
-          name: "Riesgo de desastres",
+          name: AppLocalizations.of(context)!.disasterRisk,
           code: "RIESGO_DESASTRES",
-          description: "Identifica los efectos negativos y los impactos sobre las personas, las viviendas y los negocios a los que se enfrenta un barrio en caso de fenómenos naturales y desastres, tales como inundaciones, olas de calor o incendios. Una comunidad que se prepara para estos riesgos puede protegerse y recuperarse de ellos más fácilmente.",
+          description: AppLocalizations.of(context)!.disasterRiskText,
           color: "#f8d8e0",
           borderColor: "#d46e87",
           icon: "snowflake"
         ),
         Category(
           uuid: "a657288c-35ac-453c-a3e1-e283ed664929",
-          name: "Calidad medioambiental",
+          name: AppLocalizations.of(context)!.environmentalQuality,
           code: "CALIDAD_MEDIOAMBIENTAL",
-          description: "Las características ambientales de un barrio incluyen las prácticas y situaciones que impactan en la salud de la población.  Por ejemplo, se refieren a la limpieza del aire o dell agua, cómo se maneja la basura o si hay lugares sucios o contaminados en el barrio.",
+          description: AppLocalizations.of(context)!.environmentalQualityText,
           color: "#d8e9d4",
           borderColor: "#4fa163",
           icon: "tree"
         ),
         Category(
           uuid: "d7dd49aa-d91d-4f46-8979-47cbbad56194",
-          name: "Bienestar Socioeconómico",
+          name: AppLocalizations.of(context)!.socioeconomicWellbeing,
           code: "BIENESTAR_SOCIOECONOMICO",
-          description: "El bienestar socioeconómico identifica las oportunidades para tener un trabajo, poder estudiar, saber lo que pasa y estar sanos. También incluye el que todas las personas puedan participar en actividades que les generen ingresos y en eventos que les hagan sentir parte de la comunidad.",
+          description: AppLocalizations.of(context)!.socioeconomicWellbeingText,
           color: "#fcf0db",
           borderColor: "#d2ad51",
           icon: "user"
@@ -189,8 +210,8 @@ Puedes utilizar las herramientas por separado, pero para obtener un diagnóstico
       ],
       activities: [],
       uuid: '',
-      title: 'Mapeo Libre',
-      locationText: 'Mapeo para cualquier ubicación.',
+      title: AppLocalizations.of(context)!.freeMapping,
+      locationText: AppLocalizations.of(context)!.mappingForAnyLocation,
       limitNorth: '',
       limitSouth: '',
       limitEast: '',

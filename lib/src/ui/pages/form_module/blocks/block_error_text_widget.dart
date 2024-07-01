@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../utils/constants.dart';
 
@@ -9,9 +10,9 @@ class BlockErrorTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return showError ? const Padding(
-      padding: EdgeInsets.only(bottom: 8.0),
-      child: Text('* Este campo es obligatorio', style: TextStyle(color: Constants.redColor)),
+    return showError ? Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Text('* ${AppLocalizations.of(context)!.required}', style: const TextStyle(color: Constants.redColor)),
     ) : Container();
   }
 }

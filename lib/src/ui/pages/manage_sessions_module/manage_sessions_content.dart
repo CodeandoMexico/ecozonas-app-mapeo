@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../domain/models/db/mapper_db_model.dart';
 import '../../utils/constants.dart';
@@ -20,12 +21,12 @@ class ManageSessionsContent extends StatelessWidget {
         return false;
       },
       child: Scaffold(
-        appBar: const MyAppBar(
-          title: Text('Administrar sesiones'),
+        appBar: MyAppBar(
+          title: Text(AppLocalizations.of(context)!.manageSessions),
         ),
         body: Column(
           children: [
-            _text(),
+            _text(context),
             _listView(bloc),
           ],
         ),
@@ -37,12 +38,12 @@ class ManageSessionsContent extends StatelessWidget {
   /*
    * WIDGETS
    */
-  Widget _text() {
-    return const Padding(
-      padding: EdgeInsets.all(Constants.padding),
+  Widget _text(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(Constants.padding),
       child: Text(
-        'Elimina las sesiones que no quieres que aparezcan en este dispositivo',
-        style: TextStyle(fontSize: 18),
+        AppLocalizations.of(context)!.deleteSessionsText,
+        style: const TextStyle(fontSize: 18),
         textAlign: TextAlign.center,
       ),
     );
@@ -105,8 +106,8 @@ class ManageSessionsContent extends StatelessWidget {
   void _deleteSession(BuildContext context, int id) {
     dialogs.showConfirmationDialog(
       context,
-      text: '¿Eliminar la sesión?',
-      acceptButtonText: 'Sí',
+      text: AppLocalizations.of(context)!.deleteSession,
+      acceptButtonText: AppLocalizations.of(context)!.yes,
       acceptCallback: () {
         BlocProvider.of<ManageSessionsBloc>(context).add(DeleteSession(id));
       },

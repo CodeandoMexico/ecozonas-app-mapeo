@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../styles/my_button_styles.dart';
 import '../../../utils/constants.dart';
@@ -21,8 +22,15 @@ class PictureBlockWidget extends StatefulWidget {
 }
 
 class _PictureBlockWidgetState extends State<PictureBlockWidget> {
-  String? _imagePath;
-  String _buttonText = 'Tomar foto';
+  late String? _imagePath;
+  late String _buttonText;
+
+  @override
+  void didChangeDependencies() {
+    _imagePath = null;
+    _buttonText = AppLocalizations.of(context)!.takePhoto;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {

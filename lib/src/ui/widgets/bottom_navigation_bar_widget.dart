@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../bloc/bottom_navigation_bar_bloc.dart';
 
@@ -21,18 +22,18 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       unselectedItemColor: Colors.grey,
       showUnselectedLabels: true,
       type: BottomNavigationBarType.fixed,
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.map),
-          label: 'Herramientas'
+          icon: const Icon(Icons.map),
+          label: AppLocalizations.of(context)!.tools
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle_outlined),
-          label: 'Mi sesión'
+          icon: const Icon(Icons.account_circle_outlined),
+          label: AppLocalizations.of(context)!.mySession
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle_outlined),
-          label: 'Sobre EcoZonas'
+          icon: const Icon(Icons.info_outline),
+          label: AppLocalizations.of(context)!.aboutEcozonas
         ),
       ],
       currentIndex: _currentIndex,

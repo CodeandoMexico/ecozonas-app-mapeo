@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../utils/constants.dart';
 import '../widgets/my_primary_elevated_button.dart';
@@ -30,15 +31,15 @@ class NewSessionConfirmDialog extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           runAlignment: WrapAlignment.center,
           children: [
-            const Text('¿Tus datos son correctos?', style: styleTitle),
+            Text(AppLocalizations.of(context)!.detailsCorrect, style: styleTitle),
             const SizedBox(height: Constants.padding),
-            const Text('Género', style: styleField),
+            Text(AppLocalizations.of(context)!.gender, style: styleField),
             Text(gender, style: styleBold),
             const SizedBox(height: Constants.padding),
-            const Text('Rango de edad', style: styleField),
+            Text(AppLocalizations.of(context)!.ageRange, style: styleField),
             Text(age, style: styleBold),
             const SizedBox(height: Constants.padding),
-            const Text('Discapacidad', style: styleField),
+            Text(AppLocalizations.of(context)!.disability, style: styleField),
             Text(disability, style: styleBold),
             const SizedBox(height: Constants.padding),
             _buttons(context)
@@ -58,7 +59,7 @@ class NewSessionConfirmDialog extends StatelessWidget {
           Expanded(
             child: MySecondaryElevatedButton(
               onPressed: () => Navigator.pop(context),
-              label: 'No',
+              label: AppLocalizations.of(context)!.no,
             ),
           ),
           const SizedBox(width: 16.0),
@@ -68,7 +69,7 @@ class NewSessionConfirmDialog extends StatelessWidget {
                 callback();
               },
               fullWidth: true,
-              label: 'Sí',
+              label: AppLocalizations.of(context)!.yes,
             ),
           ),
         ],

@@ -9,11 +9,14 @@ class MapatonMainContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<BottomNavigationBarBloc, BottomNavigationBarState>(
-        builder: (context, state) => state as Widget,
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: BlocBuilder<BottomNavigationBarBloc, BottomNavigationBarState>(
+          builder: (context, state) => state as Widget,
+        ),
+        bottomNavigationBar: const BottomNavigationBarWidget(),
       ),
-      bottomNavigationBar: const BottomNavigationBarWidget(),
     );
   }
 }

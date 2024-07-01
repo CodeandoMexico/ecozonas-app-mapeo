@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? title;
+  final bool hideBackButton;
 
-  const MyAppBar({super.key, this.title});
+  const MyAppBar({super.key, this.title, this.hideBackButton = false});
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +12,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: title,
       centerTitle: true,
       elevation: 0,
+      leading: hideBackButton ? Container() : null,
       iconTheme: const IconThemeData(
         color: Colors.black
       ),

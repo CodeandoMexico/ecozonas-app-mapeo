@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../domain/models/db/mapper_db_model.dart';
 import '../../utils/constants.dart';
@@ -22,7 +23,7 @@ class MySessionContent extends StatelessWidget {
     final bloc = context.read<MySessionBloc>();
 
     return Scaffold(
-      appBar: _appBar(),
+      appBar: _appBar(context),
       body: BlocListener<MySessionBloc, MySessionState>(
         listener: _states,
         child: SingleChildScrollView(
@@ -45,9 +46,10 @@ class MySessionContent extends StatelessWidget {
   /*
    * APPBAR
    */
-  MyAppBar _appBar() {
-    return const MyAppBar(
-      title: Text('Mi sesión'),
+  MyAppBar _appBar(BuildContext context) {
+    return MyAppBar(
+      title: Text(AppLocalizations.of(context)!.mySession),
+      hideBackButton: true,
     );
   }
 
@@ -69,7 +71,7 @@ class MySessionContent extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('ID de mapeo', style: style),
+                Text(AppLocalizations.of(context)!.mappingId, style: style),
                 const SizedBox(height: Constants.padding),
                 AliasTextFields(
                   id: mapper.mapperId,
@@ -81,13 +83,13 @@ class MySessionContent extends StatelessWidget {
                 const SizedBox(height: Constants.padding),
                 _copyButton(context, mapper.mapperId),
                 const SizedBox(height: Constants.paddingXLarge),
-                const Text('Tus datos', style: style),
+                Text(AppLocalizations.of(context)!.yourData, style: style),
                 const SizedBox(height: Constants.padding),
                 _genderDropdown(context, bloc, mapper.gender),
                 const SizedBox(height: Constants.paddingLarge),
-                _ageDropdown(bloc, mapper.age),
+                _ageDropdown(context, bloc, mapper.age),
                 const SizedBox(height: Constants.paddingLarge),
-                _disabilityDropdown(bloc, mapper.disability),
+                _disabilityDropdown(context, bloc, mapper.disability),
                 const SizedBox(height: Constants.paddingXLarge),
                 _saveButton(context, bloc, aliasController),
                 const SizedBox(height: Constants.padding),
@@ -105,15 +107,15 @@ class MySessionContent extends StatelessWidget {
   Widget _copyButton(BuildContext context, int id) {
     return MySecondaryElevatedButton(
       onPressed: () async => await _copyToClipboard(id, context),
-      label: 'Copiar',
+      label: AppLocalizations.of(context)!.copy,
       iconData: Icons.copy,
     );
   }
 
   Widget _genderDropdown(BuildContext context, MySessionBloc bloc, String gender) {
     return MyBottomSheetTextField(
-      titleText: 'Género',
-      options: Constants.gender,
+      titleText: AppLocalizations.of(context)!.gender,
+      options: utils.getGenderOptions(context),
       initialValue: gender,
       callback: (value) {
         bloc.setMapper(bloc.mapperValue.copyWith(gender: value));
@@ -121,10 +123,10 @@ class MySessionContent extends StatelessWidget {
     );
   }
 
-  Widget _ageDropdown(MySessionBloc bloc, String age) {
+  Widget _ageDropdown(BuildContext context, MySessionBloc bloc, String age) {
     return MyBottomSheetTextField(
-      titleText: 'Rango de edad',
-      options: Constants.ageRange,
+      titleText: AppLocalizations.of(context)!.ageRange,
+      options: utils.getAgeRange(context),
       initialValue: age,
       callback: (value) {
         bloc.setMapper(bloc.mapperValue.copyWith(age: value));
@@ -132,10 +134,10 @@ class MySessionContent extends StatelessWidget {
     );
   }
 
-  Widget _disabilityDropdown(MySessionBloc bloc, String disability) {
+  Widget _disabilityDropdown(BuildContext context, MySessionBloc bloc, String disability) {
     return MyBottomSheetTextField(
-      titleText: 'Discapacidad',
-      options: Constants.disability,
+      titleText: AppLocalizations.of(context)!.disability,
+      options: utils.getDisiability(context),
       initialValue: disability,
       callback: (value) {
         bloc.setMapper(bloc.mapperValue.copyWith(disability: value));
@@ -145,7 +147,7 @@ class MySessionContent extends StatelessWidget {
 
   MyPrimaryElevatedButton _saveButton(BuildContext context, MySessionBloc bloc, TextEditingController controller) {
     return MyPrimaryElevatedButton(
-      label: 'Guardar',
+      label: AppLocalizations.of(context)!.save,
       onPressed: () {
         bloc.setMapper(bloc.mapperValue.copyWith(alias: controller.text));
         BlocProvider.of<MySessionBloc>(context).add(UpdateMapper());
@@ -165,9 +167,9 @@ class MySessionContent extends StatelessWidget {
         )
       ),
       onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-      child: const Text(
-        'Salir de la sesión',
-        style: TextStyle(
+      child: Text(
+        AppLocalizations.of(context)!.logout,
+        style: const TextStyle(
           color: Constants.redColor,
           fontWeight: FontWeight.w500,
           fontSize: 18
@@ -181,7 +183,7 @@ class MySessionContent extends StatelessWidget {
    */
   Future<void> _copyToClipboard(int id, BuildContext context) async {
     await Clipboard.setData(ClipboardData(text: id.toString())).then((value) {
-      utils.showSnackBar(context, 'ID copiado');
+      utils.showSnackBar(context, AppLocalizations.of(context)!.copiedId);
     });
   }
 }

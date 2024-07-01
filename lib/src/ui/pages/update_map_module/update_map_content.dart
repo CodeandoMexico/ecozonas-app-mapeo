@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../domain/models/db/mapaton_db_model.dart';
 import '../../widgets/my_app_bar.dart';
@@ -18,8 +19,8 @@ class UpdateMapContent extends StatelessWidget {
     final bloc = context.read<UpdateMapBloc>();
 
     return Scaffold(
-      appBar: const MyAppBar(
-        title: Text('Enviar datos'),
+      appBar: MyAppBar(
+        title: Text(AppLocalizations.of(context)!.sendData),
       ),
       body: _body(context, bloc),
       backgroundColor: Colors.white,
@@ -38,7 +39,7 @@ class UpdateMapContent extends StatelessWidget {
           Navigator.pop(context);
         }
         if (state is MapatonSent) {
-          utils.showSnackBarSuccess(context, 'Los objetos fueron enviados correctamente');
+          utils.showSnackBarSuccess(context, AppLocalizations.of(context)!.itemsSent);
           BlocProvider.of<UpdateMapBloc>(context).add(GetMapatonById());
         }
         if (state is ErrorSendingMapaton) {
@@ -56,17 +57,17 @@ class UpdateMapContent extends StatelessWidget {
         if (snapshot.hasData && snapshot.data != null) {
           final mapaton = snapshot.data!;
           final count = mapaton.activities != null ? mapaton.activities!.length : 0;
-          final s = count > 1 ? 's' : '';
+          final s = count != 1 ? 's' : '';
 
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: Column(
               children: [
-                Text('Hay $count objeto$s mapeado$s por enviar'),
+                Text(AppLocalizations.of(context)!.objectCount(count.toString(), s)),
                 const SizedBox(height: 8.0),
                 MyPrimaryElevatedButton(
                   onPressed: count != 0 ? () => _postMapaton(context, mapaton) : null,
-                  label: 'Enviar mapeos',
+                  label: AppLocalizations.of(context)!.sendMappings,
                   fullWidth: true,
                 ),
               ],
@@ -85,9 +86,8 @@ class UpdateMapContent extends StatelessWidget {
   Future<void> _postMapaton(BuildContext context, MapatonDbModel mapaton) async {
     dialogs.showConfirmationDialog(
       context,
-      // title: '¿Enviar los objetos ahora?',
-      text: '¿Enviar los objetos ahora?',
-      acceptButtonText: 'Enviar',
+      text: AppLocalizations.of(context)!.sendMappingsNow,
+      acceptButtonText: AppLocalizations.of(context)!.send,
       acceptCallback: () {
         BlocProvider.of<UpdateMapBloc>(context).add(SendMapaton(mapaton));
       }

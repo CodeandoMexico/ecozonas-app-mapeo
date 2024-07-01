@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../domain/models/mapaton_model.dart';
 import '../../ui/utils/color_extension.dart';
@@ -95,7 +95,7 @@ class _MapatonCarouselWidgetState extends State<MapatonCarouselWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _sectionTitle('Dimensión ${category.name}'),
+          _sectionTitle('${AppLocalizations.of(context)!.dimension} ${category.name}'),
           utils.getCategoryIcon(
             code: category.code,
             size: 120,
@@ -111,7 +111,6 @@ class _MapatonCarouselWidgetState extends State<MapatonCarouselWidget> {
       title,
       style: const TextStyle(
         fontWeight: FontWeight.bold,
-        // fontSize: 25,
         fontSize: 18,
         color: Color(0xFF29496E))
     );

@@ -1,8 +1,9 @@
-import 'package:ecozonas/src/ui/pages/login_module/tabs_container/bloc/login_tab_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../utils/constants.dart';
+import '../../login_module/tabs_container/bloc/login_tab_event.dart';
 import '../continue_session_tab/continue_session_page.dart';
 import '../new_session_tab/new_session_page.dart';
 import 'bloc/login_tab_bloc.dart';
@@ -30,21 +31,25 @@ class _LoginTabPageState extends State<LoginTabContent> {
       },
     );
 
-    _defaultTabs = [_tab('Nueva sesión')];
-
-    _allTabs = [
-      _tab('Nueva sesión'),
-      _tab('Continuar sesión')
-    ];
-
     _defaultPages = [_newSession];
 
     _allPages = [
-      _newSession,
-      const ContinueSessionPage()
+      const ContinueSessionPage(),
+      _newSession
     ];
 
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _defaultTabs = [_tab(AppLocalizations.of(context)!.newSession)];
+
+    _allTabs = [
+      _tab(AppLocalizations.of(context)!.continueSession),
+      _tab(AppLocalizations.of(context)!.newSession)
+    ];
+    super.didChangeDependencies();
   }
 
   @override

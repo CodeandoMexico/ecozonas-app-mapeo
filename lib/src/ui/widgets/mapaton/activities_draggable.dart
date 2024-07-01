@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../data/repositories/db/activity/activity_repository_impl.dart';
 import '../../../domain/models/category_option_model.dart';
@@ -49,18 +50,25 @@ class ActivitiesDraggable extends StatefulWidget {
 }
 
 class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
+  late String _selectedCategory;
+  late List<CategoryOptionModel> _options;
   final _controller = TextEditingController();
   final useCase = ActivityUseCase(ActivityRepositoryImpl());
 
   String _searchText = '';
-  String _selectedCategory = 'Selecciona una dimensión';
-  final _options = [
-    CategoryOptionModel(text: 'Selecciona una dimensión'),
-    CategoryOptionModel(text: 'Entorno urbano', code: 'ENTORNO_URBANO'),
-    CategoryOptionModel(text: 'Calidad medioambiental', code: 'CALIDAD_MEDIOAMBIENTAL'),
-    CategoryOptionModel(text: 'Bienestar socioeconómico', code: 'BIENESTAR_SOCIOECONOMICO'),
-    CategoryOptionModel(text: 'Riesgo de desastres', code: 'RIESGO_DESASTRES'),
-  ];
+
+  @override
+  void didChangeDependencies() {
+    _selectedCategory = AppLocalizations.of(context)!.searchByDimension;
+    _options = [
+      CategoryOptionModel(text: AppLocalizations.of(context)!.searchByDimension),
+      CategoryOptionModel(text: AppLocalizations.of(context)!.urbanEnvironment, code: 'ENTORNO_URBANO'),
+      CategoryOptionModel(text: AppLocalizations.of(context)!.environmentalQuality, code: 'CALIDAD_MEDIOAMBIENTAL'),
+      CategoryOptionModel(text: AppLocalizations.of(context)!.socioeconomicWellbeing, code: 'BIENESTAR_SOCIOECONOMICO'),
+      CategoryOptionModel(text: AppLocalizations.of(context)!.disasterRisk, code: 'RIESGO_DESASTRES'),
+    ];
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +114,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   Widget _searchTextField() {
     return MyTextFormField(
       controller: _controller,
-      hintText: 'Buscar...',
+      hintText: '${AppLocalizations.of(context)!.search}...',
       suffixIconData: Icons.search,
       onChanged: (value) => _search(value),
     );

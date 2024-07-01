@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../data/preferences/user_preferences.dart';
 import '../../../../data/repositories/preferences/preferences_repository_impl.dart';
@@ -23,7 +24,7 @@ class ContinueSessionContent extends StatelessWidget {
       padding: const EdgeInsets.all(Constants.padding),
       child: Column(
         children: [
-          _text(),
+          _text(context),
           const SizedBox(height: Constants.paddingLarge),
           _sessionsList(bloc),
           _elevatedButton(context),
@@ -35,10 +36,10 @@ class ContinueSessionContent extends StatelessWidget {
   /*
    * WIDGETS
    */
-  Widget _text() {
-    return const Text(
-      'Selecciona una de las sesiones registradas en este dispositivo',
-      style: TextStyle(fontSize: 18, color: Constants.labelTextColor),
+  Widget _text(BuildContext context) {
+    return Text(
+      AppLocalizations.of(context)!.selectSession,
+      style: const TextStyle(fontSize: 18, color: Constants.labelTextColor),
       textAlign: TextAlign.center,
     );
   }
@@ -106,7 +107,7 @@ class ContinueSessionContent extends StatelessWidget {
       onPressed: () async {
         await _push(context, const ManageSessionsPage());
       },
-      child: const Text('Administrar sesiones', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500))
+      child: Text(AppLocalizations.of(context)!.manageSessions, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black))
     );
   }
 

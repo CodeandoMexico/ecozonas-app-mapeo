@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../theme/theme.dart';
 import '../widgets/my_modal_bottom_sheet.dart';
@@ -9,16 +10,19 @@ void showLoadingDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) {
-      return const AlertDialog(
-        content: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(
-              color: Colors.black,
-            ),
-            SizedBox(width: 25),
-            Text('Por favor espere...')
-          ],
+      return AlertDialog(
+        content: Padding(
+          padding: const EdgeInsets.only(top: Constants.paddingSmall),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(
+                color: Colors.black,
+              ),
+              const SizedBox(width: 25),
+              Text('${AppLocalizations.of(context)!.pleaseWait}...')
+            ],
+          ),
         ),
       );
     },
@@ -60,7 +64,7 @@ void showConfirmationDialog(BuildContext context, {
                         borderRadius: BorderRadius.circular(12)
                       )
                     ),
-                    child: const Text('No', style: TextStyle(color: Constants.labelTextColor, fontSize: 18)),
+                    child: Text(AppLocalizations.of(context)!.no, style: const TextStyle(color: Constants.labelTextColor, fontSize: 18)),
                   ),
                   const SizedBox(width: 16.0),
                   MyPrimaryElevatedButton(

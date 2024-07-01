@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:location/location.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../main.dart';
 import '../../../data/preferences/user_preferences.dart';
@@ -162,9 +163,9 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
             borderRadius: BorderRadius.all(Radius.circular(Constants.borderRadiusMedium))
           )
         ),
-        child: const Text(
-          'Enviar datos',
-          style: TextStyle(fontSize: 12)
+        child: Text(
+          AppLocalizations.of(context)!.sendData,
+          style: const TextStyle(fontSize: 12, color: Colors.black)
         )
       ),
     );
@@ -237,7 +238,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
       right: 16.0,
       bottom: 16.0,
       child: MyPrimaryElevatedButton(
-        label: 'Mapear aquí',
+        label: AppLocalizations.of(context)!.mapHere,
         fullWidth: true,
         onPressed: () => _activitiesDraggable.animateDraggable(false),
       ),
@@ -507,8 +508,8 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
     if (context.mounted) {
       showConfirmationDialog(
         context,
-        text: '¿Descargar región?',
-        acceptButtonText: 'Descargar',
+        text: AppLocalizations.of(context)!.downloadRegion,
+        acceptButtonText: AppLocalizations.of(context)!.download,
         acceptCallback: () {
           BlocProvider.of<MapatonBloc>(context).add(DownloadRegion(name: mapaton.uuid, bounds: bounds));
         }

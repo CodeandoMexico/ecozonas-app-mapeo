@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../dialogs/new_session_confirm_dialog.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/dialogs.dart' as dialogs;
+import '../../../utils/utils.dart' as utils;
 import '../../../widgets/my_bottom_sheet_text_field.dart';
 import '../../../widgets/my_primary_elevated_button.dart';
 import 'bloc/bloc.dart';
@@ -54,9 +56,9 @@ class _NewSessionContentState extends State<NewSessionContent> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'Completa los siguientes datos para crear una nueva sesión',
-            style: TextStyle(fontSize: 18),
+          Text(
+            AppLocalizations.of(context)!.completeData,
+            style: const TextStyle(fontSize: 18),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: Constants.paddingXLarge),
@@ -74,8 +76,8 @@ class _NewSessionContentState extends State<NewSessionContent> {
 
   Widget _genderDropdown(BuildContext context, NewSessionBloc bloc) {
     return MyBottomSheetTextField(
-      titleText: 'Género',
-      options: Constants.gender,
+      titleText: AppLocalizations.of(context)!.gender,
+      options: utils.getGenderOptions(context),
       callback: (value) {
         bloc.setGender(value);
         _selectedGender = value;
@@ -85,8 +87,8 @@ class _NewSessionContentState extends State<NewSessionContent> {
 
   Widget _ageDropdown(NewSessionBloc bloc) {
     return MyBottomSheetTextField(
-      titleText: 'Rango de edad',
-      options: Constants.ageRange,
+      titleText: AppLocalizations.of(context)!.ageRange,
+      options: utils.getAgeRange(context),
       callback: (value) {
         bloc.setAge(value);
         _selectedAge = value;
@@ -96,8 +98,8 @@ class _NewSessionContentState extends State<NewSessionContent> {
 
   Widget _disabilityDropdown(NewSessionBloc bloc) {
     return MyBottomSheetTextField(
-      titleText: 'Discapacidad',
-      options: Constants.disability,
+      titleText: AppLocalizations.of(context)!.disability,
+      options: utils.getDisiability(context),
       callback: (value) {
         bloc.setDisability(value);
         _selectedDisability = value;
@@ -115,7 +117,7 @@ class _NewSessionContentState extends State<NewSessionContent> {
             () => _showConfirmDialog(context) :
             null,
             fullWidth: true,
-          label: 'Continuar',
+          label: AppLocalizations.of(context)!.continueText,
         );
       },
     );

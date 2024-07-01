@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../theme/theme.dart';
 import '../utils/constants.dart';
@@ -21,7 +22,7 @@ class AliasTextFields extends StatelessWidget {
       ),
       child: Row(
         children: [
-          _aliasTextField(aliasController),
+          _aliasTextField(context, aliasController),
           _divider(),
           _idText(id),
         ],
@@ -32,7 +33,7 @@ class AliasTextFields extends StatelessWidget {
   /*
    * WIDGETS
    */
-  Widget _aliasTextField(TextEditingController aliasController) {
+  Widget _aliasTextField(BuildContext context, TextEditingController aliasController) {
     return Flexible(
       flex: 2,
       child: Padding(
@@ -41,10 +42,10 @@ class AliasTextFields extends StatelessWidget {
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           controller: aliasController,
           cursorColor: Colors.black,
-          decoration: const InputDecoration(
-            hintText: 'Escribe tu nombre',
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!.writeYourName,
             border: InputBorder.none,
-            suffixIcon: Icon(Icons.edit_outlined, color: Colors.black)
+            suffixIcon: const Icon(Icons.edit_outlined, color: Colors.black)
           ),
           onChanged: (value) {
             if (callback != null) {

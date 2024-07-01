@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../domain/models/mapaton_model.dart';
 import '../../ui/utils/color_extension.dart';
@@ -39,10 +40,10 @@ class ActivityItem extends StatelessWidget {
                     child: utils.getCategoryIcon(code: activity.category.code, size: 60)
                   ),
                   const SizedBox(width: 16.0),
-                  _activityDetails()
+                  _activityDetails(context)
                 ],
               ),
-              _activityButton(activity)
+              _activityButton(context, activity)
             ],
           ),
         ),
@@ -50,32 +51,32 @@ class ActivityItem extends StatelessWidget {
     );
   }
 
-  Widget _activityDetails() {
+  Widget _activityDetails(BuildContext context) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            activity.title,
+            utils.showEnglish(context) && activity.titleEn != null ? activity.titleEn! : activity.title,
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: Constants.paddingSmall),
           Text(
-            activity.description,
+            utils.showEnglish(context) && activity.descriptionEn != null ? activity.descriptionEn! : activity.description,
             style: const TextStyle(fontSize: 12)
           ),
           const SizedBox(height: Constants.paddingSmall),
           activity.counter != null ?
-            Text('Mapeos realizados: ${activity.counter}') :
+            Text('${AppLocalizations.of(context)!.mappingFinished} ${activity.counter}') :
             Container()
         ],
       ),
     );
   }
 
-  Widget _activityButton(Activity activity) {
+  Widget _activityButton(BuildContext context, Activity activity) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -85,7 +86,7 @@ class ActivityItem extends StatelessWidget {
               activity.isPriority ? Image.asset('assets/icons/ic_asterisk_50.png', width: 18) : Container(),
               activity.isPriority ? Image.asset('assets/icons/ic_asterisk_50.png', width: 18) : Container(),
               SizedBox(width: activity.isPriority ? 8.0 : 0),
-              Flexible(child: Text(activity.category.description, style: const TextStyle(fontSize: 10)))
+              Flexible(child: Text(utils.showEnglish(context) && activity.category.descriptionEn != null ? activity.category.descriptionEn! : activity.category.description, style: const TextStyle(fontSize: 10)))
             ],
           ),
         ),
@@ -97,7 +98,7 @@ class ActivityItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(12)
             )
           ),
-          child: const Text('Mapear', style: TextStyle(color: Colors.white, fontSize: 14))
+          child: Text(AppLocalizations.of(context)!.mapOut, style: const TextStyle(color: Colors.white, fontSize: 14))
         )
       ],
     );

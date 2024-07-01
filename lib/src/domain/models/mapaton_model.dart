@@ -9,6 +9,7 @@ class MapatonModel {
     List<Category> categories;
     String uuid;
     String title;
+    String? titleEn;
     String locationText;
     String limitNorth;
     String limitEast;
@@ -23,6 +24,7 @@ class MapatonModel {
         required this.categories,
         required this.uuid,
         required this.title,
+        this.titleEn,
         required this.locationText,
         required this.limitNorth,
         required this.limitEast,
@@ -38,6 +40,7 @@ class MapatonModel {
         categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
         uuid: json["uuid"],
         title: json["title"],
+        titleEn: json["title_en"],
         locationText: json["location_text"],
         limitNorth: json["limit_north"],
         limitEast: json["limit_east"],
@@ -53,6 +56,7 @@ class MapatonModel {
         "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
         "uuid": uuid,
         "title": title,
+        "title_en": titleEn,
         "location_text": locationText,
         "limit_north": limitNorth,
         "limit_east": limitEast,
@@ -69,7 +73,9 @@ class Activity {
     Category category;
     String uuid;
     String title;
+    String? titleEn;
     String description;
+    String? descriptionEn;
     bool isPriority;
     String? mapatonUuid;
     String? mapatonTitle;
@@ -85,7 +91,9 @@ class Activity {
         required this.category,
         required this.uuid,
         required this.title,
+        this.titleEn,
         required this.description,
+        this.descriptionEn,
         required this.isPriority,
         required this.blocksJson,
     });
@@ -95,7 +103,9 @@ class Activity {
         category: Category.fromJson(json["category"]),
         uuid: json["uuid"],
         title: json["title"],
+        titleEn: json["title_en"],
         description: json["description"],
+        descriptionEn: json["description_en"],
         isPriority: json["is_priority"],
         blocksJson: json["blocks"].toString()
     );
@@ -105,7 +115,9 @@ class Activity {
         "category": category.toJson(),
         "uuid": uuid,
         "title": title,
+        "title_en": titleEn,
         "description": description,
+        "description_en": descriptionEn,
         "is_priority": isPriority,
     };
 }
@@ -122,7 +134,9 @@ class Block {
     String uuid;
     String blockType;
     String title;
+    String? titleEn;
     String description;
+    String? descriptionEn;
     bool isRequired;
     Options? options;
     dynamic value;
@@ -131,7 +145,9 @@ class Block {
         required this.uuid,
         required this.blockType,
         required this.title,
+        this.titleEn,
         required this.description,
+        this.descriptionEn,
         required this.isRequired,
         required this.options,
         this.value
@@ -141,7 +157,9 @@ class Block {
         uuid: json["uuid"],
         blockType: json["block_type"],
         title: json["title"],
+        titleEn: json["title_en"],
         description: json["description"],
+        descriptionEn: json["description_en"],
         isRequired: json["is_required"],
         options: json["options"] == null ? null : Options.fromJson(json["options"]),
         value: json["value"],
@@ -151,7 +169,9 @@ class Block {
         "uuid": uuid,
         "block_type": blockType,
         "title": title,
+        "title_en": titleEn,
         "description": description,
+        "description_en": descriptionEn,
         "is_required": isRequired,
         "options": options?.toJson(),
         "value": value,
@@ -201,6 +221,7 @@ class Category {
     String name;
     String code;
     String description;
+    String? descriptionEn;
     String color;
     String? borderColor;
     String icon;
@@ -210,6 +231,7 @@ class Category {
         required this.name,
         required this.code,
         required this.description,
+        this.descriptionEn,
         required this.color,
         this.borderColor,
         required this.icon,
@@ -220,6 +242,7 @@ class Category {
         name: json["name"],
         code: json["code"],
         description: json["description"],
+        descriptionEn: json["description_en"],
         color: json["color"],
         borderColor: json["border_color"],
         icon: json["icon"],
@@ -230,6 +253,7 @@ class Category {
         "name": name,
         "code": code,
         "description": description,
+        "description_en": descriptionEn,
         "color": color,
         "border_color": borderColor,
         "icon": icon,

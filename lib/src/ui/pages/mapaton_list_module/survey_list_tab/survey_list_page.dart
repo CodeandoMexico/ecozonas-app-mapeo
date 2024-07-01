@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../domain/models/survey_model.dart';
 import '../../../utils/constants.dart';
@@ -50,7 +51,7 @@ class _SurveyListPageState extends State<SurveyListPage> {
       padding: const EdgeInsets.all(Constants.padding),
       child: MyTextFormField(
         controller: _controller,
-        hintText: 'Buscar...',
+        hintText: '${AppLocalizations.of(context)!.search}...',
         suffixIconData: Icons.search,
         onChanged: (value) => _provider.filterSurveyList(value),
       ),
@@ -67,7 +68,9 @@ class _SurveyListPageState extends State<SurveyListPage> {
           },
         ),
       ) : 
-      const NoDataWidget();
+      NoDataWidget(
+        callback: () {},
+      );
   }
 
   Widget _listViewItem(BuildContext context, SurveyModel survey) {
@@ -86,7 +89,7 @@ class _SurveyListPageState extends State<SurveyListPage> {
               child: Text(survey.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             ),
             MyPrimaryElevatedButton(
-              label: 'Ir a la encuesta',
+              label: AppLocalizations.of(context)!.goToSurvey,
               onPressed: () async => await launchUrl(Uri.parse(survey.surveyUrl))
             )
           ],
