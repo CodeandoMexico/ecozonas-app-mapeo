@@ -57,19 +57,21 @@ class ActivityItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            utils.showEnglish(context) && activity.titleEn != null ? activity.titleEn! : activity.title,
+            utils.showEnglish(context) ? activity.titleEn : activity.title,
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: Constants.paddingSmall),
           Text(
-            utils.showEnglish(context) && activity.descriptionEn != null ? activity.descriptionEn! : activity.description,
+            utils.showEnglish(context) ? activity.descriptionEn : activity.description,
             style: const TextStyle(fontSize: 12)
           ),
           const SizedBox(height: Constants.paddingSmall),
           activity.counter != null ?
-            Text('${AppLocalizations.of(context)!.mappingFinished} ${activity.counter}') :
+            Text(
+              '${AppLocalizations.of(context)!.mappingsFinished} ${activity.counter}',
+              style: const TextStyle(fontSize: 12)) :
             Container()
         ],
       ),
@@ -86,7 +88,7 @@ class ActivityItem extends StatelessWidget {
               activity.isPriority ? Image.asset('assets/icons/ic_asterisk_50.png', width: 18) : Container(),
               activity.isPriority ? Image.asset('assets/icons/ic_asterisk_50.png', width: 18) : Container(),
               SizedBox(width: activity.isPriority ? 8.0 : 0),
-              Flexible(child: Text(utils.showEnglish(context) && activity.category.descriptionEn != null ? activity.category.descriptionEn! : activity.category.description, style: const TextStyle(fontSize: 10)))
+              Flexible(child: Text(utils.showEnglish(context) ? activity.category.nameEn : activity.category.name, style: const TextStyle(fontSize: 10)))
             ],
           ),
         ),

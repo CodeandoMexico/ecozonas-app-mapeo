@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../utils/constants.dart';
+import 'ecozonas_image.dart';
 
 class NoDataWidget extends StatelessWidget {
   final VoidCallback callback;
@@ -11,10 +12,10 @@ class NoDataWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(36.0),
+      padding: const EdgeInsets.fromLTRB(36.0, 0, 36.0, 0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const EcozonasImage(topPadding: 96, bottomPadding: 76),
           Text(
             AppLocalizations.of(context)!.noDataYet,
             textAlign: TextAlign.center,
@@ -26,7 +27,7 @@ class NoDataWidget extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: Constants.yellowButtonColor,
               shadowColor: Constants.yellowButtonShadowColor,
-              elevation: 5,
+              elevation: 0,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(Constants.borderRadiusMedium))
               )

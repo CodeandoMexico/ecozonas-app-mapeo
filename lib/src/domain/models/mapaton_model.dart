@@ -4,12 +4,14 @@ List<MapatonModel> mapatonListFromJson(String str) => List<MapatonModel>.from(js
 
 String mapatonModelToJson(List<MapatonModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+const _noTraduction = 'SIN TRADUCIR';
+
 class MapatonModel {
     List<Activity> activities;
     List<Category> categories;
     String uuid;
     String title;
-    String? titleEn;
+    String titleEn;
     String locationText;
     String limitNorth;
     String limitEast;
@@ -24,7 +26,7 @@ class MapatonModel {
         required this.categories,
         required this.uuid,
         required this.title,
-        this.titleEn,
+        this.titleEn = _noTraduction,
         required this.locationText,
         required this.limitNorth,
         required this.limitEast,
@@ -40,7 +42,7 @@ class MapatonModel {
         categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
         uuid: json["uuid"],
         title: json["title"],
-        titleEn: json["title_en"],
+        titleEn: json["title_en"] == null || json["title_en"] == '' ? _noTraduction : json["title_en"],
         locationText: json["location_text"],
         limitNorth: json["limit_north"],
         limitEast: json["limit_east"],
@@ -73,9 +75,9 @@ class Activity {
     Category category;
     String uuid;
     String title;
-    String? titleEn;
+    String titleEn;
     String description;
-    String? descriptionEn;
+    String descriptionEn;
     bool isPriority;
     String? mapatonUuid;
     String? mapatonTitle;
@@ -91,9 +93,9 @@ class Activity {
         required this.category,
         required this.uuid,
         required this.title,
-        this.titleEn,
+        this.titleEn = _noTraduction,
         required this.description,
-        this.descriptionEn,
+        this.descriptionEn = _noTraduction,
         required this.isPriority,
         required this.blocksJson,
     });
@@ -103,9 +105,9 @@ class Activity {
         category: Category.fromJson(json["category"]),
         uuid: json["uuid"],
         title: json["title"],
-        titleEn: json["title_en"],
+        titleEn: json["title_en"] == null || json["title_en"] == '' ? _noTraduction : json["title_en"],
         description: json["description"],
-        descriptionEn: json["description_en"],
+        descriptionEn: json["description_en"] == null || json["description_en"] == '' ? _noTraduction : json["description_en"],
         isPriority: json["is_priority"],
         blocksJson: json["blocks"].toString()
     );
@@ -134,9 +136,9 @@ class Block {
     String uuid;
     String blockType;
     String title;
-    String? titleEn;
+    String titleEn;
     String description;
-    String? descriptionEn;
+    String descriptionEn;
     bool isRequired;
     Options? options;
     dynamic value;
@@ -145,9 +147,9 @@ class Block {
         required this.uuid,
         required this.blockType,
         required this.title,
-        this.titleEn,
+        this.titleEn = _noTraduction,
         required this.description,
-        this.descriptionEn,
+        this.descriptionEn = _noTraduction,
         required this.isRequired,
         required this.options,
         this.value
@@ -157,9 +159,9 @@ class Block {
         uuid: json["uuid"],
         blockType: json["block_type"],
         title: json["title"],
-        titleEn: json["title_en"],
+        titleEn: json["title_en"] == null || json['title_en'] == '' ? _noTraduction : json["title_en"],
         description: json["description"],
-        descriptionEn: json["description_en"],
+        descriptionEn: json["description_en"] == null || json['description_en'] == '' ? _noTraduction : json["description_en"],
         isRequired: json["is_required"],
         options: json["options"] == null ? null : Options.fromJson(json["options"]),
         value: json["value"],
@@ -196,22 +198,26 @@ class Options {
 
 class Choice {
     String label;
+    String labelEn;
     String value;
     bool? checked;
 
     Choice({
         required this.label,
+        this.labelEn = _noTraduction,
         required this.value,
         this.checked,
     });
 
     factory Choice.fromJson(Map<String, dynamic> json) => Choice(
         label: json["label"],
+        labelEn: json["label_en"] == null || json["label_en"] == '' ? _noTraduction : json["label_en"],
         value: json["value"],
     );
 
     Map<String, dynamic> toJson() => {
         "label": label,
+        "label_en": labelEn,
         "value": value,
     };
 }
@@ -219,9 +225,10 @@ class Choice {
 class Category {
     String uuid;
     String name;
+    String nameEn;
     String code;
     String description;
-    String? descriptionEn;
+    String descriptionEn;
     String color;
     String? borderColor;
     String icon;
@@ -229,9 +236,10 @@ class Category {
     Category({
         required this.uuid,
         required this.name,
+        this.nameEn = _noTraduction,
         required this.code,
         required this.description,
-        this.descriptionEn,
+        this.descriptionEn = _noTraduction,
         required this.color,
         this.borderColor,
         required this.icon,
@@ -240,9 +248,10 @@ class Category {
     factory Category.fromJson(Map<String, dynamic> json) => Category(
         uuid: json["uuid"],
         name: json["name"],
+        nameEn: json["name_en"] == null || json["name_en"] == '' ? _noTraduction : json["name_en"],
         code: json["code"],
         description: json["description"],
-        descriptionEn: json["description_en"],
+        descriptionEn: json["description_en"] == null || json["description_en"] == '' ? _noTraduction : json["description_en"],
         color: json["color"],
         borderColor: json["border_color"],
         icon: json["icon"],
@@ -251,6 +260,7 @@ class Category {
     Map<String, dynamic> toJson() => {
         "uuid": uuid,
         "name": name,
+        "name_en": nameEn,
         "code": code,
         "description": description,
         "description_en": descriptionEn,

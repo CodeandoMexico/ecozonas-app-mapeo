@@ -8,7 +8,7 @@ class MyButtonStyles {
     backgroundColor: Constants.yellowButtonColor,
     disabledBackgroundColor: Constants.disabledButtonColor,
     shadowColor: Constants.yellowButtonShadowColor,
-    elevation: 5,
+    elevation: 0,
     textStyle: const TextStyle(fontSize: 30),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(Constants.borderRadiusMedium))
@@ -20,7 +20,7 @@ class MyButtonStyles {
     backgroundColor: Constants.darkBlueColor,
     disabledBackgroundColor: Constants.disabledButtonColor,
     shadowColor: Constants.blueButtonShadowColor,
-    elevation: 5,
+    elevation: 0,
     textStyle: const TextStyle(fontSize: 20),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(Constants.borderRadiusMedium))

@@ -22,7 +22,9 @@ import '../update_map_module/update_map_page.dart';
 import 'bloc/bloc.dart';
 
 class MapatonMapContent extends StatefulWidget {
-  const MapatonMapContent({super.key});
+  final MapatonModel? mapaton;
+
+  const MapatonMapContent({super.key, this.mapaton});
 
   @override
   State<MapatonMapContent> createState() => _MapatonMapContentState();
@@ -31,7 +33,7 @@ class MapatonMapContent extends StatefulWidget {
 class _MapatonMapContentState extends State<MapatonMapContent> {
   final ActivitiesDraggable _activitiesDraggable = ActivitiesDraggable();
 
-  late MapatonBloc _bloc;
+  // late MapatonBloc _bloc;
   MapboxMapController? _controller;
   Symbol? _currentPositionSymbol;
   bool _disableCameraMove = false;
@@ -42,29 +44,29 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
     zoom: 15
   );
 
-  @override
-  void initState() {
-    _bloc = context.read<MapatonBloc>();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   _bloc = context.read<MapatonBloc>();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final mapaton = ModalRoute.of(context)!.settings.arguments as MapatonModel;
+    // final mapaton = ModalRoute.of(context)!.settings.arguments as MapatonModel;
+    final bloc = context.read<MapatonBloc>();
     
     final prefs = UserPreferences();
 
-    _activitiesDraggable.setActivities(mapaton);
+    _activitiesDraggable.setActivities(widget.mapaton!);
     _activitiesDraggable.setCallback((value) {
       BlocProvider.of<MapatonBloc>(context).add(AddMarker(value));
-      // addImageFromAsset(LatLng(value.latitude, value.longitude), value);
     });
 
     return Scaffold(
-      appBar: _appBar(context, _bloc, mapaton),
+      appBar: _appBar(context, bloc, widget.mapaton!),
       body: BlocListener<MapatonBloc, MapatonState>(
         listener: _states,
-        child: _body(_bloc, prefs, context, mapaton),
+        child: _body(bloc, prefs, context, widget.mapaton!),
       ),
     );
   }
@@ -88,11 +90,11 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
       showLoadingDialog(context);
     }
     if (state is RegionDownloaded) {
-      utils.showSnackBarSuccess(context, 'Descarga completa');
+      utils.showSnackBarSuccess(context, AppLocalizations.of(context)!.downloadCompleted);
       Navigator.pop(context);
     }
     if (state is ErrorDownloadingRegion) {
-      utils.showSnackBarError(context, 'Error en la descarga');
+      utils.showSnackBarError(context, AppLocalizations.of(context)!.downloadError);
       Navigator.pop(context);
     }
   }
@@ -106,21 +108,11 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
       title: Row(
         children: [
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(mapaton.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text(mapaton.locationText, style: const TextStyle(fontSize: 14)),
-              ],
+            child: Text(
+              utils.showEnglish(context) ? mapaton.titleEn : mapaton.title,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)
             ),
           ),
-          // StreamBuilder<List<ActivityDbModel>>(
-          //   stream: bloc.activities,
-          //   initialData: const [],
-          //   builder: (BuildContext context, AsyncSnapshot<List<ActivityDbModel>> snapshot) {
-          //     return snapshot.data != null && snapshot.data!.isNotEmpty ? _updateMapButton(context) : Container();
-          //   },
-          // ),
           _updateMapButton(context)
         ],
       ),
@@ -158,7 +150,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
           padding: const EdgeInsets.all(8.0),
           backgroundColor: Constants.yellowButtonColor,
           shadowColor: Constants.yellowButtonShadowColor,
-          elevation: 5,
+          elevation: 0,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(Constants.borderRadiusMedium))
           )
@@ -240,6 +232,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
       child: MyPrimaryElevatedButton(
         label: AppLocalizations.of(context)!.mapHere,
         fullWidth: true,
+        elevation: 5,
         onPressed: () => _activitiesDraggable.animateDraggable(false),
       ),
     );
@@ -473,14 +466,14 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
     if (symbol.id == _selectedMarkerId) {
       showConfirmationDialog(
         context,
-        text: '¿Eliminar mapeo?',
-        acceptButtonText: 'Eliminar',
+        text: AppLocalizations.of(context)!.deleteMapping,
+        acceptButtonText: AppLocalizations.of(context)!.delete,
         acceptCallback: () async {
           await _controller!.removeSymbol(symbol);
 
           if (mounted) {
             BlocProvider.of<MapatonBloc>(context).add(RemoveMarker(activity));
-            utils.showSnackBarSuccess(context, 'La actividad se eliminó correctamente.');
+            utils.showSnackBarSuccess(context, AppLocalizations.of(context)!.activityDeleted);
           }
         }
       );
@@ -505,7 +498,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
   Future<void> _downloadRegion(MapatonModel mapaton) async {
     LatLngBounds bounds = await _controller!.getVisibleRegion();
     
-    if (context.mounted) {
+    if (mounted) {
       showConfirmationDialog(
         context,
         text: AppLocalizations.of(context)!.downloadRegion,

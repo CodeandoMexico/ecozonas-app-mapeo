@@ -46,7 +46,7 @@ class _LoginTabPageState extends State<LoginTabContent> {
     _defaultTabs = [_tab(AppLocalizations.of(context)!.newSession)];
 
     _allTabs = [
-      _tab(AppLocalizations.of(context)!.continueSession),
+      _tab(AppLocalizations.of(context)!.continueText),
       _tab(AppLocalizations.of(context)!.newSession)
     ];
     super.didChangeDependencies();
@@ -80,10 +80,18 @@ class _LoginTabPageState extends State<LoginTabContent> {
   AppBar _appBar(List<Widget> tabs) {
     return AppBar(
       elevation: 0,
-      title: TabBar(
+      title: Text(
+        AppLocalizations.of(context)!.init,
+        style: const TextStyle(fontSize: Constants.appBarFontSize)
+      ),
+      centerTitle: true,
+      bottom: TabBar(
         indicatorColor: Constants.darkBlueColor,
         indicatorWeight: 3,
         tabs: tabs,
+      ),
+      iconTheme: const IconThemeData(
+        color: Colors.black,
       ),
     );
   }
@@ -101,7 +109,7 @@ class _LoginTabPageState extends State<LoginTabContent> {
     return Tab(
       child: Text(
         label,
-        style: const TextStyle(fontSize: 18, color: Constants.labelTextColor)
+        style: const TextStyle(fontSize: Constants.appBarFontSize, color: Constants.labelTextColor)
       )
     );
   }

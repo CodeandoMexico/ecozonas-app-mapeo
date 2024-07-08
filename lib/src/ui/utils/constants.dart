@@ -80,6 +80,11 @@ class Constants {
   static const borderRadiusBottomSheet = 24.0;
 
   /*
+   * FONT SIZE
+   */
+  static const appBarFontSize = 18.0;
+
+  /*
    * COLORS
    */
   static const disabledButtonColor = Color(0xFFDDDDDD);

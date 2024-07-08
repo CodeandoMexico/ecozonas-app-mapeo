@@ -40,7 +40,7 @@ class FormPage extends StatelessWidget {
         children: [
           utils.getCategoryIcon(code: activity.category.code, size: 20),
           const SizedBox(width: Constants.paddingMedium),
-          Flexible(child: Text(utils.showEnglish(context) && activity.titleEn != null ? activity.titleEn! : activity.title, maxLines: 2, style: const TextStyle(fontSize: 16))),
+          Flexible(child: Text(utils.showEnglish(context) ? activity.titleEn : activity.title, maxLines: 2, style: const TextStyle(fontSize: 16))),
         ],
       ),
     );
@@ -53,8 +53,8 @@ class FormPage extends StatelessWidget {
           ...activity.blocks.map((e) {
             e.value = null;
 
-            final title = utils.showEnglish(context) && e.titleEn != null ? e.titleEn! : e.title;
-            final description = utils.showEnglish(context) && e.descriptionEn != null ? e.descriptionEn! : e.description;
+            final title = utils.showEnglish(context) ? e.titleEn : e.title;
+            final description = utils.showEnglish(context) ? e.descriptionEn : e.description;
 
             if (e.blockType == 'instructions') {
               return _instructions(title, description);
@@ -97,7 +97,7 @@ class FormPage extends StatelessWidget {
       child: MyDoubleButtonRow(
         cancelText: AppLocalizations.of(context)!.exit,
         cancelCallback: () => Navigator.pop(context),
-        acceptText: AppLocalizations.of(context)!.saveMapping,
+        acceptText: AppLocalizations.of(context)!.save,
         acceptCallback: () => _save(context, activity),
       ),
     );

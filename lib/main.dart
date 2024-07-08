@@ -27,16 +27,30 @@ void main() async {
   });
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   static const String accessToken = String.fromEnvironment("ACCESS_TOKEN");
   
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+
+  void _changeLanguage(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
+      locale: _locale,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -48,8 +62,13 @@ class MyApp extends StatelessWidget {
         Locale('es'),
       ],
       theme: myTheme,
-      home: const LoginTabPage(),
+      home: LanguagePage(
+        localeCallback: (value) {
+          _changeLanguage(value);
+        },
+      ),
       routes: {
+        LoginTabPage.routeName: (_) => const LoginTabPage(),
         NewSessionPage.routeName: (_) => const NewSessionPage(),
         NewIdPage.routeName: (_) => const NewIdPage(),
         MapatonTabsPage.routeName: (_) => const MapatonTabsPage(),
@@ -61,6 +80,7 @@ class MyApp extends StatelessWidget {
         MapatonMainPage.routeName: (_) => const MapatonMainPage(),
         ManageSessionsPage.routeName: (_) => const ManageSessionsPage(),
         MapatonTextOnboardingPage.routeName: (_) => const MapatonTextOnboardingPage(),
+        MapatonMoreInfoPage.routeName: (_) => const MapatonMoreInfoPage(),
       },
     );
   }

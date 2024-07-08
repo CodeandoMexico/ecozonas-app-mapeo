@@ -51,7 +51,7 @@
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>
 		</array>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Se necesita acceso a la ubicación mientras la aplicación está en uso para seleccionar la ubicación del mapeo.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Se necesita acceso a la ubicación mientras la aplicación está en uso para seleccionar la ubicación del mapeo.</string>
 	</dict>
 </plist>

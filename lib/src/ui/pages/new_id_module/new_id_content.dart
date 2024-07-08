@@ -22,7 +22,7 @@ class NewIdContent extends StatelessWidget {
 
     return Scaffold(
       appBar: MyAppBar(
-        title: Text(AppLocalizations.of(context)!.mappingId),
+        title: Text(AppLocalizations.of(context)!.mappingId, style: const TextStyle(fontSize: Constants.appBarFontSize)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(Constants.padding),

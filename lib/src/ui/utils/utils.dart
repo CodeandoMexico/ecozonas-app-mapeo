@@ -80,6 +80,13 @@ String removeDiacritics(String str) {
   return str.toLowerCase();
 }
 
+List<ItemModel> getLanguageOptions(BuildContext context) {
+  return [
+    ItemModel(label: AppLocalizations.of(context)!.spanish, value: 'es'),
+    ItemModel(label: AppLocalizations.of(context)!.english, value: 'en'),
+  ];
+}
+
 List<ItemModel> getGenderOptions(BuildContext context) {
   return [
     ItemModel(label: AppLocalizations.of(context)!.woman, value: 'MUJER'),

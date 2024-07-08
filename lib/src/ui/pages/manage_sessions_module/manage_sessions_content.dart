@@ -22,7 +22,7 @@ class ManageSessionsContent extends StatelessWidget {
       },
       child: Scaffold(
         appBar: MyAppBar(
-          title: Text(AppLocalizations.of(context)!.manageSessions),
+          title: Text(AppLocalizations.of(context)!.manageSessions, style: const TextStyle(fontSize: Constants.appBarFontSize)),
         ),
         body: Column(
           children: [

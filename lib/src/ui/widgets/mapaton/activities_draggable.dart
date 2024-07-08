@@ -297,15 +297,16 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   }
 
   bool _matchText(Activity element) {
-    final title = utils.removeDiacritics(element.title);
-    final description = utils.removeDiacritics(element.description);
+    final title = utils.removeDiacritics(utils.showEnglish(context) ? element.titleEn : element.title);
+    final description = utils.removeDiacritics(utils.showEnglish(context) ? element.descriptionEn : element.description);
     final blocksJson = utils.removeDiacritics(element.blocksJson);
     final search = utils.removeDiacritics(_searchText);
 
     if (_searchText.isNotEmpty) {
       return title.contains(search) || description.contains(search) || blocksJson.contains(search);
+    } else {
+      return true;
     }
-    return true;
   }
   
   bool _matchCategory(Activity element) {

@@ -11,6 +11,7 @@ import '../../widgets/my_app_bar.dart';
 import '../../widgets/my_bottom_sheet_text_field.dart';
 import '../../widgets/my_primary_elevated_button.dart';
 import '../../widgets/my_secondary_elevated_button.dart';
+import '../login_module/tabs_container/login_tab_page.dart';
 import 'bloc/bloc.dart';
 
 class MySessionContent extends StatelessWidget {
@@ -48,7 +49,7 @@ class MySessionContent extends StatelessWidget {
    */
   MyAppBar _appBar(BuildContext context) {
     return MyAppBar(
-      title: Text(AppLocalizations.of(context)!.mySession),
+      title: Text(AppLocalizations.of(context)!.mySession, style: const TextStyle(fontSize: Constants.appBarFontSize)),
       hideBackButton: true,
     );
   }
@@ -166,7 +167,7 @@ class MySessionContent extends StatelessWidget {
           side: const BorderSide(color: Constants.redColor)
         )
       ),
-      onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+      onPressed: () => Navigator.of(context).popUntil((route) => route.settings.name == LoginTabPage.routeName),
       child: Text(
         AppLocalizations.of(context)!.logout,
         style: const TextStyle(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../domain/models/db/mapaton_db_model.dart';
+import '../../utils/constants.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../utils/utils.dart' as utils;
 import '../../utils/dialogs.dart' as dialogs;
@@ -20,7 +21,7 @@ class UpdateMapContent extends StatelessWidget {
 
     return Scaffold(
       appBar: MyAppBar(
-        title: Text(AppLocalizations.of(context)!.sendData),
+        title: Text(AppLocalizations.of(context)!.sendData, style: const TextStyle(fontSize: Constants.appBarFontSize)),
       ),
       body: _body(context, bloc),
       backgroundColor: Colors.white,

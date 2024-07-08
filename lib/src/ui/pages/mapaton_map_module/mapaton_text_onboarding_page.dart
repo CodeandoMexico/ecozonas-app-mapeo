@@ -27,7 +27,7 @@ class MapatonTextOnboardingPage extends StatelessWidget implements BottomNavigat
     return Scaffold(
       appBar: MyAppBar(
         title: Image.asset(
-          'assets/images/ecozonas_logo.png',
+          'assets/images/new_app_logo.png',
           height: 35,
         ),
         hideBackButton: showContinueButton != true,
@@ -44,28 +44,6 @@ class MapatonTextOnboardingPage extends StatelessWidget implements BottomNavigat
                     height: _height
                   ),
                   children: [
-
-                    // ESPAÑOL
-                    // HECHO - "Las EcoZonas son barrios que promueven colaboración, sostenibilidad y prosperidad. Esta aplicación te ayudará a identificar los desafíos y oportunidades en tu barrio en cuatro dimensiones: entorno urbano, calidad ambiental, bienestar socioeconómico y riesgo de desastres.
-                    // HECHO - Realiza la encuesta barrial y el mapeo colaborativo para identificar estos desafíos. Los resultados generarán un reporte de tu barrio junto con una priorización de Soluciones Urbanas Sostenibles (SUS) de rápida implementación y bajo costo para tu comunidad. Podrás visualizar y descargar este reporte en la página  www.ecozonas.org, junto con otros recursos y detalles sobre las Soluciones Urbanas Sostenibles.
-                    // HECHO - Para un diagnóstico completo, sigue estos pasos:
-                    // HECHO - 1. Completa la encuesta y anima a otras personas a hacerlo.
-                    // HECHO - 2. Mapea los desafíos y oportunidades en tu barrio y envía la información.
-                    // HECHO - 3. Descarga el reporte con el diagnóstico y las soluciones en la página www.ecozonas.org
-                    
-                    // HECHO - Esta herramienta es parte del proyecto ""EcoZonas"", implementado por WRI México y el Instituto Wuppertal, apoyado por el Ministerio Federal de Economía y Protección del Clima Alemán y la Iniciativa Internacional del Clima (IKI)."
-
-                    // INGLES
-                    // HECHO - EcoZones are neighborhoods that promote collaboration, sustainability, and prosperity. This app will help you identify the challenges and opportunities in your neighborhood across four dimensions: urban environment, environmental quality, socioeconomic well-being, and disaster risk.
-                    // HECHO - Complete the neighborhood survey and collaborative mapping to identify these challenges. The results will generate a report for your neighborhood, prioritizing Sustainable Urban Solutions (SUS) of short-term and low-cost implementation that can be applied in your community. You can view and download this report on the website: www.ecozonas.org, along with other resources and a catalogue of Sustainable Urban Solutions.
-                    // HECHO - For a complete assessment, follow these steps:
-                    // HECHO - 1. Complete the survey and encourage others to do it as well.
-                    // HECHO - 2. Map the challenges and opportunities in your neighborhood and submit the information.
-                    // HECHO - 3. Download the report with the diagnosis and solutions from the website www.ecozonas.org.
-                    //
-                    // HECHO - This tool is part of the "EcoZones" project, implemented by WRI Mexico and the Wuppertal Institute, supported by the German Federal Ministry for Economic Affairs and Climate Action and the International Climate Initiative (IKI).
-
-
                     TextSpan(
                       text: '''${AppLocalizations.of(context)!.onboardingIntro1}
 
@@ -75,7 +53,7 @@ ${AppLocalizations.of(context)!.onboardingIntro3}\n\n'''
                     ),
                     _numberIndent(
                       1,
-                      '${AppLocalizations.of(context)!.onboarding1}\n'
+                      AppLocalizations.of(context)!.onboarding1
                     ),
                     _numberIndent(
                       2,
@@ -176,8 +154,8 @@ ${AppLocalizations.of(context)!.onboardingIntro3}\n\n'''
           name: AppLocalizations.of(context)!.urbanEnvironment,
           code: "ENTORNO_URBANO",
           description: AppLocalizations.of(context)!.urbanEnvironmentText,
-          color: "#deecfd",
-          borderColor: "#6a94c6",
+          color: "#D3D8EA",
+          borderColor: "#6D7DBC",
           icon: "building"
         ),
         Category(
@@ -185,8 +163,8 @@ ${AppLocalizations.of(context)!.onboardingIntro3}\n\n'''
           name: AppLocalizations.of(context)!.disasterRisk,
           code: "RIESGO_DESASTRES",
           description: AppLocalizations.of(context)!.disasterRiskText,
-          color: "#f8d8e0",
-          borderColor: "#d46e87",
+          color: "#F1D0D5",
+          borderColor: "#DD4663",
           icon: "snowflake"
         ),
         Category(
@@ -194,8 +172,8 @@ ${AppLocalizations.of(context)!.onboardingIntro3}\n\n'''
           name: AppLocalizations.of(context)!.environmentalQuality,
           code: "CALIDAD_MEDIOAMBIENTAL",
           description: AppLocalizations.of(context)!.environmentalQualityText,
-          color: "#d8e9d4",
-          borderColor: "#4fa163",
+          color: "#D3E9D3",
+          borderColor: "#79C990",
           icon: "tree"
         ),
         Category(
@@ -203,8 +181,8 @@ ${AppLocalizations.of(context)!.onboardingIntro3}\n\n'''
           name: AppLocalizations.of(context)!.socioeconomicWellbeing,
           code: "BIENESTAR_SOCIOECONOMICO",
           description: AppLocalizations.of(context)!.socioeconomicWellbeingText,
-          color: "#fcf0db",
-          borderColor: "#d2ad51",
+          color: "#F7EDC8",
+          borderColor: "#F0C23D",
           icon: "user"
         )
       ],

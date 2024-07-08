@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/models/mapaton_model.dart';
+import '../../../utils/utils.dart' as utils;
 import 'block_error_text_widget.dart';
 import 'block_title_widget.dart';
 
@@ -46,7 +47,9 @@ class _CheckboxBlockWidgetState extends State<CheckboxBlockWidget> {
           ...widget.choices.map((e) {
             return CheckboxListTile(
               value: e.checked ?? false,
-              title: Text(e.label),
+              activeColor: Colors.black,
+              checkColor: Colors.white,
+              title: Text(utils.showEnglish(context) ? e.labelEn : e.label),
               onChanged: (value) {
                 if (value != null && value) {
                   selectedChoices.add(e.value);

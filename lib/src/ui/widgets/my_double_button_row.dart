@@ -11,6 +11,8 @@ class MyDoubleButtonRow extends StatelessWidget {
 
   const MyDoubleButtonRow({super.key, required this.cancelText, required this.cancelCallback, required this.acceptText, required this.acceptCallback});
 
+  final _style = const TextStyle(fontSize: 16, color: Constants.darkBlueColor);
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -19,7 +21,7 @@ class MyDoubleButtonRow extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => cancelCallback(),
             style: MyButtonStyles.cancelButton,
-            child: Text(cancelText, style: const TextStyle(fontSize: 16, color: Constants.darkBlueColor))
+            child: Text(cancelText, style: _style)
           ),
         ),
         const SizedBox(
@@ -29,7 +31,7 @@ class MyDoubleButtonRow extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => acceptCallback(),
             style: MyButtonStyles.primaryButton,
-            child: Text(acceptText, style: const TextStyle(fontSize: 18, color: Constants.darkBlueColor))
+            child: Text(acceptText, style: _style)
           ),
         ),
       ],

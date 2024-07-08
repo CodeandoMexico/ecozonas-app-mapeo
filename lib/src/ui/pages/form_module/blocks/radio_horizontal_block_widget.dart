@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/models/mapaton_model.dart';
+import '../../../utils/utils.dart' as utils;
 import 'block_error_text_widget.dart';
 import 'block_title_widget.dart';
 
@@ -54,9 +55,10 @@ class _RadioBlockWidgetState extends State<RadioHorizontalBlockWidget> {
                         value: e.key,
                         groupValue: selectedRadioTile,
                         visualDensity: VisualDensity.compact,
+                        activeColor: Colors.black,
                         onChanged: (value) => _onChanged(e, value),
                       ),
-                      Text(e.value.label, style: const TextStyle(fontSize: 16))
+                      Text(utils.showEnglish(context) ? e.value.labelEn : e.value.label, style: const TextStyle(fontSize: 16))
                     ],
                   ),
                 );

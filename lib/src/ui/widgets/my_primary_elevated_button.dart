@@ -5,9 +5,10 @@ import '../utils/constants.dart';
 class MyPrimaryElevatedButton extends StatelessWidget {
   final String label;
   final bool? fullWidth;
+  final double? elevation;
   final Function()? onPressed;
 
-  const MyPrimaryElevatedButton({super.key, required this.label, this.fullWidth = false, required this.onPressed});
+  const MyPrimaryElevatedButton({super.key, required this.label, this.fullWidth = false, required this.onPressed, this.elevation = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class MyPrimaryElevatedButton extends StatelessWidget {
         backgroundColor: Constants.yellowButtonColor,
         disabledBackgroundColor: Constants.disabledButtonColor,
         shadowColor: Constants.yellowButtonShadowColor,
-        elevation: 5,
+        elevation: elevation,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(Constants.borderRadiusMedium))
         )
