@@ -95,7 +95,7 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
         child: IconButton(
           onPressed: () => setState(() {
             _imagePath = null;
-            _buttonText = 'Tomar foto';
+            _buttonText = AppLocalizations.of(context)!.takePhoto;
           }),
           icon: const Icon(Icons.delete_outline, size: 30),
         ),
@@ -112,7 +112,7 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
     if (image != null) {
       setState(() { 
         _imagePath = image.path;
-        _buttonText = 'Tomar otra foto';
+        _buttonText = AppLocalizations.of(context)!.takeAnotherPhoto;
       });
       widget.callback(_imagePath!);
     }

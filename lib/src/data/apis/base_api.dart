@@ -13,7 +13,7 @@ extension IsOk on http.Response {
 }
 
 class BaseApi {
-  static String basePath = 'https://ecozonas.codeandomexico.org/';
+  static String basePath = 'https://ecozonas.org/';
 
   static final Map<String, String> _headers = {
     "Content-Type" : "application/json",

@@ -106,6 +106,7 @@
     
     "exit": "Exit",
     "takePhoto": "Take photo",
+    "takeAnotherPhoto": "Take another photo",
     "required": "This field is required",
     "checkRequired": "Please review the required fields",
     

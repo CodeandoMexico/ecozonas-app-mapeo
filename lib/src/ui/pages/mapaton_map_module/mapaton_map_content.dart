@@ -68,6 +68,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
         listener: _states,
         child: _body(bloc, prefs, context, widget.mapaton!),
       ),
+      resizeToAvoidBottomInset: false,
     );
   }
 
@@ -374,15 +375,17 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
   }
 
   Future<void> _onCameraIdle(MapatonBloc bloc, UserPreferences prefs) async {
-    LatLngBounds bounds = await _controller!.getVisibleRegion();
-    LatLng latLng = LatLng(
-      (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
-      (bounds.northeast.longitude + bounds.southwest.longitude) / 2,
-    );
+    if (_controller != null) {
+      LatLngBounds bounds = await _controller!.getVisibleRegion();
+      LatLng latLng = LatLng(
+        (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
+        (bounds.northeast.longitude + bounds.southwest.longitude) / 2,
+      );
 
-    prefs.setActivityLocation = latLng;
+      prefs.setActivityLocation = latLng;
 
-    bloc.setShowDownload(_controller!.cameraPosition!.zoom >= 15);
+      bloc.setShowDownload(_controller!.cameraPosition!.zoom >= 15);
+    }
   }
 
   void _showCenter(BuildContext context) {
@@ -434,15 +437,19 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
     }
 
     if (_controller != null) {
-      await _controller!.addSymbol(
-        SymbolOptions(
-          geometry: coordinates,
-          iconImage: icon,
-          iconSize: 1,
-          iconOffset: const Offset(0, -10),
-        ),
-        a.toJson()
-      );
+      try {
+        await _controller!.addSymbol(
+          SymbolOptions(
+            geometry: coordinates,
+            iconImage: icon,
+            iconSize: 1,
+            iconOffset: const Offset(0, -10),
+          ),
+          a.toJson()
+        );
+      } catch (err) {
+        debugPrint(err.toString());
+      }
     }
   }
 
