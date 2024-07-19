@@ -53,5 +53,7 @@
 		</array>
 		<key>NSLocationWhenInUseUsageDescription</key>
 		<string>Se necesita acceso a la ubicación mientras la aplicación está en uso para seleccionar la ubicación del mapeo.</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Se necesita acceso a la cámara para completar la información del mapeo.</string>
 	</dict>
 </plist>
