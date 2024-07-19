@@ -1,4 +1,4 @@
-package com.example.ecozonas
+package org.codeandomexico.ecozonas
 
 import io.flutter.embedding.android.FlutterActivity
 
