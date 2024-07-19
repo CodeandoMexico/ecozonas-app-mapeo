@@ -46,7 +46,7 @@ dependencies:
   # google_maps_flutter: ^2.5.0
   http: ^1.1.0
   image_picker: ^1.0.4
-  intl: ^0.18.1
+  intl: ^0.19.0
   location: ^6.0.2
   mapbox_gl: ^0.16.0
   path: ^1.8.3

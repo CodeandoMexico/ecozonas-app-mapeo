@@ -89,6 +89,7 @@ class _LoginTabPageState extends State<LoginTabContent> {
         indicatorColor: Constants.darkBlueColor,
         indicatorWeight: 3,
         tabs: tabs,
+        dividerColor: Colors.white,
       ),
       iconTheme: const IconThemeData(
         color: Colors.black,

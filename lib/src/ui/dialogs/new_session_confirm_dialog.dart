@@ -20,6 +20,7 @@ class NewSessionConfirmDialog extends StatelessWidget {
     const styleField = TextStyle(fontSize: 14);
 
     return AlertDialog(
+      backgroundColor: Colors.white,
       contentPadding: const EdgeInsets.all(0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Constants.padding)

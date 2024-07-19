@@ -136,6 +136,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
               );
             },
             child: Chip(
+              backgroundColor: Colors.white,
               label: Row(
                 children: [
                   Text(_selectedCategory),

@@ -11,6 +11,7 @@ void showLoadingDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
+        backgroundColor: Colors.white,
         content: Padding(
           padding: const EdgeInsets.only(top: Constants.paddingSmall),
           child: Row(
@@ -39,6 +40,7 @@ void showConfirmationDialog(BuildContext context, {
     context: context,
     builder: (context) {
       return Dialog(
+        backgroundColor: Colors.white,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
           child: Wrap(

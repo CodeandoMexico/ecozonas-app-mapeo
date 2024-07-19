@@ -22,6 +22,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       unselectedItemColor: Colors.grey,
       showUnselectedLabels: true,
       type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.white,
       items: [
         BottomNavigationBarItem(
           icon: const Icon(Icons.map),
