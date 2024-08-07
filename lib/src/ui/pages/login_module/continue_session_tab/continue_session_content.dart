@@ -8,7 +8,6 @@ import '../../../../domain/models/db/mapper_db_model.dart';
 import '../../../../domain/models/mapaton_post_model.dart';
 import '../../../../domain/use_cases/preferences_use_case.dart';
 import '../../../utils/constants.dart';
-import '../../../widgets/ecozonas_image.dart';
 import '../../manage_sessions_module/manage_sessions_page.dart';
 import '../../mapaton_main_module/mapaton_main_page.dart';
 import '../../mapaton_map_module/mapaton_text_onboarding_page.dart';
@@ -25,7 +24,7 @@ class ContinueSessionContent extends StatelessWidget {
       padding: const EdgeInsets.all(Constants.padding),
       child: Column(
         children: [
-          const EcozonasImage(topPadding: 30, bottomPadding: 30),
+          Image.asset('assets/images/new_app_splash.png', height: 160),
           _text(context),
           const SizedBox(height: Constants.paddingLarge),
           _sessionsList(bloc),

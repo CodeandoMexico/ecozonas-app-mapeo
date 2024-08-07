@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../utils/constants.dart';
 import '../../utils/utils.dart' as utils;
-import '../../widgets/ecozonas_image.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/my_bottom_sheet_text_field.dart';
 import '../../widgets/my_primary_elevated_button.dart';
@@ -22,7 +21,10 @@ class LanguagePage extends StatelessWidget {
         padding: const EdgeInsets.all(Constants.padding),
         child: Column(
           children: [
-            const EcozonasImage(topPadding: 76, bottomPadding: 76),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+              child: Image.asset('assets/images/new_app_splash.png', height: 160),
+            ),
             _bottomSheet(context),
             const Spacer(),
             _continueButton(context)

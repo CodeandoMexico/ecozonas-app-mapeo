@@ -7,7 +7,6 @@ import '../../../theme/theme.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/dialogs.dart' as dialogs;
 import '../../../utils/utils.dart' as utils;
-import '../../../widgets/ecozonas_image.dart';
 import '../../../widgets/my_bottom_sheet_text_field.dart';
 import '../../../widgets/my_primary_elevated_button.dart';
 import 'bloc/bloc.dart';
@@ -56,7 +55,7 @@ class _NewSessionContentState extends State<NewSessionContent> {
       padding: const EdgeInsets.all(Constants.padding),
       child: Column(
         children: [
-          const EcozonasImage(topPadding: 30, bottomPadding: 30),
+          Image.asset('assets/images/new_app_splash.png', height: 160),
           Text(
             AppLocalizations.of(context)!.completeData,
             style: const TextStyle(fontSize: 18),
