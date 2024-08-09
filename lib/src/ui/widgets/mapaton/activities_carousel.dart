@@ -24,7 +24,7 @@
 //           title: 'Calidad del servicio de recolección de basura',
 //           detail: 'Observa y anota las características del servicio de recolección de basura',
 //           percentage: 0.3,
-//           type: 'Calidad medioambiental',
+//           type: 'Calidad ambiental',
 //           backgroundColor: const Color(0xFFD8E9D4),
 //           borderColor: const Color(0xFFA8D29E),
 //           iconData: Icons.pedal_bike

@@ -61,11 +61,20 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   void didChangeDependencies() {
     _selectedCategory = AppLocalizations.of(context)!.searchByDimension;
     _options = [
-      CategoryOptionModel(text: AppLocalizations.of(context)!.searchByDimension),
-      CategoryOptionModel(text: AppLocalizations.of(context)!.urbanEnvironment, code: 'ENTORNO_URBANO'),
-      CategoryOptionModel(text: AppLocalizations.of(context)!.environmentalQuality, code: 'CALIDAD_MEDIOAMBIENTAL'),
-      CategoryOptionModel(text: AppLocalizations.of(context)!.socioeconomicWellbeing, code: 'BIENESTAR_SOCIOECONOMICO'),
-      CategoryOptionModel(text: AppLocalizations.of(context)!.disasterRisk, code: 'RIESGO_DESASTRES'),
+      CategoryOptionModel(
+          text: AppLocalizations.of(context)!.searchByDimension),
+      CategoryOptionModel(
+          text: AppLocalizations.of(context)!.urbanEnvironment,
+          code: 'ENTORNO_URBANO'),
+      CategoryOptionModel(
+          text: AppLocalizations.of(context)!.environmentalQuality,
+          code: 'CALIDAD_AMBIENTAL'),
+      CategoryOptionModel(
+          text: AppLocalizations.of(context)!.socioeconomicWellbeing,
+          code: 'BIENESTAR_SOCIOECONOMICO'),
+      CategoryOptionModel(
+          text: AppLocalizations.of(context)!.disasterRisk,
+          code: 'RIESGO_DESASTRES'),
     ];
     super.didChangeDependencies();
   }
@@ -165,7 +174,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
 
       return bInt.compareTo(aInt);
     });
-    
+
     Activity? c = widget._activities.firstWhereOrNull((element) => element.category.code == 'OTRA');
     if (c != null) {
       c.color = c.category.color;
@@ -209,7 +218,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
                           return element.uuid == e.uuid;
                         }).toList().length;
                       }
-        
+
                       return ActivityItem(
                         activity: e,
                         callback: () async {
@@ -227,7 +236,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
                 ),
               ),
             ],
-          ); 
+          );
         } else {
           return const Center(child: CircularProgressIndicator());
         }
@@ -309,12 +318,12 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
       return true;
     }
   }
-  
+
   bool _matchCategory(Activity element) {
     final category = _options.firstWhere((element) {
       return element.text == _selectedCategory;
     });
-  
+
     return element.category.code == category.code;
   }
 
@@ -322,7 +331,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
     e.mapatonUuid = widget._mapatone.uuid;
     e.mapatonTitle = widget._mapatone.title;
     e.mapatonLocationText = widget._mapatone.locationText;
-    
+
     final a = await Navigator.push(
       context,
       MaterialPageRoute(
