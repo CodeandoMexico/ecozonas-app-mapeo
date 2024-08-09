@@ -148,56 +148,58 @@ ${AppLocalizations.of(context)!.onboardingIntro3}\n\n'''
    */
   void _goToMain(BuildContext context) {
     final mapaton = MapatonModel(
-      categories: [
-        Category(
-          uuid: "644c2ebe-a82e-4c23-a111-7bdc6f95e09d",
-          name: AppLocalizations.of(context)!.urbanEnvironment,
-          code: "ENTORNO_URBANO",
-          description: AppLocalizations.of(context)!.urbanEnvironmentText,
-          color: "#D3D8EA",
-          borderColor: "#6D7DBC",
-          icon: "building"
-        ),
-        Category(
-          uuid: "3a06b95b-a571-43fa-af49-62e38e3719bc",
-          name: AppLocalizations.of(context)!.disasterRisk,
-          code: "RIESGO_DESASTRES",
-          description: AppLocalizations.of(context)!.disasterRiskText,
-          color: "#F1D0D5",
-          borderColor: "#DD4663",
-          icon: "snowflake"
-        ),
-        Category(
-          uuid: "a657288c-35ac-453c-a3e1-e283ed664929",
-          name: AppLocalizations.of(context)!.environmentalQuality,
-          code: "CALIDAD_MEDIOAMBIENTAL",
-          description: AppLocalizations.of(context)!.environmentalQualityText,
-          color: "#D3E9D3",
-          borderColor: "#79C990",
-          icon: "tree"
-        ),
-        Category(
-          uuid: "d7dd49aa-d91d-4f46-8979-47cbbad56194",
-          name: AppLocalizations.of(context)!.socioeconomicWellbeing,
-          code: "BIENESTAR_SOCIOECONOMICO",
-          description: AppLocalizations.of(context)!.socioeconomicWellbeingText,
-          color: "#F7EDC8",
-          borderColor: "#F0C23D",
-          icon: "user"
-        )
-      ],
-      activities: [],
-      uuid: '',
-      title: AppLocalizations.of(context)!.freeMapping,
-      locationText: AppLocalizations.of(context)!.mappingForAnyLocation,
-      limitNorth: '',
-      limitSouth: '',
-      limitEast: '',
-      limitWest: '',
-      createdAt: DateTime.now(),
-      status: '',
-      updatedAt: DateTime.now()
-    );
+        categories: [
+          Category(
+              uuid: "644c2ebe-a82e-4c23-a111-7bdc6f95e09d",
+              name:
+                  AppLocalizations.of(context)!.urbanEnvironment.toLowerCase(),
+              code: "ENTORNO_URBANO",
+              description: AppLocalizations.of(context)!.urbanEnvironmentText,
+              color: "#D3D8EA",
+              borderColor: "#6D7DBC",
+              icon: "building"),
+          Category(
+              uuid: "3a06b95b-a571-43fa-af49-62e38e3719bc",
+              name: AppLocalizations.of(context)!.disasterRisk.toLowerCase(),
+              code: "RIESGO_DESASTRES",
+              description: AppLocalizations.of(context)!.disasterRiskText,
+              color: "#F1D0D5",
+              borderColor: "#DD4663",
+              icon: "snowflake"),
+          Category(
+              uuid: "a657288c-35ac-453c-a3e1-e283ed664929",
+              name: AppLocalizations.of(context)!
+                  .environmentalQuality
+                  .toLowerCase(),
+              code: "CALIDAD_AMBIENTAL",
+              description:
+                  AppLocalizations.of(context)!.environmentalQualityText,
+              color: "#D3E9D3",
+              borderColor: "#79C990",
+              icon: "tree"),
+          Category(
+              uuid: "d7dd49aa-d91d-4f46-8979-47cbbad56194",
+              name: AppLocalizations.of(context)!
+                  .socioeconomicWellbeing
+                  .toLowerCase(),
+              code: "BIENESTAR_SOCIOECONOMICO",
+              description:
+                  AppLocalizations.of(context)!.socioeconomicWellbeingText,
+              color: "#F7EDC8",
+              borderColor: "#F0C23D",
+              icon: "user")
+        ],
+        activities: [],
+        uuid: '',
+        title: AppLocalizations.of(context)!.freeMapping,
+        locationText: AppLocalizations.of(context)!.mappingForAnyLocation,
+        limitNorth: '',
+        limitSouth: '',
+        limitEast: '',
+        limitWest: '',
+        createdAt: DateTime.now(),
+        status: '',
+        updatedAt: DateTime.now());
 
     Navigator.pushNamed(context, MapatonOnboardingPage.routeName, arguments: mapaton);
   }

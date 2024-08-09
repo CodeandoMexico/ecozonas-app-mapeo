@@ -42,7 +42,6 @@
     "copiedId": "Copied ID",
     "deleteSessionsText": "Delete sessions that you do not want to appear on this device",
     "deleteSession": "Delete session?",
-
     "onboardingIntro1": "EcoZones are neighborhoods that promote collaboration, sustainability, and prosperity. This app will help you identify the challenges and opportunities in your neighborhood across four dimensions: urban environment, environmental quality, socioeconomic well-being, and disaster risk.",
     "onboardingIntro2": "Complete the neighborhood survey and collaborative mapping to identify these challenges. The results will generate a report for your neighborhood, prioritizing Sustainable Urban Solutions (SUS) of short-term and low-cost implementation that can be applied in your community. You can view and download this report on the website: www.ecozonas.org, along with other resources and a catalogue of Sustainable Urban Solutions.",
     "onboardingIntro3": "For a complete assessment, follow these steps:",
@@ -52,14 +51,12 @@
     "aboutEcozonas": "About Ecozonas",
     "onboardingOutro": "This tool is part of the \"EcoZones\" project, implemented by WRI Mexico and the Wuppertal Institute, supported by the German Federal Ministry for Economic Affairs and Climate Action and the International Climate Initiative (IKI).",
     "goToTools": "Go to tools",
-    
     "moreInfoIntro": "Visit www.ecozonas.org from your computer to view the results of the survey and mapping conducted in your community and other regions. On the website, you will find information on:",
     "moreInfo1": "Survey: Check the survey results in your neighborhood, focusing on the main challenges and opportunities. Additionally, you will find a prioritization of Sustainable Urban Solutions (SUS) with proposed interventions for your neighborhood based on the identified challenges.",
     "moreInfo2": "Mapping: Explore the map of all mapped objects and a summary of the evaluation of your community.",
     "moreInfo3": "Catalog of Sustainable Urban Solutions (SUS): Filter solutions according to the identified challenges or explore the catalog with 160 ideas to implement in your neighborhood.",
     "moreInfo4": "Download the report with the diagnosis of your neighborhood and the prioritized SUS, as well as the databases with the collected information.",
     "moreInfo5": "Visit www.ecozonas.org and invite others to check it out!",
-
     "freeMapping": "Free Mapping",
     "mappingForAnyLocation": "Mapping for any location.",
     "dimension": "Dimension",
@@ -72,7 +69,6 @@
     "environmentalQualityText": "The environmental characteristics of a neighborhood include practices and situations that impact the quality of the environment and the health of the population. For example, this refers to air or water cleanliness, waste management, or the presence of pollution in the neighborhood.",
     "socioeconomicWellbeing": "Socioeconomic Wellbeing",
     "socioeconomicWellbeingText": "Socioeconomic well-being refers to the opportunities for employment, education, information, and health that people have access to. It also includes participation in income-generating activities and events that foster a sense of community.",
-    
     "diagnosticTools": "Diagnostic tools",
     "survey": "Survey",
     "mapping": "Mapping",
@@ -89,7 +85,6 @@
     "checkResultsText": "Go to www.ecozonas.org from your computer to see your answers, mappings and download the list of recommended solutions",
     "moreInfo": "More information",
     "webPlatform": "Web platform",
-    
     "sendData": "Submit data",
     "mapHere": "Map here",
     "downloadRegion": "Download region?",
@@ -103,16 +98,13 @@
     "deleteMapping": "Delete mapping?",
     "delete": "Delete",
     "activityDeleted": "The activity was successfully deleted.",
-    
     "exit": "Exit",
     "takePhoto": "Take photo",
     "takeAnotherPhoto": "Take another photo",
     "required": "This field is required",
     "checkRequired": "Please review the required fields",
-    
     "tools": "Tools",
     "mySession": "My session",
-    
     "pleaseWait": "Please wait",
     "objectCount": "There are {count} mapped object{plurals} to be submitted",
     "@objectCount": {

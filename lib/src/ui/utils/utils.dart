@@ -53,7 +53,7 @@ Widget getCategoryIcon({required String code, required int size, Color color = C
   switch(code) {
     case 'ENTORNO_URBANO':
       image = 'assets/icons/ic_building_solid.svg';
-    case 'CALIDAD_MEDIOAMBIENTAL':
+    case 'CALIDAD_AMBIENTAL':
       image = 'assets/icons/ic_leaf_solid.svg';
     case 'BIENESTAR_SOCIOECONOMICO':
       image = 'assets/icons/ic_people_roof_solid.svg';
@@ -72,9 +72,9 @@ Widget getCategoryIcon({required String code, required int size, Color color = C
 
 String removeDiacritics(String str) {
   var withDia = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
-  var withoutDia = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz'; 
+  var withoutDia = 'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
 
-  for (int i = 0; i < withDia.length; i++) {      
+  for (int i = 0; i < withDia.length; i++) {
     str = str.replaceAll(withDia[i], withoutDia[i]);
   }
   return str.toLowerCase();

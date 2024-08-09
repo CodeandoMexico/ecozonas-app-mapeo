@@ -54,7 +54,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
   Widget build(BuildContext context) {
     // final mapaton = ModalRoute.of(context)!.settings.arguments as MapatonModel;
     final bloc = context.read<MapatonBloc>();
-    
+
     final prefs = UserPreferences();
 
     _activitiesDraggable.setActivities(widget.mapaton!);
@@ -171,7 +171,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
         builder: (BuildContext context, AsyncSnapshot<LocationData> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             final l = snapshot.data!;
-            
+
             if (_currentPositionSymbol != null) {
               final currentGeo = _currentPositionSymbol!.options.geometry!;
               if (currentGeo.latitude.toStringAsFixed(5) != l.latitude!.toStringAsFixed(5) ||
@@ -201,16 +201,16 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
       onStyleLoadedCallback: () async {
         await _controller!.setSymbolIconAllowOverlap(true);
         await _controller!.setSymbolTextAllowOverlap(true);
-        
+
         final icons = [
           'my_location',
           'desastres',
-          'medioambiental',
+          'ambiental',
           'socioeconomico',
           'urbano',
           'otra'
         ];
-        
+
         for (var icon in icons) {
           final ByteData bytes = await rootBundle.load('assets/markers/icon_$icon.png');
           final Uint8List list = bytes.buffer.asUint8List();
@@ -414,16 +414,16 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
       _controller!.removeSymbol(_currentPositionSymbol!);
     }
   }
-  
+
   Future<void> addImageFromAsset(LatLng coordinates, ActivityDbModel a) async {
     String icon = '';
-    
+
     switch(a.categoryCode) {
       case 'RIESGO_DESASTRES':
         icon = 'desastres';
         break;
-      case 'CALIDAD_MEDIOAMBIENTAL':
-        icon = 'medioambiental';
+      case 'CALIDAD_AMBIENTAL':
+        icon = 'ambiental';
         break;
       case 'BIENESTAR_SOCIOECONOMICO':
         icon = 'socioeconomico';
@@ -496,7 +496,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
 
   Future<void> _setDisableCameraMove() async {
     _disableCameraMove = true;
-    
+
     await Future.delayed(const Duration(milliseconds: 600)).then((value) {
       _disableCameraMove = false;
     });
@@ -504,7 +504,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
 
   Future<void> _downloadRegion(MapatonModel mapaton) async {
     LatLngBounds bounds = await _controller!.getVisibleRegion();
-    
+
     if (mounted) {
       showConfirmationDialog(
         context,

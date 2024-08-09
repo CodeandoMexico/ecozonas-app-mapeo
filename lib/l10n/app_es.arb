@@ -42,7 +42,6 @@
     "copiedId": "ID copiado",
     "deleteSessionsText": "Elimina las sesiones que no quieres que aparezcan en este dispositivo",
     "deleteSession": "¿Eliminar la sesión?",
-
     "onboardingIntro1": "Las EcoZonas son barrios que promueven colaboración, sostenibilidad y prosperidad. Esta aplicación te ayudará a identificar los desafíos y oportunidades en tu barrio en cuatro dimensiones: entorno urbano, calidad ambiental, bienestar socioeconómico y riesgo de desastres.",
     "onboardingIntro2": "Realiza la encuesta barrial y el mapeo colaborativo para identificar estos desafíos. Los resultados generarán un reporte de tu barrio junto con una priorización de Soluciones Urbanas Sostenibles (SUS) de rápida implementación y bajo costo para tu comunidad. Podrás visualizar y descargar este reporte en la página  www.ecozonas.org, junto con otros recursos y detalles sobre las Soluciones Urbanas Sostenibles.",
     "onboardingIntro3": "Para un diagnóstico completo, sigue estos pasos:",
@@ -52,14 +51,12 @@
     "aboutEcozonas": "Sobre Ecozonas",
     "onboardingOutro": "Esta herramienta es parte del proyecto \"EcoZonas\", implementado por WRI México y el Instituto Wuppertal, apoyado por el Ministerio Federal de Economía y Protección del Clima Alemán y la Iniciativa Internacional del Clima (IKI).",
     "goToTools": "Ir a las herramientas",
-
     "moreInfoIntro": "Visita www.ecozonas.org desde tu computadora para ver los resultados de la encuesta y el mapeo realizados en tu comunidad y otras regiones. En el sitio web podrás encontrar información de:",
     "moreInfo1": "Encuesta: consulta los resultados de la encuesta en tu barrio, enfocados en los principales desafíos y oportunidades. Además, encontrarás una priorización de Soluciones Urbanas Sostenibles (SUS) con intervenciones propuestas tu barrio según los desafíos identificados.",
     "moreInfo2": "Mapeo: explora el mapa de todos los objetos mapeados y un resumen de la evaluación de tu comunidad.",
     "moreInfo3": "Catálogo de Soluciones Urbanas Sostenibles (SUS): filtra las soluciones según los desafíos identificados o explora el catálogo con 160 ideas para implementar en tu barrio.",
     "moreInfo4": "Descarga el reporte con el diagnóstico de tu barrio y las SUS priorizadas, así como las bases de datos con la información recolectada.",
     "moreInfo5": "¡Visita www.ecozonas.org e invita a otras personas a conocerla!",
-    
     "freeMapping": "Mapeo Libre",
     "mappingForAnyLocation": "Mapeo para cualquier ubicación.",
     "dimension": "Dimensión",
@@ -68,11 +65,10 @@
     "urbanEnvironmentText": "El entorno urbano incluye los elementos que son parte de un barrio: espacios públicos como plazas, parques y jardines; transporte público, calles peatonales y ciclovías; escuelas, centros de salud, comercios, y más. Un entorno urbano es adecuado cuando es atractivo, seguro, inclusivo y cuida el medio ambiente.",
     "disasterRisk": "Riesgo de desastres",
     "disasterRiskText": "En la dimensión de riesgos de desastres, se identifican los efectos negativos y los impactos en personas, viviendas y negocios que un barrio puede enfrentar ante fenómenos naturales y desastres, como inundaciones, olas de calor o incendios. Una comunidad que se prepara para estos riesgos puede protegerse y recuperarse más fácilmente.",
-    "environmentalQuality": "Calidad medioambiental",
+    "environmentalQuality": "Calidad ambiental",
     "environmentalQualityText": "Las características ambientales de un barrio incluyen prácticas y situaciones que impactan en la calidad del medio ambiente y en la salud de la población. Por ejemplo, se refieren a la limpieza del aire o del agua, cómo se maneja la basura o si hay presencia de contaminación en el barrio.",
-    "socioeconomicWellbeing": "Bienestar Socioeconómico",
+    "socioeconomicWellbeing": "Bienestar socioeconómico",
     "socioeconomicWellbeingText": "El bienestar socioeconómico se refiere a las oportunidades de empleo, educación, información y salud a las que tienen acceso las personas. También incluye la participación en actividades que generen ingresos y en eventos que fomenten el sentido de comunidad para todas las personas.",
-    
     "diagnosticTools": "Herramientas de diagnóstico",
     "survey": "Encuesta",
     "mapping": "Mapeo",
@@ -89,7 +85,6 @@
     "checkResultsText": "Entra a www.ecozonas.org desde tu computadora para ver tus respuestas, mapeos y descargar la lista de soluciones recomendadas",
     "moreInfo": "Más información",
     "webPlatform": "Plataforma web",
-    
     "sendData": "Enviar datos",
     "mapHere": "Mapear aquí",
     "downloadRegion": "¿Descargar región?",
@@ -103,16 +98,13 @@
     "deleteMapping": "¿Eliminar mapeo?",
     "delete": "Eliminar",
     "activityDeleted": "La actividad se eliminó correctamente.",
-    
     "exit": "Salir",
     "takePhoto": "Tomar foto",
     "takeAnotherPhoto": "Tomar otra foto",
     "required": "Este campo es obligatorio",
     "checkRequired": "Por favor, revise los campos obligatorios",
-    
     "tools": "Herramientas",
     "mySession": "Mi sesión",
-    
     "pleaseWait": "Por favor espere",
     "objectCount": "Hay {count} objeto{plurals} mapeado{plurals} por enviar",
     "@objectCount": {
