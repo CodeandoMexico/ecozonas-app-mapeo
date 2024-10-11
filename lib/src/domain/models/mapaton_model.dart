@@ -4,7 +4,7 @@ List<MapatonModel> mapatonListFromJson(String str) => List<MapatonModel>.from(js
 
 String mapatonModelToJson(List<MapatonModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-const _noTraduction = 'SIN TRADUCIR';
+const _noTraduction = '';
 
 class MapatonModel {
     List<Activity> activities;

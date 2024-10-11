@@ -9,6 +9,7 @@ import 'constants.dart';
 void showLoadingDialog(BuildContext context) {
   showDialog(
     context: context,
+    barrierDismissible: false,
     builder: (context) {
       return AlertDialog(
         backgroundColor: Colors.white,
@@ -95,6 +96,7 @@ void showMyBottomSheet({
 }) {
   showModalBottomSheet(
     context: context,
+    isScrollControlled: true,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(Constants.borderRadiusBottomSheet),

@@ -35,6 +35,7 @@ class Constants {
     ItemModel(label: 'Entre 46 y 55 años', value: '46_55'),
     ItemModel(label: 'Entre 56 y 65 años', value: '56_65'),
     ItemModel(label: 'Más de 65 años', value: 'MAS_65'),
+    ItemModel(label: 'Prefiero no contestar', value: 'NO_CONTESTO'),
     ItemModel(label: 'Under 18 years', value: 'MENOS_18'),
     ItemModel(label: 'Between 18 and 25 years', value: '18_25'),
     ItemModel(label: 'Between 26 and 35 years', value: '26_35'),
@@ -42,6 +43,7 @@ class Constants {
     ItemModel(label: 'Between 46 and 55 years', value: '46_55'),
     ItemModel(label: 'Between 56 and 65 years', value: '56_65'),
     ItemModel(label: 'More than 65 years', value: 'MAS_65'),
+    ItemModel(label: 'I prefer not to answer', value: 'NO_CONTESTO'),
   ];
 
   static List<ItemModel> disability = [
@@ -51,12 +53,14 @@ class Constants {
     ItemModel(label: 'Auditiva', value: 'AUDITIVA'),
     ItemModel(label: 'Cognitiva', value: 'COGNITIVA'),
     ItemModel(label: 'Otra', value: 'OTRA'),
+    ItemModel(label: 'Prefiero no contestar', value: 'OTRA'),
     ItemModel(label: 'None', value: 'NINGUNA'),
     ItemModel(label: 'Motor', value: 'MOTRIZ'),
     ItemModel(label: 'Visual', value: 'VISUAL'),
     ItemModel(label: 'Hearing', value: 'AUDITIVA'),
     ItemModel(label: 'Cognitive', value: 'COGNITIVA'),
     ItemModel(label: 'Other', value: 'OTRA'),
+    ItemModel(label: 'I prefer not to answer', value: 'OTRA'),
   ];
 
   /*

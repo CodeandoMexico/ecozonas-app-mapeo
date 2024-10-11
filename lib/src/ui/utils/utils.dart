@@ -106,6 +106,7 @@ List<ItemModel> getAgeRange(BuildContext context) {
     ItemModel(label: AppLocalizations.of(context)!.between46, value: '46_55'),
     ItemModel(label: AppLocalizations.of(context)!.between56, value: '56_65'),
     ItemModel(label: AppLocalizations.of(context)!.more65, value: 'MAS_65'),
+    ItemModel(label: AppLocalizations.of(context)!.preferNoAnswer, value: 'NO_CONTESTO'),
   ];
 }
 
@@ -117,6 +118,7 @@ List<ItemModel> getDisiability(BuildContext context) {
     ItemModel(label: AppLocalizations.of(context)!.hearing, value: 'AUDITIVA'),
     ItemModel(label: AppLocalizations.of(context)!.cognitive, value: 'COGNITIVA'),
     ItemModel(label: AppLocalizations.of(context)!.other2, value: 'OTRA'),
+    ItemModel(label: AppLocalizations.of(context)!.preferNoAnswer, value: 'OTRA'),
   ];
 }
 

@@ -29,6 +29,13 @@ class _NewSessionContentState extends State<NewSessionContent> {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<NewSessionBloc>();
+
+    _selectedGender = AppLocalizations.of(context)!.preferNoAnswer;
+    _selectedAge = AppLocalizations.of(context)!.preferNoAnswer;
+    _selectedDisability = AppLocalizations.of(context)!.preferNoAnswer;
+    bloc.setGender(_selectedGender!);
+    bloc.setAge(_selectedAge!);
+    bloc.setDisability(_selectedDisability!);
     
     return Scaffold(
       body: BlocListener<NewSessionBloc, NewSessionState>(
@@ -78,6 +85,7 @@ class _NewSessionContentState extends State<NewSessionContent> {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.gender,
       options: utils.getGenderOptions(context),
+      initialValue: utils.getGenderOptions(context).last.label,
       callback: (value) {
         bloc.setGender(value);
         _selectedGender = value;
@@ -89,6 +97,7 @@ class _NewSessionContentState extends State<NewSessionContent> {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.ageRange,
       options: utils.getAgeRange(context),
+      initialValue: utils.getAgeRange(context).last.label,
       callback: (value) {
         bloc.setAge(value);
         _selectedAge = value;
@@ -100,6 +109,7 @@ class _NewSessionContentState extends State<NewSessionContent> {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.disability,
       options: utils.getDisiability(context),
+      initialValue: utils.getDisiability(context).last.label,
       callback: (value) {
         bloc.setDisability(value);
         _selectedDisability = value;
