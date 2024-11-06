@@ -9,6 +9,7 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../main.dart';
+import '../../../data/device/connectivity.dart';
 import '../../../data/preferences/user_preferences.dart';
 import '../../../domain/models/current_activity_model.dart';
 import '../../../domain/models/db/activity_db_model.dart';
@@ -397,15 +398,19 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
   }
 
   Future<void> addMyLocation(LatLng coordinates) async {
-    if (_controller != null) {
-      _currentPositionSymbol = await _controller!.addSymbol(
-        SymbolOptions(
-          geometry: coordinates,
-          iconImage: 'my_location',
-          iconSize: 0.7,
-          iconColor: '#FF0000',
-        ),
-      );
+    try {
+      if (_controller != null) {
+        _currentPositionSymbol = await _controller!.addSymbol(
+          SymbolOptions(
+            geometry: coordinates,
+            iconImage: 'my_location',
+            iconSize: 0.7,
+            iconColor: '#FF0000',
+          ),
+        );
+      }
+    } catch (err) {
+      debugPrint(err.toString());
     }
   }
 
@@ -505,15 +510,22 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
   Future<void> _downloadRegion(MapatonModel mapaton) async {
     LatLngBounds bounds = await _controller!.getVisibleRegion();
 
-    if (mounted) {
-      showConfirmationDialog(
-        context,
-        text: AppLocalizations.of(context)!.downloadRegion,
-        acceptButtonText: AppLocalizations.of(context)!.download,
-        acceptCallback: () {
-          BlocProvider.of<MapatonBloc>(context).add(DownloadRegion(name: mapaton.uuid, bounds: bounds));
-        }
-      );
+    final connectionAvailable = await Connectivity.connectionAvailable();
+    if (connectionAvailable) {
+      if (mounted) {
+        showConfirmationDialog(
+          context,
+          text: AppLocalizations.of(context)!.downloadRegion,
+          acceptButtonText: AppLocalizations.of(context)!.download,
+          acceptCallback: () {
+            BlocProvider.of<MapatonBloc>(context).add(DownloadRegion(name: mapaton.uuid, bounds: bounds));
+          }
+        );
+      }
+    } else {
+      if (mounted) {
+        utils.showSnackBarError(context, AppLocalizations.of(context)!.noConnection);
+      }
     }
   }
 }

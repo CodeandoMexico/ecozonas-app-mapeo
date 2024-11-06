@@ -44,7 +44,7 @@ class UpdateMapContent extends StatelessWidget {
           BlocProvider.of<UpdateMapBloc>(context).add(GetMapatonById());
         }
         if (state is ErrorSendingMapaton) {
-          utils.showSnackBarError(context, state.error);
+          utils.showSnackBarError(context, state.error ?? AppLocalizations.of(context)!.errorFound);
         }
       },
       child: _sendButton(context, bloc),

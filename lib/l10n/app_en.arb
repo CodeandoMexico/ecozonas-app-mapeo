@@ -118,5 +118,7 @@
           "example": "s"
         }
       }
-    }
+    },
+    "errorFound": "An error was found",
+    "noConnection": "No connection"
 }

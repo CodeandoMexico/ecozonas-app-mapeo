@@ -15,6 +15,32 @@ El proyecto “EcoZonas: Piloto para diseñar, escalar y replicar la acción cli
 
 Este proyecto se centra en la implementación de proyectos piloto en dos barrios vulnerables de ciudades mexicanas de tamaño medio con el objetivo de desarrollar, apoyar y fortalecer procesos y métodos participativos de acción climática inclusiva y replicable a nivel comunitario, enmarcados en planes de acción climática municipales y nacionales. Los principales beneficiarios son las comunidades locales, sociedad civil organizada, los municipios y los gobiernos estatales y nacionales.
 
+## Obtener api de Mapbox
+1. Visitar la página de Mapbox
+2. ___
+
+## Como compilar la aplicación
+1. Clonar proyecto desde: ___
+2. Instalar Visual Studio Code para abrir el proyecto
+3. En Visual Studio Code y abrir el proyecto utiilzando Open Folder
+4. En la terminal de Visual Studio Code, ejecutar el comando “flutter pub get” para descargar las librerías del proyecto
+5. Una vez terminado el proceso, ejecutar “flutter run apk --dart-define=ACCESS_TOKEN=[API_DE_MAPBOX]” para compilar el proyecto. Se debe reemplazar [API_DE_MAPBOX] con el obtenido en la página oficial de Mapbox
+
+## Versiones utilizadas
+1. Flutter (Channel stable, 3.22.3, on macOS 15.0.1)
+    1. Flutter version 3.22.3 on channel stable
+    2. Dart version 3.4.4
+    3. DevTools version 2.34.3
+2. Android toolchain - develop for Android devices (Android SDK version 33.0.1)
+    1. Platform android-34, build-tools 33.0.1
+    2. Java version OpenJDK Runtime Environment (build 17.0.9+0-17.0.9b1087.7-11185874)
+3. Xcode - develop for iOS and macOS (Xcode 16.1)
+    1. CocoaPods version 1.14.3
+4. Android Studio (version 2023.2)
+    1. Java version OpenJDK Runtime Environment (build 17.0.9+0-17.0.9b1087.7-11185874)
+5. VS Code (version 1.94.2)
+    1. Flutter extension version 3.98.0
+
 ## Cómo contribuir al proyecto
 
 De momento el proyecto no está abierto a contribuciones, pero está planeado abrirlo a futuro.

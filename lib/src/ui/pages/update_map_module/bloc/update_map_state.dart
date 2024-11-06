@@ -18,7 +18,7 @@ class SendingMapaton extends UpdateMapState {}
 class MapatonSent extends UpdateMapState {}
 
 class ErrorSendingMapaton extends UpdateMapState {
-  final String error;
+  final String? error;
 
   ErrorSendingMapaton(this.error);
 

@@ -114,7 +114,7 @@ class MapatonBloc extends Bloc<MapatonEvent, MapatonState> {
   void _mapDownloadRegionToState(Emitter<MapatonState> emit, String name, LatLngBounds bounds) async {
     emit(DownloadingRegion());
     try {
-       await _downloadRegion(bounds, name);
+      await _downloadRegion(bounds, name);
       emit(RegionDownloaded());
     } catch (err) {
       emit(ErrorDownloadingRegion());

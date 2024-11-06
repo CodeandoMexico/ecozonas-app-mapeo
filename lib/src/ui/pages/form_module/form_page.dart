@@ -216,6 +216,7 @@ class FormPage extends StatelessWidget {
 
     try {
       final prefs = UserPreferences();
+      final title = utils.showEnglish(context) ? activity.titleEn : activity.title;
 
       final useCase = MapatonUseCase(MapatonRepositoryImpl());
       final m = await useCase.getMapatonsByUuidAndMapper(activity.mapatonUuid!, prefs.getMapper!.id.toString());
@@ -227,7 +228,7 @@ class FormPage extends StatelessWidget {
       final a = ActivityDbModel(
         mapatonId: m!.id!,
         uuid: activity.uuid,
-        name: activity.title,
+        name: title,
         color: activity.category.color,
         borderColor: activity.category.borderColor!,
         latitude: lat,

@@ -63,7 +63,7 @@ class UpdateMapBloc extends Bloc<UpdateMapEvent, UpdateMapState> {
         await _updateSentActivities(mapaton);
         emit(MapatonSent());
       } else {
-        emit(ErrorSendingMapaton(response.error!));
+        emit(ErrorSendingMapaton(null));
       }
     } catch (err) {
       emit(ErrorSendingMapaton(err.toString()));

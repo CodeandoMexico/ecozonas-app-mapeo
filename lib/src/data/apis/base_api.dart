@@ -20,14 +20,6 @@ class BaseApi {
     "Accept" : "application/json"
   };
 
-  // static Map<String, String> _authHeaders() {
-  //   final prefs = UserPreferences();
-  //   return {
-  //       ..._headers,
-  //       "Authorization" : "Bearer ${prefs.getLoginData!.token}"
-  //   };
-  // }
-
   /*
    * FUTURES
    */
@@ -36,7 +28,6 @@ class BaseApi {
     if (connectionAvailable) {
       final http.Response response = await http.get(
         Uri.parse('${basePath}api/$endpoint'),
-        // headers : _authHeaders()
       );
       if (response.ok) {
         return ApiResponseModel(
@@ -46,13 +37,11 @@ class BaseApi {
       } else {
         return ApiResponseModel(
           isSuccess: false,
-          error: 'No se pudo descargar la información'
         );
       }
     } else {
       return ApiResponseModel(
         isSuccess: false,
-        error: 'No hay conexión a internet'
       );
     }
   }
@@ -77,42 +66,11 @@ class BaseApi {
       } else {
         return ApiResponseModel(
           isSuccess: false,
-          error: 'No se pudo enviar la información'
         );
       }
     } else {
       return ApiResponseModel(
         isSuccess: false,
-        error: 'No hay conexión a internet'
-      );
-    }
-  }
-
-  static Future<ApiResponseModel> postTest({
-    required String endpoint,
-    required Map<String, dynamic> body
-  }) async {
-    final connectionAvailable = await Connectivity.connectionAvailable();
-    if (connectionAvailable) {
-      final http.Response response = await http.post(
-        Uri.parse(endpoint),
-        body: json.encode(body),
-      );
-      if (response.ok) {
-        return ApiResponseModel(
-          isSuccess: true,
-          result: json.decode(response.body),
-        );
-      } else {
-        return ApiResponseModel(
-          isSuccess: false,
-          error: 'No se pudo enviar la información'
-        );
-      }
-    } else {
-      return ApiResponseModel(
-        isSuccess: false,
-        error: 'No hay conexión a internet'
       );
     }
   }
@@ -153,7 +111,6 @@ class BaseApi {
     } else {
       return ApiResponseModel(
         isSuccess: false,
-        error: 'No hay conexión a internet'
       );
     }
   }

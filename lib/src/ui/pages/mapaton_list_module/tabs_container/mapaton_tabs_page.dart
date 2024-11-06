@@ -199,7 +199,7 @@ class MapatonTabsPage extends StatelessWidget implements BottomNavigationBarStat
       }
     } else {
       if (context.mounted) {
-        utils.showSnackBarError(context, mapatonResponse.error!);
+        utils.showSnackBarError(context, AppLocalizations.of(context)!.errorFound);
       }  
     }
 
@@ -224,7 +224,7 @@ class MapatonTabsPage extends StatelessWidget implements BottomNavigationBarStat
       }
     } else {
       if (context.mounted) {
-        utils.showSnackBarError(context, surveyResponse.error!);
+        utils.showSnackBarError(context, AppLocalizations.of(context)!.errorFound);
       }  
     }
     
