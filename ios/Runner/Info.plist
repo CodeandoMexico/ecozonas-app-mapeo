@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Ecozonas</string>
+	<string>EcoZonas</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -30,7 +30,7 @@
 	<string>pk.eyJ1Ijoib3NjYXJjbXgiLCJhIjoiY2w5dzZsOXk2MHhkdTN2bnphc2lndmNmZyJ9.2AYl5RU58_E0G2XpOfYjlQ</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Se necesita acceso a la cámara para completar la información del mapeo.</string>
-  <key>NSPhotoLibraryUsageDescription</key>
+	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Se necesita acceso a la cámara para completar la información del mapeo.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Se necesita acceso a la ubicación mientras la aplicación está en uso para seleccionar la ubicación del mapeo.</string>
