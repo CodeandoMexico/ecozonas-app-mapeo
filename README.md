@@ -69,6 +69,11 @@ Si estás planeando reutilizar el código, es necesario que publiques el código
 
 Te recomendamos leas a detalle la licencia. Puedes contactarnos si tienes alguna duda al respecto.
 
+## Equipo y colaboradores
+
+* [Jesús L.](https://github.com/jck9007)
+* [Óscar Hernández](https://github.com/oxcar)
+
 ---
 
 Creado con ❤️ por la comunidad de [Codeando México](http://www.codeandomexico.org).
