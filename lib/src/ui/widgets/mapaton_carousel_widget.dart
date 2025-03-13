@@ -89,7 +89,7 @@ class _MapatonCarouselWidgetState extends State<MapatonCarouselWidget> {
   Widget _header(BuildContext context, Category category) {
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.4,
       color: category.color.toColor(),
       padding: const EdgeInsets.all(Constants.padding),
       child: Column(

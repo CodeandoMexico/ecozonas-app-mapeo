@@ -20,12 +20,14 @@ class MapatonOnboardingPage extends StatelessWidget {
 
     return Scaffold(
       appBar: _appBar(mapaton),
-      body: Column(
-        children: [
-          MapatonCarouselWidget(mapaton: mapaton),
-          const Spacer(),
-          _buttons(context, mapaton)
-        ],
+      body: SingleChildScrollView( // Add scrollability
+        child: Column(
+          children: [
+            MapatonCarouselWidget(mapaton: mapaton),
+            const SizedBox(height: Constants.paddingLarge),
+            _buttons(context, mapaton),
+          ],
+        ),
       ),
       backgroundColor: myTheme.primaryColor,
     );
@@ -87,7 +89,7 @@ class MapatonOnboardingPage extends StatelessWidget {
         l.add(userId);
         prefs.setOnboardingTextShownIds = l.join(',');
       }
-      
+
       Navigator.pushNamed(context, MapatonMainPage.routeName);
     }
   }

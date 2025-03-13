@@ -36,7 +36,7 @@ class _NewSessionContentState extends State<NewSessionContent> {
     bloc.setGender(_selectedGender!);
     bloc.setAge(_selectedAge!);
     bloc.setDisability(_selectedDisability!);
-    
+
     return Scaffold(
       body: BlocListener<NewSessionBloc, NewSessionState>(
         listener: (context, state) {
@@ -57,10 +57,12 @@ class _NewSessionContentState extends State<NewSessionContent> {
     );
   }
 
-  Widget _body(BuildContext context, NewSessionBloc bloc) {
-    return Padding(
+Widget _body(BuildContext context, NewSessionBloc bloc) {
+  return SingleChildScrollView( // Add scrollability
+    child: Padding(
       padding: const EdgeInsets.all(Constants.padding),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset('assets/images/new_app_splash.png', height: 160),
           Text(
@@ -68,18 +70,20 @@ class _NewSessionContentState extends State<NewSessionContent> {
             style: const TextStyle(fontSize: 18),
             textAlign: TextAlign.center,
           ),
-          const Spacer(),
+          const SizedBox(height: Constants.paddingLarge), // Replace Spacer
           _genderDropdown(context, bloc),
           const SizedBox(height: Constants.paddingLarge),
           _ageDropdown(bloc),
           const SizedBox(height: Constants.paddingLarge),
           _disabilityDropdown(bloc),
-          const Spacer(),
-          _continueButton(bloc)
+          const SizedBox(height: Constants.paddingLarge), // Replace Spacer
+          _continueButton(bloc),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _genderDropdown(BuildContext context, NewSessionBloc bloc) {
     return MyBottomSheetTextField(

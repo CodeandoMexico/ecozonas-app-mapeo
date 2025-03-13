@@ -73,29 +73,39 @@ class MapatonTabsPage extends StatelessWidget implements BottomNavigationBarStat
    * WIDGETS
    */
   Widget _body(BuildContext context, MapatonSurveyProvider provider) {
-    return provider.mapatons.isNotEmpty && provider.surveys.isNotEmpty ? Padding(
-      padding: const EdgeInsets.symmetric(vertical: Constants.paddingSmall, horizontal: Constants.padding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const EcozonasImage(topPadding: 20, bottomPadding: 20),
-          _answerSurveyWidget(context, provider),
-          const SizedBox(height: Constants.paddingSmall),
-          _mapNeighborhood(context, provider),
-          const Spacer(),
-          Text(AppLocalizations.of(context)!.checkResults, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-          _text(context),
-          const Spacer(),
-          _moreInfoButton(context, provider),
-          const Spacer(),
-        ],
-      ),
-    ) : NoDataWidget(
-      callback: () {
-        _downloadAndSaveMapatons(context, provider);
-      },
-    );
+  return provider.mapatons.isNotEmpty && provider.surveys.isNotEmpty
+      ? Padding(
+          padding: const EdgeInsets.symmetric(
+              vertical: Constants.paddingSmall, horizontal: Constants.padding),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const EcozonasImage(topPadding: 20, bottomPadding: 20),
+                _answerSurveyWidget(context, provider),
+                const SizedBox(height: Constants.paddingSmall),
+                _mapNeighborhood(context, provider),
+                const SizedBox(height: Constants.paddingLarge),
+                Text(
+                  AppLocalizations.of(context)!.checkResults,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+                _text(context),
+                const SizedBox(height: Constants.paddingLarge),
+                _moreInfoButton(context, provider),
+                const SizedBox(height: Constants.paddingLarge),
+              ],
+            ),
+          ),
+        )
+      : NoDataWidget(
+          callback: () {
+            _downloadAndSaveMapatons(context, provider);
+          },
+        );
   }
+
 
   Widget _answerSurveyWidget(BuildContext context, MapatonSurveyProvider provider) {
     return Card(
@@ -174,7 +184,7 @@ class MapatonTabsPage extends StatelessWidget implements BottomNavigationBarStat
    */
   Future<void> _downloadAndSaveMapatons(BuildContext context, MapatonSurveyProvider provider) async {
     final apiUseCase = MapatonSurveyApiUseCase(MapatonSurveyApiRepositoryImpl());
-    
+
     dialogs.showLoadingDialog(context);
 
     /*
@@ -200,7 +210,7 @@ class MapatonTabsPage extends StatelessWidget implements BottomNavigationBarStat
     } else {
       if (context.mounted) {
         utils.showSnackBarError(context, AppLocalizations.of(context)!.errorFound);
-      }  
+      }
     }
 
     /*
@@ -225,9 +235,9 @@ class MapatonTabsPage extends StatelessWidget implements BottomNavigationBarStat
     } else {
       if (context.mounted) {
         utils.showSnackBarError(context, AppLocalizations.of(context)!.errorFound);
-      }  
+      }
     }
-    
+
     if (context.mounted) {
       Navigator.pop(context);
     }
@@ -236,10 +246,10 @@ class MapatonTabsPage extends StatelessWidget implements BottomNavigationBarStat
   Future<void> _goToMapaton(MapatonModel mapaton, BuildContext context) async {
     final prefs = UserPreferences();
     final mapper = prefs.getMapper;
-    
+
     final useCase = MapatonUseCase(MapatonRepositoryImpl());
     final m = await useCase.getMapatonsByUuidAndMapper(mapaton.uuid, mapper!.id.toString());
-    
+
     if (m == null) {
       final id = await useCase.addMapaton(MapatonDbModel(
         uuid: mapaton.uuid,
@@ -253,7 +263,7 @@ class MapatonTabsPage extends StatelessWidget implements BottomNavigationBarStat
     } else {
       prefs.setMapatonDbId = m.id;
     }
-    
+
     if (context.mounted) {
       // Navigator.pushNamed(context, MapatonMapPage.routeName, arguments: mapaton);
       Navigator.push(
