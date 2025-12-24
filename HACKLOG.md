@@ -1,11 +1,17 @@
-# hacklog: Nombre del proyecto
+# Hacklog: EcoZonas App Mapeo
 
-```
-   ____          _                      _         __  __           _           
-  / ___|___   __| | ___  __ _ _ __   __| | ___   |  \/  | _____  _(_) ___ ___  
- | |   / _ \ / _` |/ _ \/ _` | '_ \ / _` |/ _ \  | |\/| |/ _ \ \/ / |/ __/ _ \ 
- | |__| (_) | (_| |  __/ (_| | | | | (_| | (_) | | |  | |  __/>  <| | (_| (_) |
-  \____\___/ \__,_|\___|\__,_|_| |_|\__,_|\___/  |_|  |_|\___/_/\_\_|\___\___/ 
-```
+## 11 de diciembre de 2025
+
+### Documentación técnica
+
+- Revisión exhaustiva del codebase para entender arquitectura, patrones y funcionalidades
+- Creación de `docs/DESARROLLO.md` con documentación técnica del proyecto
+  - Descripción del proyecto y contexto (EcoZonas, WRI México)
+  - Documentación de arquitectura Clean Architecture (capas data/domain/ui)
+  - Patrones de diseño implementados (Repository, BLoC, Provider, Use Cases)
+  - Funcionalidades principales (sesiones, mapeo, formularios dinámicos, offline-first)
+  - Dependencias clave y integraciones externas (Mapbox, API EcoZonas, KoboToolbox)
+  - Identificación de mejoras prioritarias (testing, migraciones BD, DI, logging)
+
 
 
