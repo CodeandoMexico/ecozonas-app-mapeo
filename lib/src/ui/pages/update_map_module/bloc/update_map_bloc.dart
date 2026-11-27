@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ecozonas/src/domain/models/api_response_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:path/path.dart' as path;
@@ -63,10 +64,11 @@ class UpdateMapBloc extends Bloc<UpdateMapEvent, UpdateMapState> {
         await _updateSentActivities(mapaton);
         emit(MapatonSent());
       } else {
-        emit(ErrorSendingMapaton(null));
+        emit(ErrorSendingMapaton());
       }
-    } catch (err) {
-      emit(ErrorSendingMapaton(err.toString()));
+    } catch (err, stack) {
+      debugPrint('Error al enviar los mapeos: $err\n$stack');
+      emit(ErrorSendingMapaton());
     }
   }
 

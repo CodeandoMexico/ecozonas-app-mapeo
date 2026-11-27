@@ -228,9 +228,10 @@ class FormPage extends StatelessWidget {
       if (context.mounted) {
         Navigator.pop(context, a);
       }
-    } catch (err) {
+    } catch (err, stack) {
+      debugPrint('Error al guardar el mapeo: $err\n$stack');
       if (context.mounted) {
-        utils.showSnackBarError(context, err.toString());
+        utils.showSnackBarError(context, AppLocalizations.of(context)!.saveError);
       }
     }
   }

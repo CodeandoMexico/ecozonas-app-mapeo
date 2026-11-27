@@ -17,11 +17,4 @@ class SendingMapaton extends UpdateMapState {}
 
 class MapatonSent extends UpdateMapState {}
 
-class ErrorSendingMapaton extends UpdateMapState {
-  final String? error;
-
-  ErrorSendingMapaton(this.error);
-
-  @override
-  List<Object?> get props => [error];
-}
+class ErrorSendingMapaton extends UpdateMapState {}

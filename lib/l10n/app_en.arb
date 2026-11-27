@@ -161,5 +161,9 @@
     "selectOption": "Select an option",
     "dataUpdated": "Information updated successfully",
     "priorityObjects": "Priority objects to map",
-    "@priorityObjects": {"description": "Header above the activities marked as priority in the activity list."}
+    "@priorityObjects": {"description": "Header above the activities marked as priority in the activity list."},
+    "saveError": "Couldn't save the mapping. Please try again.",
+    "@saveError": {"description": "Shown when a filled-in form cannot be saved on the device."},
+    "sendError": "Couldn't submit the mappings. Check your connection and try again.",
+    "@sendError": {"description": "Shown when uploading the mapped objects to the EcoZonas server fails."}
 }
