@@ -6,8 +6,6 @@
         android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission
         android:name="android.permission.INTERNET"/>
-    <uses-permission
-        android:name="android.permission.READ_PHONE_STATE"/>
     <!-- El plugin location declara estos permisos para su modo en segundo
          plano, que la app no usa. Se quitan para no tener que justificar
          FOREGROUND_SERVICE_LOCATION en Google Play. -->
@@ -46,8 +44,5 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2"/>
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC8ZjGpUtbXC3ovG-ok4EIMNg0UebF-jds"/>
     </application>
 </manifest>
