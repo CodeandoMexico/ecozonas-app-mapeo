@@ -18,8 +18,12 @@ class AliasTextFields extends StatelessWidget {
       decoration: InputDecoration(
         hintText: AppLocalizations.of(context)!.writeYourName,
         prefixIcon: const Icon(Icons.edit_outlined),
-        suffixText: '#$id',
-        suffixStyle: Theme.of(context).textTheme.titleSmall!.copyWith(color: AppColors.textSecondary),
+        // El ID siempre visible (suffixText solo se ve con foco o con texto).
+        suffixIcon: Padding(
+          padding: const EdgeInsets.only(right: AppSpacing.md),
+          child: Text('#$id', style: Theme.of(context).textTheme.titleSmall!.copyWith(color: AppColors.textSecondary)),
+        ),
+        suffixIconConstraints: const BoxConstraints(minHeight: 0, minWidth: 0),
       ),
       onChanged: (value) {
         if (callback != null) {

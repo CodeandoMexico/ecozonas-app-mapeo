@@ -104,7 +104,8 @@ final appTheme = ThemeData(
     fillColor: AppColors.surface,
     contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 14),
     labelStyle: _textTheme.bodyLarge!.copyWith(color: AppColors.textSecondary),
-    floatingLabelStyle: _textTheme.bodyMedium!.copyWith(color: AppColors.secondary, fontWeight: FontWeight.w500),
+    // La etiqueta flotante se dibuja al 75 %: con bodyLarge (16) queda en 12.
+    floatingLabelStyle: _textTheme.bodyLarge!.copyWith(color: AppColors.secondary, fontWeight: FontWeight.w500),
     hintStyle: _textTheme.bodyLarge!.copyWith(color: AppColors.textSecondary),
     helperStyle: _textTheme.bodySmall,
     errorStyle: _textTheme.bodySmall!.copyWith(color: AppColors.error),
