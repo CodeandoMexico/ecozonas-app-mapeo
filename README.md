@@ -19,15 +19,24 @@ Este proyecto se centra en la implementación de proyectos piloto en dos barrios
 
 Los mapas se muestran con [MapLibre](https://maplibre.org/) (`maplibre_gl`) y el estilo de [OpenFreeMap](https://openfreemap.org/), basado en OpenStreetMap. No se necesita ningún token ni cuenta. La URL del estilo está en `Constants.mapStyleUrl` (`lib/src/ui/utils/constants.dart`).
 
-## Como compilar la aplicación
-1. Clonar proyecto desde: ___
-2. Instalar Visual Studio Code para abrir el proyecto
-3. En Visual Studio Code y abrir el proyecto utiilzando Open Folder
-4. Usar Java 21 o superior para Gradle (lo pide `maplibre_gl`). Flutter usa por defecto el JDK incluido en Android Studio; para usar otro, ejecutar `flutter config --jdk-dir=/PATH_TO_JDK`
-5. En la terminal de Visual Studio Code, ejecutar el comando “flutter pub get” para descargar las librerías del proyecto
-6. Seleccionar y arrancar el dispositivo para el que se quiere probar. En VS Code está abajo a la derecha.
-7. Ejecutar `flutter run` para compilar y abrir la app en el dispositivo
-8. Para compilar el APK final para Android ejecutar `flutter build apk`
+## Cómo compilar la aplicación
+
+### Requisitos
+- Flutter 3.50 o superior (canal stable)
+- Android: JDK 21 o superior (lo pide `maplibre_gl`). Flutter usa por defecto el JDK incluido en Android Studio; para usar otro, ejecutar `flutter config --jdk-dir=/PATH_TO_JDK`
+- iOS: Xcode. Las dependencias nativas se instalan con Swift Package Manager; no hace falta CocoaPods ni `pod install`
+
+### Pasos
+1. Clonar el proyecto: `git clone https://github.com/CodeandoMexico/ecozonas-app-mapeo.git`
+2. Abrir la carpeta del proyecto en Visual Studio Code (o el editor de tu preferencia)
+3. Ejecutar `flutter pub get` para descargar las librerías; también genera los textos traducidos (`lib/l10n/app_localizations*.dart`)
+4. Seleccionar el dispositivo o emulador. En VS Code está abajo a la derecha; desde la terminal, `flutter devices` los lista
+5. Ejecutar `flutter run` para compilar y abrir la app en el dispositivo
+6. Para un iPhone físico, abrir `ios/Runner.xcworkspace` en Xcode y configurar la firma en *Signing & Capabilities* del target Runner
+
+### Compilar para publicar
+- Android: `flutter build appbundle` (Google Play) o `flutter build apk`. La firma se configura en `android/key.properties`, que no se sube al repositorio; ver [Build and release an Android app](https://docs.flutter.dev/deployment/android)
+- iOS: `flutter build ipa`; ver [Build and release an iOS app](https://docs.flutter.dev/deployment/ios)
 
 ## Pruebas y análisis
 
@@ -36,22 +45,43 @@ Los mapas se muestran con [MapLibre](https://maplibre.org/) (`maplibre_gl`) y el
 
 GitHub Actions corre ambos y compila el APK de Android en cada pull request (`.github/workflows/ci.yml`).
 
+## Sistema de diseño
+
+Los estilos de la app se definen en un solo lugar, `lib/src/ui/theme/`:
+- `app_tokens.dart`: colores según su uso (`AppColors`), espaciado en múltiplos de 4 (`AppSpacing`), radios de borde (`AppRadius`) y alturas de controles (`AppSizes`)
+- `app_typography.dart`: escala tipográfica con [Inter](https://rsms.me/inter/) (fuente variable incluida en `assets/fonts/inter/`, licencia SIL OFL)
+- `theme.dart`: tema de Material que aplica todo lo anterior a botones, campos, tarjetas, barras, diálogos y mensajes
+
+Al crear o modificar pantallas:
+- Usar `Theme.of(context).textTheme` y los tokens en lugar de tamaños, colores o márgenes escritos a mano
+- Usar `AppButton` (`lib/src/ui/widgets/app_button.dart`) para los botones: primario, secundario, contorno, peligro o texto, en tamaño normal o pequeño
+
+## Traducciones
+
+La app está en español e inglés. Los textos están en `lib/l10n/app_es.arb` y `lib/l10n/app_en.arb`; `app_en.arb` es la plantilla y tiene notas para traductores en las claves ambiguas. Los archivos `app_localizations*.dart` se generan con `flutter pub get` y no se suben al repositorio.
+
+Para agregar un idioma:
+1. Crear `lib/l10n/app_<código>.arb` con todas las claves de `app_en.arb` traducidas (una prueba verifica que todos los `.arb` tengan las mismas claves)
+2. Agregar la opción del idioma en `getLanguageOptions` (`lib/src/ui/utils/utils.dart`)
+3. Para el contenido que llega del servidor (mapatones, actividades, opciones), agregar los campos del idioma en los modelos y en `localized()` (`lib/src/ui/utils/utils.dart`)
+
 ## Versiones utilizadas
 1. Flutter 3.50.1 (channel stable), Dart 3.14.0
 2. Android
     1. Gradle 9.5.0, Android Gradle Plugin 9.3.1, Kotlin 2.4.20
     2. compileSdk y targetSdk 36, minSdk 24 (valores de Flutter)
     3. JDK 21 o superior (lo pide `maplibre_gl`; probado con el JDK 25 incluido en Android Studio)
+3. iOS
+    1. Versión mínima iOS 15.5 (la pide `maplibre_gl`)
+    2. Xcode 27.2, dependencias con Swift Package Manager
 
 ## Notas
 
-Para actualizar la versión del proyecto, editar el archivo pubspec.yaml
+La versión de la app está en `pubspec.yaml` con el formato `AA.MM.DD+AAMMDDn` (fecha de la versión y un consecutivo del día):
 
 ```
-version: 24.11.12+2411121
+version: 25.03.13+2503131
 ```
-
-Para poder compilar el APK para distribución de Android revisar la página [Build and release an Android app](https://docs.flutter.dev/deployment/android).
 
 ## Cómo contribuir al proyecto
 
@@ -59,7 +89,7 @@ De momento el proyecto no está abierto a contribuciones, pero está planeado ab
 
 ## Licencia
 
-Esta aplicación se publica bajo la licencia GNU Affero General Public License v3.0. License: LGPL v3
+Esta aplicación se publica bajo la licencia GNU Affero General Public License v3.0 (ver `LICENSE`).
 
 Si estás planeando reutilizar el código, es necesario que publiques el código bajo la misma licencia, GPL Affero 3, en un repositorio de acceso público y mantengas los avisos de autoría, además de indicar los cambios realizados al código existente.
 

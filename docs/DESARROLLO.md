@@ -92,7 +92,7 @@ La app también permite ver qué actividades están pendientes de envío y el pe
 
 ## Dependencias principales
 
-Para gestión de estado usamos `bloc`, `flutter_bloc`, `rxdart` y `provider`. La UI usa cosas estándar como `carousel_slider` para el onboarding, `flutter_svg` para SVGs y Font Awesome para iconos.
+Para gestión de estado usamos `bloc`, `flutter_bloc`, `rxdart` y `provider`. La UI usa `material_ui` (Material separado de Flutter desde la 3.47) con un sistema de diseño propio en `lib/src/ui/theme/` (tokens, tipografía Inter y tema; ver el README), `carousel_slider` para el onboarding y `flutter_svg` para SVGs.
 
 La parte crítica es `maplibre_gl` para los mapas, con el estilo de OpenFreeMap (no requiere token). Para ubicación usamos el paquete `location`.
 
@@ -110,13 +110,13 @@ Red: cliente HTTP básico (`http`) y `url_launcher` para abrir las encuestas ext
 
 ### Lo más urgente
 
-**Testing** - Actualmente tenemos menos del 5% de cobertura. Solo existe el test por defecto que genera Flutter. Necesitamos tests unitarios para los use cases, tests de integración para los repositorios, y tests de BLoC al menos para `MapatonBloc`. Sería ideal configurar CI/CD para correr los tests automáticamente.
+**Testing** - Hay pruebas de los códigos sociodemográficos, la base de datos local (con SQLite en memoria), las traducciones y algunos widgets, y GitHub Actions las corre en cada pull request junto con `flutter analyze`. Faltan pruebas de los use cases y de BLoC, al menos para `MapatonBloc`.
 
-**Migraciones de BD** - Ahora mismo si cambiamos el esquema de la base de datos, los usuarios tienen que reinstalar la app. Esto es malo. Hay que implementar un sistema de versionado en `database_provider.dart` para poder hacer migraciones incrementales.
+**Migraciones de BD** - Ya existe la estructura: `MyDatabase.schemaVersion` y un mapa de migraciones por versión en `lib/src/data/db/my_database.dart`, con los pasos para cambiar el esquema documentados ahí. Todavía no se ha necesitado ninguna migración.
 
 **Inyección de dependencias** - Los use cases y repositorios se están instanciando directamente en el código de UI, lo cual hace el testing más difícil y crea acoplamiento fuerte. Algo como GetIt ayudaría bastante aquí.
 
-**Logging y manejo de errores** - El manejo de errores es muy básico. Deberíamos integrar un paquete de logging estructurado y algún sistema de crash reporting (Crashlytics o Sentry). También falta lógica de reintento para cuando fallen las llamadas a la API.
+**Logging y manejo de errores** - Los errores al guardar y enviar mapeos ya muestran mensajes traducidos y dejan el detalle en el log con `debugPrint`, pero falta un paquete de logging estructurado y algún sistema de crash reporting (Crashlytics o Sentry). También falta lógica de reintento para cuando fallen las llamadas a la API.
 
 ### Otras mejoras importantes
 
