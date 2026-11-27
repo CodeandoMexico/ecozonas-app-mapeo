@@ -58,7 +58,7 @@ class _RadioBlockWidgetState extends State<RadioHorizontalBlockWidget> {
                         activeColor: Colors.black,
                         onChanged: (value) => _onChanged(e, value),
                       ),
-                      Text(utils.showEnglish(context) ? e.value.labelEn : e.value.label, style: const TextStyle(fontSize: 16))
+                      Text(utils.localized(context, es: e.value.label, en: e.value.labelEn), style: const TextStyle(fontSize: 16))
                     ],
                   ),
                 );

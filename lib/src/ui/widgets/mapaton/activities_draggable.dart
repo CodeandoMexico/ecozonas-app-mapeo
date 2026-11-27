@@ -307,8 +307,8 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   }
 
   bool _matchText(Activity element) {
-    final title = utils.removeDiacritics(utils.showEnglish(context) ? element.titleEn : element.title);
-    final description = utils.removeDiacritics(utils.showEnglish(context) ? element.descriptionEn : element.description);
+    final title = utils.removeDiacritics(utils.localized(context, es: element.title, en: element.titleEn));
+    final description = utils.removeDiacritics(utils.localized(context, es: element.description, en: element.descriptionEn));
     final blocksJson = utils.removeDiacritics(element.blocksJson);
     final search = utils.removeDiacritics(_searchText);
 

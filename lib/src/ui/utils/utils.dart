@@ -131,6 +131,11 @@ String optionLabel(List<ItemModel> options, String value) {
   return value;
 }
 
-bool showEnglish(BuildContext context) {
-  return Localizations.localeOf(context).languageCode == 'en';
+/// Texto del contenido que manda el servidor (mapatones, actividades,
+/// opciones) en el idioma de la app. El servidor manda español y, cuando
+/// existe, inglés; si falta la traducción se muestra el español.
+String localized(BuildContext context, {required String es, String? en}) {
+  final languageCode = Localizations.localeOf(context).languageCode;
+  if (languageCode == 'en' && en != null && en.isNotEmpty) return en;
+  return es;
 }

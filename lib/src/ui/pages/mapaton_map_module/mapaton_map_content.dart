@@ -113,7 +113,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
         children: [
           Expanded(
             child: Text(
-              utils.showEnglish(context) ? mapaton.titleEn : mapaton.title,
+              utils.localized(context, es: mapaton.title, en: mapaton.titleEn),
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)
             ),
           ),
