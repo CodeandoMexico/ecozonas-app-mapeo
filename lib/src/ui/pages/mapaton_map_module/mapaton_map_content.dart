@@ -17,9 +17,10 @@ import '../../utils/constants.dart';
 import '../../utils/dialogs.dart';
 import '../../utils/utils.dart' as utils;
 import '../../widgets/mapaton/activities_draggable.dart';
-import '../../widgets/my_primary_elevated_button.dart';
 import '../update_map_module/update_map_page.dart';
 import 'bloc/bloc.dart';
+import '../../theme/theme.dart';
+import '../../widgets/app_button.dart';
 
 class MapatonMapContent extends StatefulWidget {
   final MapatonModel? mapaton;
@@ -109,22 +110,12 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
    */
   AppBar _appBar(BuildContext context, MapatonBloc bloc, MapatonModel mapaton) {
     return AppBar(
-      titleSpacing: 0,
-      title: Row(
-        children: [
-          Expanded(
-            child: Text(
-              utils.localized(context, es: mapaton.title, en: mapaton.titleEn),
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)
-            ),
-          ),
-          _updateMapButton(context)
-        ],
+      title: Text(
+        utils.localized(context, es: mapaton.title, en: mapaton.titleEn),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
-      elevation: 0,
-      iconTheme: const IconThemeData(
-        color: Colors.black
-      ),
+      actions: [_updateMapButton(context)],
     );
   }
 
@@ -148,22 +139,11 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
 
   Widget _updateMapButton(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
-      child: ElevatedButton(
+      padding: const EdgeInsets.only(right: AppSpacing.xs),
+      child: AppButton.primary(
+        label: AppLocalizations.of(context)!.sendData,
+        size: AppButtonSize.small,
         onPressed: () => _goToUpdateMap(context),
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.all(8.0),
-          backgroundColor: Constants.yellowButtonColor,
-          shadowColor: Constants.yellowButtonShadowColor,
-          elevation: 0,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(Constants.borderRadiusMedium))
-          )
-        ),
-        child: Text(
-          AppLocalizations.of(context)!.sendData,
-          style: const TextStyle(fontSize: 12, color: Colors.black)
-        )
       ),
     );
   }
@@ -231,13 +211,14 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
 
   Widget _startButton() {
     return Positioned(
-      left: 16.0,
-      right: 16.0,
-      bottom: 16.0,
-      child: MyPrimaryElevatedButton(
+      left: AppSpacing.md,
+      right: AppSpacing.md,
+      bottom: AppSpacing.md,
+      child: AppButton.primary(
         label: AppLocalizations.of(context)!.mapHere,
+        icon: Icons.add_location_alt_outlined,
         fullWidth: true,
-        elevation: 5,
+        elevated: true,
         onPressed: () => _activitiesController.animateTo(
           ActivitiesDraggable.openSize,
           duration: const Duration(milliseconds: 500),
@@ -271,8 +252,8 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
 
   Widget _goToMyLocationButton() {
     return Positioned(
-      right: 10,
-      top: 10,
+      right: AppSpacing.md,
+      top: AppSpacing.md,
       child: FloatingActionButton(
         heroTag: 'my_location',
         onPressed: () {
@@ -281,45 +262,34 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
             _moveCamera(LatLng(currentGeo.latitude, currentGeo.longitude));
           }
         },
-        backgroundColor: Colors.white,
-        child: Image.asset('assets/markers/icon_my_location.png', height: 35),
+        child: const Icon(Icons.my_location),
       ),
     );
   }
 
   Widget _activityName(MapatonBloc bloc) {
     return Positioned(
-      left: 10,
-      top: 10,
-      right: 80,
+      left: AppSpacing.md,
+      top: AppSpacing.md,
+      right: AppSpacing.md + 56 + AppSpacing.sm,
       child: StreamBuilder(
         stream: bloc.currentActivity,
         builder: (BuildContext context, AsyncSnapshot<CurrentActivityModel?> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
+            // Colores de la categoría de la actividad (vienen del servidor).
             return Card(
-              clipBehavior: Clip.antiAlias,
+              color: snapshot.data!.color,
+              elevation: 2,
               shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: snapshot.data!.borderColor,
-                  width: 2
-                ),
-                borderRadius: BorderRadius.circular(Constants.borderRadiusSmall)
+                side: BorderSide(color: snapshot.data!.borderColor, width: 2),
+                borderRadius: AppRadius.mdAll,
               ),
-              elevation: 5,
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: snapshot.data!.color,
-                ),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    snapshot.data!.name,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+                child: Text(
+                  snapshot.data!.name,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
             );
@@ -333,8 +303,9 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
 
   Widget _downloadButton(MapatonBloc bloc, MapatonModel mapaton) {
     return Positioned(
-      right: 10,
-      bottom: 80,
+      right: AppSpacing.md,
+      // Encima de "Mapear aquí".
+      bottom: AppSpacing.md + AppSizes.controlHeight + AppSpacing.md,
       child: StreamBuilder(
         stream: bloc.showDownload,
         initialData: true,
@@ -343,8 +314,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
             return FloatingActionButton(
               heroTag: 'download',
               onPressed: () async => await _downloadRegion(mapaton),
-              backgroundColor: Constants.yellowButtonColor,
-              child: const Icon(Icons.download, size: 32),
+              child: const Icon(Icons.download),
             );
           } else {
             return Container();

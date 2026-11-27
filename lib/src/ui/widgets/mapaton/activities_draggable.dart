@@ -10,11 +10,11 @@ import '../../../domain/models/mapaton_model.dart';
 import '../../../domain/use_cases/db/activity_use_case.dart';
 import '../../pages/form_module/form_page.dart';
 import '../../pages/mapaton_map_module/bloc/bloc.dart';
-import '../../utils/constants.dart';
 import '../../utils/dialogs.dart' as dialogs;
 import '../../utils/utils.dart' as utils;
 import '../activity_item.dart';
 import '../my_text_form_field.dart';
+import '../../theme/theme.dart';
 
 /// Hoja deslizable con las actividades del mapatón. La abre y cierra quien
 /// tenga [controller]; [onActivitySaved] recibe cada actividad guardada.
@@ -80,21 +80,33 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
       maxChildSize: ActivitiesDraggable.openSize,
       snap: true,
       builder: (context, scrollController) {
-        return Container(
+        return DecoratedBox(
           decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(Constants.borderRadius),
-              topRight: Radius.circular(Constants.borderRadius),
-            )
+            color: AppColors.surface,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.lg)),
+            boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 8)],
           ),
           child: CustomScrollView(
             controller: scrollController,
             slivers: [
               SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                  child: _searchTextField(),
+                child: Column(
+                  children: [
+                    // Barra de arrastre: indica que la hoja se puede deslizar.
+                    Container(
+                      width: 32,
+                      height: 4,
+                      margin: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                      decoration: BoxDecoration(
+                        color: AppColors.outline,
+                        borderRadius: BorderRadius.circular(AppRadius.pill),
+                      ),
+                    ),
+                    Padding(
+                      padding: AppSpacing.page,
+                      child: _searchTextField(),
+                    ),
+                  ],
                 ),
               ),
               SliverFillRemaining(
@@ -120,31 +132,27 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   }
 
   Widget _filters() {
-    return SizedBox(
-      height: 50,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          const SizedBox(width: 16.0),
-          GestureDetector(
-            onTap: () {
-              dialogs.showMyBottomSheet(
-                context: context,
-                options: _options.map((e) => e.text).toList(),
-                callback: (value) => _filter(value),
-              );
-            },
-            child: Chip(
-              backgroundColor: Colors.white,
-              label: Row(
-                children: [
-                  Text(_selectedCategory),
-                  const Icon(Icons.keyboard_arrow_down)
-                ],
-              ),
-            ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.sm, AppSpacing.md, AppSpacing.sm),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: ActionChip(
+          avatar: const Icon(Icons.filter_list, size: 18),
+          label: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(_selectedCategory),
+              const Icon(Icons.keyboard_arrow_down, size: 18),
+            ],
           ),
-        ],
+          onPressed: () {
+            dialogs.showMyBottomSheet(
+              context: context,
+              options: _options.map((e) => e.text).toList(),
+              callback: (value) => _filter(value),
+            );
+          },
+        ),
       ),
     );
   }
@@ -235,20 +243,14 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   }
 
   Widget _priorityLabel() {
-    return Container(
-      height: 50,
-      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      decoration: BoxDecoration(
-        color: Constants.yellowButtonColor,
-        borderRadius: BorderRadius.circular(8),
-      ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(AppSpacing.md, 0, AppSpacing.md, AppSpacing.sm),
       child: Row(
         children: [
-          Image.asset('assets/icons/ic_asterisk_50.png', width: 18),
-          Image.asset('assets/icons/ic_asterisk_50.png', width: 18),
-          const SizedBox(width: 8.0),
-          Text(AppLocalizations.of(context)!.priorityObjects)
+          Image.asset('assets/icons/ic_asterisk_50.png', width: 16),
+          Image.asset('assets/icons/ic_asterisk_50.png', width: 16),
+          const SizedBox(width: AppSpacing.xs),
+          Text(AppLocalizations.of(context)!.priorityObjects, style: Theme.of(context).textTheme.titleSmall),
         ],
       ),
     );
