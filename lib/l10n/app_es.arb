@@ -116,5 +116,7 @@
     },
     "errorFound": "Se encontró un error",
     "noConnection": "Sin conexión",
-    "locationUnavailable": "No se pudo obtener tu ubicación. Revisa que la ubicación esté activada y que EcoZonas tenga permiso en Ajustes."
+    "locationUnavailable": "No se pudo obtener tu ubicación. Revisa que la ubicación esté activada y que EcoZonas tenga permiso en Ajustes.",
+    "selectOption": "Selecciona una opción",
+    "dataUpdated": "Información actualizada correctamente"
 }

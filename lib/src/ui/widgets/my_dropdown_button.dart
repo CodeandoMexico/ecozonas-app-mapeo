@@ -1,3 +1,4 @@
+import 'package:ecozonas/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/form_module/blocks/block_error_text_widget.dart';
@@ -32,7 +33,7 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
       children: [
         BlockErrorTextWidget(showError: showError),
         DropdownButtonFormField(
-          hint: const Text('Selecciona una opción'),
+          hint: Text(AppLocalizations.of(context)!.selectOption),
           isExpanded: true,
           items: _getItems(),
           style: const TextStyle(fontSize: 18, color: Constants.labelTextColor),

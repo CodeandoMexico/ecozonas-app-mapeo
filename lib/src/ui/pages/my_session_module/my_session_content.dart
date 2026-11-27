@@ -40,7 +40,7 @@ class MySessionContent extends StatelessWidget {
    */
   void _states(context, state) {
     if (state is UpdateSuccessful) {
-      utils.showSnackBarSuccess(context, 'Información actualizada correctamente');
+      utils.showSnackBarSuccess(context, AppLocalizations.of(context)!.dataUpdated);
     }
   }
 
