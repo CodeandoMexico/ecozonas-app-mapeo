@@ -119,5 +119,7 @@
     "locationUnavailable": "No se pudo obtener tu ubicación. Revisa que la ubicación esté activada y que EcoZonas tenga permiso en Ajustes.",
     "selectOption": "Selecciona una opción",
     "dataUpdated": "Información actualizada correctamente",
-    "priorityObjects": "Objetos a mapear prioritarios"
+    "priorityObjects": "Objetos a mapear prioritarios",
+    "saveError": "No se pudo guardar el mapeo. Inténtalo de nuevo.",
+    "sendError": "No se pudieron enviar los mapeos. Revisa tu conexión e inténtalo de nuevo."
 }

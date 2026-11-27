@@ -62,3 +62,10 @@
 - Pruebas: la del contador de la plantilla se reemplazó por pruebas de códigos sociodemográficos, selector, `localized()`, plurales y consistencia de los `.arb`
 - CI con GitHub Actions: análisis, pruebas y compilación del APK en cada pull request
 
+### Base de datos y errores
+
+- Consultas SQL con parámetros (`whereArgs`) en lugar de valores pegados al texto; un apóstrofo en un dato rompía la consulta
+- Estructura de migraciones: `schemaVersion` y un mapa de migraciones por versión que se aplican en orden; los pasos para cambiar el esquema quedan documentados en `MyDatabase`
+- Guardar y enviar mapeos muestran mensajes traducidos en lugar de la excepción; el detalle queda en el log
+- Pruebas de la base con SQLite en memoria (`sqflite_common_ffi`): consultas, actividades por enviar y migraciones
+
