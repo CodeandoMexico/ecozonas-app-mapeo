@@ -4,6 +4,7 @@ import '../../../../domain/models/mapaton_model.dart';
 import '../../../utils/utils.dart' as utils;
 import 'block_error_text_widget.dart';
 import 'block_title_widget.dart';
+import '../../../theme/theme.dart';
 
 class CheckboxBlockWidget extends StatefulWidget {
   final String title;
@@ -35,7 +36,7 @@ class _CheckboxBlockWidgetState extends State<CheckboxBlockWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -47,8 +48,9 @@ class _CheckboxBlockWidgetState extends State<CheckboxBlockWidget> {
           ...widget.choices.map((e) {
             return CheckboxListTile(
               value: e.checked ?? false,
-              activeColor: Colors.black,
-              checkColor: Colors.white,
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.zero,
+              visualDensity: VisualDensity.compact,
               title: Text(utils.localized(context, es: e.label, en: e.labelEn)),
               onChanged: (value) {
                 if (value != null && value) {

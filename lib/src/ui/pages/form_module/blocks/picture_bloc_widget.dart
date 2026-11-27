@@ -6,6 +6,7 @@ import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../../widgets/app_button.dart';
 import 'block_title_widget.dart';
+import '../../../theme/theme.dart';
 
 class PictureBlockWidget extends StatefulWidget {
   final String title;
@@ -34,7 +35,7 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -46,7 +47,7 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
             children: [
               if (_imagePath != null) ...[
                 _image(),
-                const SizedBox(height: 16.0),
+                const SizedBox(height: AppSpacing.md),
               ],
               _takePictureButton()
             ],
@@ -87,7 +88,7 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
     return Positioned(
       right: 0,
       child: Container(
-        margin: const EdgeInsets.all(6.0),
+        margin: const EdgeInsets.all(AppSpacing.xs),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12.0)

@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../../domain/models/mapaton_model.dart';
 import '../../../widgets/my_dropdown_button.dart';
 import 'block_title_widget.dart';
+import '../../../theme/theme.dart';
 
 class SelectBlockWidget extends StatelessWidget {
   final String title;
@@ -16,7 +17,7 @@ class SelectBlockWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

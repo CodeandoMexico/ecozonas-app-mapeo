@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../../utils/constants.dart';
+import '../../../theme/theme.dart';
 
 class BlockTitleWidget extends StatelessWidget {
   final String title;
@@ -10,30 +10,21 @@ class BlockTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 16, color: Constants.labelTextColor, fontWeight: FontWeight.bold)
-          ),
-        ),
-        description != null && description!.trim().isNotEmpty ?
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Text(
-              description!,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey.shade600,
-                fontStyle: FontStyle.italic
-              ),
-            ),
-          ) :
-          Container()
-      ],
+    final textTheme = Theme.of(context).textTheme;
+    final hasDescription = description != null && description!.trim().isNotEmpty;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: textTheme.titleSmall),
+          if (hasDescription) ...[
+            const SizedBox(height: AppSpacing.xxs),
+            Text(description!, style: textTheme.bodyMedium!.copyWith(color: AppColors.textSecondary)),
+          ],
+        ],
+      ),
     );
   }
 }

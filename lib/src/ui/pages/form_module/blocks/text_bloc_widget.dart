@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'block_error_text_widget.dart';
 import 'block_title_widget.dart';
+import '../../../theme/theme.dart';
 
 class TextBlockWidget extends StatefulWidget {
   final String title;
@@ -28,12 +29,9 @@ class _TextBlockWidgetState extends State<TextBlockWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10)
-    );
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,11 +43,7 @@ class _TextBlockWidgetState extends State<TextBlockWidget> {
           TextFormField(
             maxLines: widget.maxLines,
             keyboardType: widget.textInputType,
-            cursorColor: Colors.black,
-            decoration: InputDecoration(
-              border: border,
-              focusedBorder: border
-            ),
+            decoration: const InputDecoration(),
             onChanged: (value) {
               setState(() {
                 showError = value.isEmpty;
