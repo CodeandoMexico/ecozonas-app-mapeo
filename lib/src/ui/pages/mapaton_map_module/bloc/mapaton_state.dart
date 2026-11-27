@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:maplibre_gl/maplibre_gl.dart';
 
 import '../../../../domain/models/db/activity_db_model.dart';
 

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/models/mapaton_post_model.dart';

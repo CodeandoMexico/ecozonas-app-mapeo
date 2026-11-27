@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:location/location.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:maplibre_gl/maplibre_gl.dart' hide Success, Error;
+import 'package:maplibre_gl/maplibre_gl.dart' as maplibre show Success, Error;
 import 'package:rxdart/subjects.dart';
 
-import '../../../../../main.dart';
 import '../../../../data/preferences/user_preferences.dart';
 import '../../../../data/repositories/db/activity/activity_repository_impl.dart';
 import '../../../../data/repositories/db/mapaton/mapaton_repository_impl.dart';
@@ -13,6 +15,7 @@ import '../../../../domain/models/db/activity_db_model.dart';
 import '../../../../domain/use_cases/db/activity_use_case.dart';
 import '../../../../domain/use_cases/db/mapaton_use_case.dart';
 import '../../../../domain/use_cases/location_use_case.dart';
+import '../../../utils/constants.dart';
 import 'bloc.dart';
 
 class MapatonBloc extends Bloc<MapatonEvent, MapatonState> {
@@ -134,7 +137,7 @@ class MapatonBloc extends Bloc<MapatonEvent, MapatonState> {
 
     if (locationPermission) {
       final data = await useCase.getLocation();
-      return LatLng(data.latitude!, data.longitude!);
+      return LatLng(data.latitude, data.longitude);
     } else {
       return null;
     }
@@ -164,6 +167,9 @@ class MapatonBloc extends Bloc<MapatonEvent, MapatonState> {
   }
 
   Future<void> _downloadRegion(LatLngBounds bounds, String name) async {
+    // downloadOfflineRegion termina en cuanto la descarga empieza; el final
+    // (o un error a medio camino) llega por onEvent.
+    final finished = Completer<void>();
     await downloadOfflineRegion(
       OfflineRegionDefinition(
         bounds: LatLngBounds(
@@ -172,12 +178,19 @@ class MapatonBloc extends Bloc<MapatonEvent, MapatonState> {
         ),
         minZoom: 10.0,
         maxZoom: 16.0,
-        mapStyleUrl: MapboxStyles.MAPBOX_STREETS,
+        mapStyleUrl: Constants.mapStyleUrl,
       ),
       metadata: {
         'name': name,
       },
-      accessToken: MyApp.accessToken
+      onEvent: (status) {
+        if (finished.isCompleted) return;
+        if (status is maplibre.Success) finished.complete();
+        if (status is maplibre.Error) finished.completeError(status.cause);
+      },
     );
+    // Sin red, MapLibre reintenta indefinidamente; no dejar el diálogo
+    // de carga abierto para siempre.
+    await finished.future.timeout(const Duration(minutes: 5));
   }
 }

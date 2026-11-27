@@ -28,8 +28,6 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  static const String accessToken = String.fromEnvironment("ACCESS_TOKEN");
-  
   const MyApp({super.key});
 
   @override

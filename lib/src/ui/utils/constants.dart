@@ -12,6 +12,13 @@ class ItemModel {
 
 class Constants {
   /*
+   * MAP
+   */
+  /// Estilo del mapa (OpenFreeMap: mapas de OpenStreetMap, gratis y sin token).
+  /// También se usa para descargar regiones sin conexión.
+  static const mapStyleUrl = 'https://tiles.openfreemap.org/styles/liberty';
+
+  /*
    * PADDING
    */
   static const paddingHuge = 80.0;

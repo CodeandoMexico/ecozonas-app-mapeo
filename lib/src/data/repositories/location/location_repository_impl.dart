@@ -24,7 +24,9 @@ class LocationRepositoryImpl implements LocationRepository {
     var permissionGranted = await _location.hasPermission();
     if (permissionGranted == PermissionStatus.denied) {
       permissionGranted = await _location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
+      // grantedLimited: el usuario solo permitió la ubicación aproximada.
+      if (permissionGranted != PermissionStatus.granted &&
+          permissionGranted != PermissionStatus.grantedLimited) {
         debugPrint('Location permission not granted');
         granted = false;
       }

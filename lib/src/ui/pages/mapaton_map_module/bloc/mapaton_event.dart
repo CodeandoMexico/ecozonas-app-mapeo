@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:maplibre_gl/maplibre_gl.dart';
 
 import '../../../../domain/models/current_activity_model.dart';
 import '../../../../domain/models/db/activity_db_model.dart';

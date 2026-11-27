@@ -47,8 +47,8 @@ dependencies:
   http: ^1.1.0
   image_picker: ^1.0.4
   intl: ^0.20.2
-  location: ^6.0.2
-  mapbox_gl: ^0.16.0
+  location: ^10.2.0
+  maplibre_gl: ^0.28.1
   path: ^1.8.3
   provider: ^6.0.5
   rxdart: ^0.28.0
