@@ -150,6 +150,8 @@ final appTheme = ThemeData(
     shape: const RoundedRectangleBorder(borderRadius: AppRadius.smAll),
     labelStyle: _textTheme.labelMedium!.copyWith(color: AppColors.textPrimary),
     padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+    // Por defecto el ícono toma el primario (amarillo), que no se lee sobre blanco.
+    iconTheme: const IconThemeData(color: AppColors.secondary, size: 18),
   ),
 
   tabBarTheme: TabBarThemeData(
