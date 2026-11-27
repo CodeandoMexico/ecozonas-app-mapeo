@@ -16,6 +16,9 @@ import '../../utils/utils.dart' as utils;
 import '../activity_item.dart';
 import '../my_text_form_field.dart';
 
+// TODO: los datos (actividades, callback) viven en campos mutables del
+// widget en vez de en su State; corregirlo requiere reorganizar el mapa.
+// ignore: must_be_immutable
 class ActivitiesDraggable extends StatefulWidget {
   final DraggableScrollableController draggableController = DraggableScrollableController();
 

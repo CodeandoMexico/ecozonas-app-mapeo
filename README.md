@@ -29,6 +29,13 @@ Los mapas se muestran con [MapLibre](https://maplibre.org/) (`maplibre_gl`) y el
 7. Ejecutar `flutter run` para compilar y abrir la app en el dispositivo
 8. Para compilar el APK final para Android ejecutar `flutter build apk`
 
+## Pruebas y análisis
+
+- `flutter test` corre las pruebas de `test/`
+- `flutter analyze` debe terminar sin avisos
+
+GitHub Actions corre ambos y compila el APK de Android en cada pull request (`.github/workflows/ci.yml`).
+
 ## Versiones utilizadas
 1. Flutter 3.50.1 (channel stable), Dart 3.14.0
 2. Android
