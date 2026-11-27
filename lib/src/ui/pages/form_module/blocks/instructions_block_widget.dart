@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import '../../../theme/theme.dart';
 
 class InstructionsBlockWidget extends StatelessWidget {
   final String title;
@@ -8,37 +9,32 @@ class InstructionsBlockWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
-      padding: const EdgeInsets.all(16.0),
-      margin: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFBE5B0),
-        borderRadius: BorderRadius.circular(8)
+      padding: const EdgeInsets.all(AppSpacing.md),
+      margin: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, AppSpacing.sm),
+      decoration: const BoxDecoration(
+        color: AppColors.primaryContainer,
+        borderRadius: AppRadius.mdAll,
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(Icons.push_pin, color: Colors.red),
-              const SizedBox(width: 6.0),
-              Expanded(
-                child: Text(
-                  title,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
-                ),
-              ),
-            ],
+          const Icon(Icons.info_outline, color: AppColors.secondary),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: textTheme.titleSmall),
+                if (description.trim().isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.xxs),
+                  Text(description, style: textTheme.bodyMedium),
+                ],
+              ],
+            ),
           ),
-          description.trim().isNotEmpty ? Column(
-            children: [
-              const SizedBox(height: 8.0),
-              Text(
-                description,
-                style: const TextStyle(fontSize: 16)
-              )
-            ],
-          ) : Container()
         ],
       ),
     );

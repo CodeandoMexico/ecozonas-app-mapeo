@@ -18,11 +18,11 @@ import '../../../../domain/use_cases/apis/mapaton_api_use_case.dart';
 import '../../../../domain/use_cases/db/mapaton_survey_use_case.dart';
 import '../../../../domain/use_cases/db/mapaton_use_case.dart';
 import '../../../bloc/bottom_navigation_bar_bloc.dart';
-import '../../../utils/constants.dart';
 import '../../../utils/dialogs.dart' as dialogs;
 import '../../../utils/utils.dart' as utils;
 import '../../../widgets/ecozonas_image.dart';
-import '../../../widgets/my_primary_elevated_button.dart';
+import '../../../theme/theme.dart';
+import '../../../widgets/app_button.dart';
 import '../../../widgets/no_data_widget.dart';
 import '../../mapaton_map_module/mapaton_map_page.dart';
 import '../../mapaton_map_module/mapaton_more_info_page.dart';
@@ -42,7 +42,6 @@ class MapatonTabsPage extends StatelessWidget implements BottomNavigationBarStat
       child: Scaffold(
         appBar: _appBar(context, provider),
         body: _body(context, provider),
-        backgroundColor: Colors.white,
       ),
     );
   }
@@ -52,18 +51,12 @@ class MapatonTabsPage extends StatelessWidget implements BottomNavigationBarStat
    */
   AppBar _appBar(BuildContext context, MapatonSurveyProvider provider) {
     return AppBar(
-      title: Text(AppLocalizations.of(context)!.diagnosticTools, style: const TextStyle(fontSize: Constants.appBarFontSize)),
-      titleSpacing: 0,
-      centerTitle: true,
-      leading: Container(),
-      elevation: 0,
-      iconTheme: const IconThemeData(
-        color: Colors.black
-      ),
+      title: Text(AppLocalizations.of(context)!.diagnosticTools),
+      automaticallyImplyLeading: false,
       actions: [
         IconButton(
           onPressed: () => _downloadAndSaveMapatons(context, provider),
-          icon: const Icon(Icons.download)
+          icon: const Icon(Icons.download),
         )
       ],
     );
@@ -73,109 +66,80 @@ class MapatonTabsPage extends StatelessWidget implements BottomNavigationBarStat
    * WIDGETS
    */
   Widget _body(BuildContext context, MapatonSurveyProvider provider) {
-  return provider.mapatons.isNotEmpty && provider.surveys.isNotEmpty
-      ? Padding(
-          padding: const EdgeInsets.symmetric(
-              vertical: Constants.paddingSmall, horizontal: Constants.padding),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const EcozonasImage(topPadding: 20, bottomPadding: 20),
-                _answerSurveyWidget(context, provider),
-                const SizedBox(height: Constants.paddingSmall),
-                _mapNeighborhood(context, provider),
-                const SizedBox(height: Constants.paddingLarge),
-                Text(
-                  AppLocalizations.of(context)!.checkResults,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                _text(context),
-                const SizedBox(height: Constants.paddingLarge),
-                _moreInfoButton(context, provider),
-                const SizedBox(height: Constants.paddingLarge),
-              ],
+    if (provider.mapatons.isEmpty || provider.surveys.isEmpty) {
+      return NoDataWidget(
+        callback: () {
+          _downloadAndSaveMapatons(context, provider);
+        },
+      );
+    }
+
+    final l10n = AppLocalizations.of(context)!;
+    final textTheme = Theme.of(context).textTheme;
+
+    return SingleChildScrollView(
+      padding: AppSpacing.pageWithVertical,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const EcozonasImage(topPadding: AppSpacing.xs, bottomPadding: AppSpacing.lg),
+          _toolCard(
+            context,
+            icon: Icons.assignment_outlined,
+            title: l10n.answerTheSurvey,
+            onPressed: () async => await launchUrl(Uri.parse(provider.surveys[0].surveyUrl)),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          _toolCard(
+            context,
+            icon: Icons.map_outlined,
+            title: l10n.mapYourNeighborhood,
+            onPressed: () async => await _goToMapaton(provider.mapatons[0], context),
+          ),
+          const SizedBox(height: AppSpacing.xl),
+          Text(l10n.checkResults, style: textTheme.titleSmall, textAlign: TextAlign.center),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            l10n.checkResultsText,
+            style: textTheme.bodyMedium!.copyWith(color: AppColors.textSecondary),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Center(
+            child: AppButton.outline(
+              label: l10n.moreInfo,
+              onPressed: () => Navigator.pushNamed(context, MapatonMoreInfoPage.routeName),
             ),
           ),
-        )
-      : NoDataWidget(
-          callback: () {
-            _downloadAndSaveMapatons(context, provider);
-          },
-        );
+        ],
+      ),
+    );
   }
 
-
-  Widget _answerSurveyWidget(BuildContext context, MapatonSurveyProvider provider) {
+  /// Tarjeta de una herramienta de diagnóstico: ícono, título y botón.
+  Widget _toolCard(BuildContext context, {required IconData icon, required String title, required VoidCallback onPressed}) {
     return Card(
-      color: const Color(0xFFECECEC),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: const BorderSide(color: Color(0xFFB6B6B6), width: 1)
-      ),
       child: Padding(
-        padding: const EdgeInsets.all(Constants.padding),
+        padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Center(child: Text(AppLocalizations.of(context)!.answerTheSurvey, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18))),
-            const SizedBox(height: Constants.paddingSmall),
-            MyPrimaryElevatedButton(
+            Row(
+              children: [
+                Icon(icon, color: AppColors.secondary),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(child: Text(title, style: Theme.of(context).textTheme.titleSmall)),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+            AppButton.primary(
               label: AppLocalizations.of(context)!.start,
-              onPressed: () async => await launchUrl(Uri.parse(provider.surveys[0].surveyUrl))
-            )
+              onPressed: onPressed,
+              fullWidth: true,
+            ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _mapNeighborhood(BuildContext context, MapatonSurveyProvider provider) {
-    return Card(
-      color: const Color(0xFFECECEC),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: const BorderSide(color: Color(0xFFB6B6B6), width: 1)
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(Constants.padding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Center(child: Text(AppLocalizations.of(context)!.mapYourNeighborhood, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18))),
-            const SizedBox(height: Constants.paddingSmall),
-            MyPrimaryElevatedButton(
-              label: AppLocalizations.of(context)!.start,
-              onPressed: () async {
-                await _goToMapaton(provider.mapatons[0], context);
-              }
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _text(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Constants.paddingLarge),
-      child: Text(
-        AppLocalizations.of(context)!.checkResultsText,
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: 18,
-        )
-      ),
-    );
-  }
-
-  Widget _moreInfoButton(BuildContext context, MapatonSurveyProvider provider) {
-    return MyPrimaryElevatedButton(
-      label: AppLocalizations.of(context)!.moreInfo,
-      onPressed: () async {
-        Navigator.pushNamed(context, MapatonMoreInfoPage.routeName);
-      }
     );
   }
 

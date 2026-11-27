@@ -2,8 +2,6 @@ import 'package:ecozonas/l10n/app_localizations.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../pages/form_module/blocks/block_error_text_widget.dart';
-import '../theme/theme.dart';
-import '../utils/constants.dart';
 
 class MyDropdownButton extends StatefulWidget {
   final String labelText;
@@ -36,14 +34,8 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
           hint: Text(AppLocalizations.of(context)!.selectOption),
           isExpanded: true,
           items: _getItems(),
-          style: const TextStyle(fontSize: 18, color: Constants.labelTextColor),
           icon: const Icon(Icons.keyboard_arrow_down),
-          decoration: InputDecoration(
-            labelText: widget.labelText,
-            labelStyle: const TextStyle(color: Colors.black),
-            enabledBorder: _border(),
-            focusedBorder: _border(),
-          ),
+          decoration: InputDecoration(labelText: widget.labelText),
           onChanged: (value) {
             if (value != null) {
               setState(() {
@@ -69,12 +61,5 @@ class _MyDropdownButtonState extends State<MyDropdownButton> {
     }
 
     return list;
-  }
-
-  InputBorder _border() {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(Constants.borderRadius),
-      borderSide: BorderSide(color: myTheme.colorScheme.secondary),
-    );
   }
 }

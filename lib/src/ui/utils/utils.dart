@@ -5,36 +5,38 @@ import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../domain/models/sociodemographic_codes.dart';
 import 'constants.dart';
+import '../theme/theme.dart';
 
 /*
  * SNACKBARS
  */
 void showSnackBar(BuildContext context, String message) {
-  ScaffoldMessenger.of(context)
-  ..hideCurrentSnackBar()
-  ..showSnackBar(SnackBar(
-    content: Text(message, style: const TextStyle(color: Constants.labelTextColor)),
-    behavior: SnackBarBehavior.floating,
-    backgroundColor: Constants.yellowButtonColor,
-  ));
+  _showAppSnackBar(context, message, icon: Icons.info_outline, iconColor: AppColors.primary, background: AppColors.textPrimary);
 }
 
 void showSnackBarSuccess(BuildContext context, String message) {
-  ScaffoldMessenger.of(context)
-  ..hideCurrentSnackBar()
-  ..showSnackBar(SnackBar(
-    content: Text(message, style: const TextStyle(color: Constants.labelTextColor)),
-    backgroundColor: Constants.yellowButtonColor
-  ));
+  _showAppSnackBar(context, message, icon: Icons.check_circle_outline, iconColor: AppColors.primary, background: AppColors.textPrimary);
 }
 
 void showSnackBarError(BuildContext context, String message) {
+  _showAppSnackBar(context, message, icon: Icons.error_outline, iconColor: Colors.white, background: AppColors.error);
+}
+
+void _showAppSnackBar(BuildContext context, String message, {required IconData icon, required Color iconColor, required Color background}) {
   ScaffoldMessenger.of(context)
-  ..hideCurrentSnackBar()
-  ..showSnackBar(SnackBar(
-    content: Text(message, style: const TextStyle(color: Colors.white)),
-    backgroundColor: Constants.redColor
-  ));
+    ..hideCurrentSnackBar()
+    ..showSnackBar(SnackBar(
+      backgroundColor: background,
+      content: Row(
+        children: [
+          Icon(icon, color: iconColor),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Text(message, style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white)),
+          ),
+        ],
+      ),
+    ));
 }
 
 /*

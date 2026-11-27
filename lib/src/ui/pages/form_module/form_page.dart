@@ -9,7 +9,6 @@ import '../../../domain/models/mapaton_model.dart';
 import '../../../domain/use_cases/db/activity_use_case.dart';
 import '../../../domain/use_cases/db/mapaton_use_case.dart';
 import '../../theme/theme.dart';
-import '../../utils/constants.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/my_double_button_row.dart';
 import '../../utils/utils.dart' as utils;
@@ -29,7 +28,7 @@ class FormPage extends StatelessWidget {
     return Scaffold(
       appBar: _appBar(context, activity),
       body: _body(context, activity),
-      backgroundColor: myTheme.primaryColor,
+      backgroundColor: AppColors.background,
     );
   }
 
@@ -39,8 +38,8 @@ class FormPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           utils.getCategoryIcon(code: activity.category.code, size: 20),
-          const SizedBox(width: Constants.paddingMedium),
-          Flexible(child: Text(utils.localized(context, es: activity.title, en: activity.titleEn), maxLines: 2, style: const TextStyle(fontSize: 16))),
+          const SizedBox(width: AppSpacing.xs),
+          Flexible(child: Text(utils.localized(context, es: activity.title, en: activity.titleEn), maxLines: 2, overflow: TextOverflow.ellipsis)),
         ],
       ),
     );
@@ -48,7 +47,8 @@ class FormPage extends StatelessWidget {
 
   Widget _body(BuildContext context, Activity activity) {
     return SingleChildScrollView(
-      child:  Column(
+      padding: const EdgeInsets.only(bottom: AppSpacing.md),
+      child: Column(
         children: [
           ...activity.blocks.map((e) {
             e.value = null;
@@ -88,7 +88,7 @@ class FormPage extends StatelessWidget {
    */
   Widget _buttons(BuildContext context, Activity activity) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.lg, AppSpacing.md, AppSpacing.md),
       child: MyDoubleButtonRow(
         cancelText: AppLocalizations.of(context)!.exit,
         cancelCallback: () => Navigator.pop(context),

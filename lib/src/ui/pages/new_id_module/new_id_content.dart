@@ -4,7 +4,6 @@ import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../../data/preferences/user_preferences.dart';
 import '../../theme/theme.dart';
-import '../../utils/constants.dart';
 import '../../widgets/alias_text_fields.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/my_primary_elevated_button.dart';
@@ -22,20 +21,22 @@ class NewIdContent extends StatelessWidget {
 
     return Scaffold(
       appBar: MyAppBar(
-        title: Text(AppLocalizations.of(context)!.mappingId, style: const TextStyle(fontSize: Constants.appBarFontSize)),
+        title: Text(AppLocalizations.of(context)!.mappingId),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(Constants.padding),
-        child: Column(
-          children: [
-            const SizedBox(height: Constants.paddingXLarge),
-            AliasTextFields(id: id, aliasController: aliasController),
-            const Spacer(),
-            _continueButton(context, aliasController),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: AppSpacing.pageWithVertical,
+          child: Column(
+            children: [
+              const SizedBox(height: AppSpacing.lg),
+              AliasTextFields(id: id, aliasController: aliasController),
+              const Spacer(),
+              _continueButton(context, aliasController),
+            ],
+          ),
         ),
       ),
-      backgroundColor: myTheme.primaryColor,
+      backgroundColor: AppColors.background,
     );
   }
 

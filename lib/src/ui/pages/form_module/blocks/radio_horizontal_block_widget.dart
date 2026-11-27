@@ -4,6 +4,7 @@ import '../../../../domain/models/mapaton_model.dart';
 import '../../../utils/utils.dart' as utils;
 import 'block_error_text_widget.dart';
 import 'block_title_widget.dart';
+import '../../../theme/theme.dart';
 
 class RadioHorizontalBlockWidget extends StatefulWidget {
   final String title;
@@ -33,7 +34,7 @@ class _RadioBlockWidgetState extends State<RadioHorizontalBlockWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -59,9 +60,8 @@ class _RadioBlockWidgetState extends State<RadioHorizontalBlockWidget> {
                         Radio<int>(
                           value: e.key,
                           visualDensity: VisualDensity.compact,
-                          activeColor: Colors.black,
                         ),
-                        Text(utils.localized(context, es: e.value.label, en: e.value.labelEn), style: const TextStyle(fontSize: 16))
+                        Text(utils.localized(context, es: e.value.label, en: e.value.labelEn), style: Theme.of(context).textTheme.bodyLarge)
                       ],
                     ),
                   );

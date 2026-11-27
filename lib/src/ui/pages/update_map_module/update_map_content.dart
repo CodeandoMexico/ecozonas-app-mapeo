@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../../domain/models/db/mapaton_db_model.dart';
-import '../../utils/constants.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../utils/utils.dart' as utils;
 import '../../utils/dialogs.dart' as dialogs;
-import '../../widgets/my_primary_elevated_button.dart';
 import 'bloc/bloc.dart';
+import '../../theme/theme.dart';
+import '../../widgets/app_button.dart';
 
 class UpdateMapContent extends StatelessWidget {
   static String routeName = 'updateMap';
@@ -21,10 +21,9 @@ class UpdateMapContent extends StatelessWidget {
 
     return Scaffold(
       appBar: MyAppBar(
-        title: Text(AppLocalizations.of(context)!.sendData, style: const TextStyle(fontSize: Constants.appBarFontSize)),
+        title: Text(AppLocalizations.of(context)!.sendData),
       ),
       body: _body(context, bloc),
-      backgroundColor: Colors.white,
     );
   }
 
@@ -60,17 +59,30 @@ class UpdateMapContent extends StatelessWidget {
           final count = mapaton.activities != null ? mapaton.activities!.length : 0;
 
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            child: Column(
-              children: [
-                Text(AppLocalizations.of(context)!.objectCount(count)),
-                const SizedBox(height: 8.0),
-                MyPrimaryElevatedButton(
-                  onPressed: count != 0 ? () => _postMapaton(context, mapaton) : null,
-                  label: AppLocalizations.of(context)!.sendMappings,
-                  fullWidth: true,
+            padding: AppSpacing.pageWithVertical,
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.cloud_upload_outlined, size: 40, color: AppColors.secondary),
+                    const SizedBox(height: AppSpacing.sm),
+                    Text(
+                      AppLocalizations.of(context)!.objectCount(count),
+                      style: Theme.of(context).textTheme.titleSmall,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: AppSpacing.lg),
+                    AppButton.primary(
+                      onPressed: count != 0 ? () => _postMapaton(context, mapaton) : null,
+                      label: AppLocalizations.of(context)!.sendMappings,
+                      icon: Icons.upload,
+                      fullWidth: true,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           );
         } else {

@@ -1,7 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../utils/constants.dart';
+import 'app_button.dart';
 
+/// Botón principal (amarillo). Usa [AppButton]; se conserva para no tocar
+/// todas las pantallas a la vez.
 class MyPrimaryElevatedButton extends StatelessWidget {
   final String label;
   final bool? fullWidth;
@@ -12,19 +14,11 @@ class MyPrimaryElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return AppButton.primary(
+      label: label,
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        minimumSize: fullWidth == true ? const Size.fromHeight(50) : null,
-        backgroundColor: Constants.yellowButtonColor,
-        disabledBackgroundColor: Constants.disabledButtonColor,
-        shadowColor: Constants.yellowButtonShadowColor,
-        elevation: elevation,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(Constants.borderRadiusMedium))
-        )
-      ),
-      child: Text(label, style: const TextStyle(color: Constants.darkBlueColor, fontSize: 18))
+      fullWidth: fullWidth == true,
+      elevated: (elevation ?? 0) > 0,
     );
   }
 }
