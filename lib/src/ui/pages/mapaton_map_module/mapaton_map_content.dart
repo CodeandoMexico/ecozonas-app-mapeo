@@ -486,7 +486,12 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
           await _controller!.removeSymbol(symbol);
 
           if (mounted) {
-            BlocProvider.of<MapatonBloc>(context).add(RemoveMarker(activity));
+            final bloc = BlocProvider.of<MapatonBloc>(context);
+            bloc.add(RemoveMarker(activity));
+            // Deselecciona: quita la tarjeta del nombre y vuelve a mostrar el pin central.
+            _selectedMarkerId = null;
+            bloc.add(SetCurrentActivity(activity: null));
+            bloc.add(ShowCenter(showCenter: true));
             utils.showSnackBarSuccess(context, AppLocalizations.of(context)!.activityDeleted);
           }
         }
