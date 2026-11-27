@@ -69,3 +69,12 @@
 - Guardar y enviar mapeos muestran mensajes traducidos en lugar de la excepción; el detalle queda en el log
 - Pruebas de la base con SQLite en memoria (`sqflite_common_ffi`): consultas, actividades por enviar y migraciones
 
+### Sistema de diseño
+
+- Tokens en `lib/src/ui/theme/`: colores según su uso (se conservan el amarillo, el azul y el rojo de la app), espaciado en múltiplos de 4, radios de borde y alturas de controles
+- Tipografía Inter (fuente variable incluida en la app, licencia OFL) con una escala de 6 tamaños y 3 pesos
+- Tema completo: botones, campos, tarjetas, barra superior centrada, barra inferior, radios, chips, diálogos, hojas inferiores y mensajes
+- Componentes: `AppButton` (primario, secundario, contorno, peligro y texto, en dos tamaños), `AppListItem` y `AppNumberedText`
+- Todas las pantallas migradas: ya no hay tamaños de letra, colores ni márgenes escritos a mano; `Constants` conserva solo la URL del mapa
+- Se borraron pantallas sin uso (lista de mapatones, lista de encuestas, `TaskItem`)
+
