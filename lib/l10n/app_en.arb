@@ -118,5 +118,6 @@
     "noConnection": "No connection",
     "locationUnavailable": "Couldn't get your location. Make sure location is turned on and EcoZonas has permission in Settings.",
     "selectOption": "Select an option",
-    "dataUpdated": "Information updated successfully"
+    "dataUpdated": "Information updated successfully",
+    "priorityObjects": "Priority objects to map"
 }

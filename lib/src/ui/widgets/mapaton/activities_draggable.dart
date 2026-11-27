@@ -258,7 +258,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
           Image.asset('assets/icons/ic_asterisk_50.png', width: 18),
           Image.asset('assets/icons/ic_asterisk_50.png', width: 18),
           const SizedBox(width: 8.0),
-          const Text('Objetos a mapear prioritarios')
+          Text(AppLocalizations.of(context)!.priorityObjects)
         ],
       ),
     );
