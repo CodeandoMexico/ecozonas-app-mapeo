@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       localizationsDelegates: appLocalizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: myTheme,
+      theme: appTheme,
       home: LanguagePage(
         localeCallback: (value) {
           _changeLanguage(value);

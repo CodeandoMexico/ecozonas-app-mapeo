@@ -4,8 +4,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
-import '../../../styles/my_button_styles.dart';
-import '../../../utils/constants.dart';
+import '../../../widgets/app_button.dart';
 import 'block_title_widget.dart';
 
 class PictureBlockWidget extends StatefulWidget {
@@ -61,10 +60,11 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
    * WIDGETS
    */
   Widget _takePictureButton() {
-    return ElevatedButton(
+    return AppButton.secondary(
+      label: _buttonText,
+      icon: Icons.photo_camera_outlined,
       onPressed: () => _getImage(),
-      style: MyButtonStyles.secondaryButton,
-      child: Text(_buttonText, style: const TextStyle(color: Constants.whiteLabelTextColor))
+      fullWidth: true,
     );
   }
 

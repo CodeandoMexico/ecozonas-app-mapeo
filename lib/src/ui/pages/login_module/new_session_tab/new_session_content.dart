@@ -58,7 +58,7 @@ class _NewSessionContentState extends State<NewSessionContent> {
         },
         child: _body(context, bloc),
       ),
-      backgroundColor: myTheme.colorScheme.surface,
+      backgroundColor: AppColors.background,
     );
   }
 

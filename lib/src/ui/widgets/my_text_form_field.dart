@@ -1,7 +1,5 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../theme/theme.dart';
-import '../utils/constants.dart';
 
 class MyTextFormField extends StatelessWidget {
   final TextEditingController controller;
@@ -16,22 +14,12 @@ class MyTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      cursorColor: Colors.black,
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: prefixIconData != null ? Icon(prefixIconData) : null,
         suffixIcon: suffixIconData != null ? Icon(suffixIconData) : null,
-        enabledBorder: _border(),
-        focusedBorder: _border(),
       ),
       onChanged: (value) => onChanged(value),
-    );
-  }
-
-  InputBorder _border() {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(Constants.borderRadiusLarge),
-      borderSide: BorderSide(color: myTheme.colorScheme.secondary),
     );
   }
 }

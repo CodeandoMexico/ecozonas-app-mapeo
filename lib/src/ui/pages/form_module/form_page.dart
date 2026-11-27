@@ -29,7 +29,7 @@ class FormPage extends StatelessWidget {
     return Scaffold(
       appBar: _appBar(context, activity),
       body: _body(context, activity),
-      backgroundColor: myTheme.primaryColor,
+      backgroundColor: AppColors.background,
     );
   }
 

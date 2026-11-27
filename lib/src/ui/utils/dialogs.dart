@@ -2,9 +2,8 @@ import 'package:material_ui/material_ui.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../theme/theme.dart';
+import '../widgets/app_button.dart';
 import '../widgets/my_modal_bottom_sheet.dart';
-import '../widgets/my_primary_elevated_button.dart';
-import 'constants.dart';
 
 void showLoadingDialog(BuildContext context) {
   showDialog(
@@ -12,19 +11,12 @@ void showLoadingDialog(BuildContext context) {
     barrierDismissible: false,
     builder: (context) {
       return AlertDialog(
-        backgroundColor: Colors.white,
-        content: Padding(
-          padding: const EdgeInsets.only(top: Constants.paddingSmall),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const CircularProgressIndicator(
-                color: Colors.black,
-              ),
-              const SizedBox(width: 25),
-              Text('${AppLocalizations.of(context)!.pleaseWait}...')
-            ],
-          ),
+        content: Row(
+          children: [
+            const CircularProgressIndicator(),
+            const SizedBox(width: AppSpacing.lg),
+            Text('${AppLocalizations.of(context)!.pleaseWait}...'),
+          ],
         ),
       );
     },
@@ -41,45 +33,39 @@ void showConfirmationDialog(BuildContext context, {
     context: context,
     builder: (context) {
       return Dialog(
-        backgroundColor: Colors.white,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-          child: Wrap(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  text,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                  textAlign: TextAlign.center,
-                ),
+              Text(
+                text,
+                style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 48.0),
+              const SizedBox(height: AppSpacing.lg),
               Row(
                 children: [
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    style: TextButton.styleFrom(
-                      foregroundColor: myTheme.colorScheme.primary,
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.circular(12)
-                      )
+                  Expanded(
+                    child: AppButton.outline(
+                      label: AppLocalizations.of(context)!.no,
+                      onPressed: () => Navigator.of(context).pop(),
+                      fullWidth: true,
                     ),
-                    child: Text(AppLocalizations.of(context)!.no, style: const TextStyle(color: Constants.labelTextColor, fontSize: 18)),
                   ),
-                  const SizedBox(width: 16.0),
-                  MyPrimaryElevatedButton(
-                    label: acceptButtonText,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      acceptCallback();
-                    },
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: AppButton.primary(
+                      label: acceptButtonText,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        acceptCallback();
+                      },
+                      fullWidth: true,
+                    ),
                   ),
-                  const Spacer(),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -97,12 +83,7 @@ void showMyBottomSheet({
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(Constants.borderRadiusBottomSheet),
-        topRight: Radius.circular(Constants.borderRadiusBottomSheet),
-      )
-    ),
+    showDragHandle: true,
     builder: (_) {
       return MyModalBottomSheet(
         titleText: titleText,

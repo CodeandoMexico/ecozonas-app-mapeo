@@ -1,8 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../styles/my_button_styles.dart';
-import '../utils/constants.dart';
+import '../theme/theme.dart';
+import 'app_button.dart';
 
+/// Par de botones al pie de un formulario: cancelar (contorno) y aceptar (principal).
 class MyDoubleButtonRow extends StatelessWidget {
   final String cancelText;
   final Function cancelCallback;
@@ -11,28 +12,16 @@ class MyDoubleButtonRow extends StatelessWidget {
 
   const MyDoubleButtonRow({super.key, required this.cancelText, required this.cancelCallback, required this.acceptText, required this.acceptCallback});
 
-  final _style = const TextStyle(fontSize: 16, color: Constants.darkBlueColor);
-
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
-          child: ElevatedButton(
-            onPressed: () => cancelCallback(),
-            style: MyButtonStyles.cancelButton,
-            child: Text(cancelText, style: _style)
-          ),
+          child: AppButton.outline(label: cancelText, onPressed: () => cancelCallback(), fullWidth: true),
         ),
-        const SizedBox(
-          width: Constants.padding,
-        ),
+        const SizedBox(width: AppSpacing.md),
         Expanded(
-          child: ElevatedButton(
-            onPressed: () => acceptCallback(),
-            style: MyButtonStyles.primaryButton,
-            child: Text(acceptText, style: _style)
-          ),
+          child: AppButton.primary(label: acceptText, onPressed: () => acceptCallback(), fullWidth: true),
         ),
       ],
     );

@@ -35,7 +35,7 @@ class NewIdContent extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: myTheme.primaryColor,
+      backgroundColor: AppColors.background,
     );
   }
 

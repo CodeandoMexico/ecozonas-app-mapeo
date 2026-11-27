@@ -29,7 +29,7 @@ class MapatonOnboardingPage extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: myTheme.primaryColor,
+      backgroundColor: AppColors.background,
     );
   }
 
