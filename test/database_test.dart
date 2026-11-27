@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:ecozonas/src/data/db/my_database.dart';
 import 'package:ecozonas/src/domain/models/db/activity_db_model.dart';
 import 'package:ecozonas/src/domain/models/db/mapaton_db_model.dart';
+import 'package:ecozonas/src/domain/models/db/mapper_db_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -82,5 +85,63 @@ void main() {
 
     expect(await MyDatabase.instance.getMapatonActivitiesToSend(activitiesTable, 1), isEmpty);
     expect(await MyDatabase.instance.getMapatonActivitiesToSend(activitiesTable, 2), hasLength(1));
+  });
+
+  group('migraciones', () {
+    test('hay una migración para cada versión después de la 1', () {
+      for (var version = 2; version <= MyDatabase.schemaVersion; version++) {
+        expect(MyDatabase.migrations.containsKey(version), isTrue, reason: 'falta la migración a $version');
+      }
+    });
+
+    test('se aplican en orden y solo las que faltan', () async {
+      final applied = <int>[];
+      final migrations = <int, Migration>{
+        for (final v in [2, 3, 4]) v: (_) async => applied.add(v),
+      };
+      final db = await MyDatabase.instance.database;
+
+      await MyDatabase.migrate(db, 2, 4, migrations);
+
+      expect(applied, [3, 4]);
+    });
+
+    test('una migración faltante falla con un error claro', () async {
+      final db = await MyDatabase.instance.database;
+
+      expect(() => MyDatabase.migrate(db, 1, 2, {}), throwsStateError);
+    });
+
+    test('una base existente conserva sus datos al actualizarse', () async {
+      final dir = await Directory.systemTemp.createTemp('ecozonas_db_');
+      addTearDown(() => dir.delete(recursive: true));
+      final path = '${dir.path}/ecozonas.db';
+
+      // Instalación con la versión actual del esquema y un mapeador guardado.
+      MyDatabase.pathOverride = path;
+      await MyDatabase.instance.insert(mappersTable, {
+        MapperColumns.mapperId: 7173,
+        MapperColumns.alias: '',
+        MapperColumns.gender: 'MUJER',
+        MapperColumns.age: '18_25',
+        MapperColumns.disability: 'NINGUNA',
+      });
+      await MyDatabase.reset();
+
+      // Una versión futura de la app agrega una columna.
+      const next = MyDatabase.schemaVersion + 1;
+      final db = await databaseFactory.openDatabase(path, options: OpenDatabaseOptions(
+        version: next,
+        onUpgrade: (db, oldVersion, newVersion) => MyDatabase.migrate(db, oldVersion, newVersion, {
+          next: (db) => db.execute('ALTER TABLE $mappersTable ADD COLUMN extra TEXT'),
+        }),
+      ));
+      addTearDown(db.close);
+
+      final rows = await db.query(mappersTable);
+      expect(rows, hasLength(1));
+      expect(rows.first[MapperColumns.mapperId], 7173);
+      expect(rows.first.containsKey('extra'), isTrue);
+    });
   });
 }

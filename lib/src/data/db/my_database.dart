@@ -10,8 +10,35 @@ import '../../domain/models/db/mapaton_data_db_model.dart';
 import '../../domain/models/db/mapper_db_model.dart';
 import '../../domain/models/db/survey_data_db_model.dart';
 
+/// Cambios del esquema para llegar a una versión desde la anterior.
+typedef Migration = Future<void> Function(DatabaseExecutor db);
+
 class MyDatabase {
   static final MyDatabase instance = MyDatabase._init();
+
+  /// Versión actual del esquema. Para cambiarlo:
+  /// 1. Sube [schemaVersion].
+  /// 2. Agrega a [migrations] la nueva versión con sus cambios
+  ///    (por ejemplo, `ALTER TABLE ... ADD COLUMN ...`).
+  /// 3. Aplica el mismo cambio en `_createDB`, que crea las instalaciones nuevas.
+  static const schemaVersion = 1;
+
+  static final Map<int, Migration> migrations = {
+    // 2: (db) => db.execute('ALTER TABLE ... ADD COLUMN ...'),
+  };
+
+  /// Aplica en orden las migraciones de [from] + 1 hasta [to]. sqflite la
+  /// llama dentro de una transacción: si una falla no queda nada a medias.
+  @visibleForTesting
+  static Future<void> migrate(DatabaseExecutor db, int from, int to, Map<int, Migration> migrations) async {
+    for (var version = from + 1; version <= to; version++) {
+      final migration = migrations[version];
+      if (migration == null) {
+        throw StateError('Falta la migración de la base de datos a la versión $version');
+      }
+      await migration(db);
+    }
+  }
 
   static Database? _database;
 
@@ -47,7 +74,12 @@ class MyDatabase {
   Future<Database> _initDB(String filePath) async {
     final path = pathOverride ?? join(await getDatabasesPath(), filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);//, onUpgrade: _upgradeDB);
+    return await openDatabase(
+      path,
+      version: schemaVersion,
+      onCreate: _createDB,
+      onUpgrade: (db, oldVersion, newVersion) => migrate(db, oldVersion, newVersion, migrations),
+    );
   }
 
   Future _createDB(Database db, int version) async {
@@ -105,12 +137,6 @@ class MyDatabase {
       )
     ''');
   }
-
-  // Future _upgradeDB(Database db, int oldVersion, int newVersion) async {
-  //   if (oldVersion < newVersion) {
-  //     db.execute("ALTER TABLE $shoppingListsTable ADD COLUMN ${ShoppingListColumns.latitude} $floatType");
-  //   }
-  // }
 
   Future close() async {
     final db = await instance.database;
