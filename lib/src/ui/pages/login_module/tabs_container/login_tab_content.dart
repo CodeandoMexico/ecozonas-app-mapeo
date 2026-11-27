@@ -2,7 +2,6 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
-import '../../../utils/constants.dart';
 import '../../login_module/tabs_container/bloc/login_tab_event.dart';
 import '../continue_session_tab/continue_session_page.dart';
 import '../new_session_tab/new_session_page.dart';
@@ -67,7 +66,6 @@ class _LoginTabPageState extends State<LoginTabContent> {
           child: Scaffold(
             appBar: _appBar(!hasSessions ? _defaultTabs : _allTabs),
             body: _body(!hasSessions ? _defaultPages : _allPages),
-            backgroundColor: Colors.white,
           ),
         );
       },
@@ -79,21 +77,8 @@ class _LoginTabPageState extends State<LoginTabContent> {
    */
   AppBar _appBar(List<Widget> tabs) {
     return AppBar(
-      elevation: 0,
-      title: Text(
-        AppLocalizations.of(context)!.init,
-        style: const TextStyle(fontSize: Constants.appBarFontSize)
-      ),
-      centerTitle: true,
-      bottom: TabBar(
-        indicatorColor: Constants.darkBlueColor,
-        indicatorWeight: 3,
-        tabs: tabs,
-        dividerColor: Colors.white,
-      ),
-      iconTheme: const IconThemeData(
-        color: Colors.black,
-      ),
+      title: Text(AppLocalizations.of(context)!.init),
+      bottom: TabBar(tabs: tabs, indicatorWeight: 3),
     );
   }
 
@@ -107,11 +92,6 @@ class _LoginTabPageState extends State<LoginTabContent> {
   }
 
   Widget _tab(String label) {
-    return Tab(
-      child: Text(
-        label,
-        style: const TextStyle(fontSize: Constants.appBarFontSize, color: Constants.labelTextColor)
-      )
-    );
+    return Tab(text: label);
   }
 }

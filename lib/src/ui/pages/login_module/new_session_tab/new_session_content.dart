@@ -5,7 +5,6 @@ import 'package:ecozonas/l10n/app_localizations.dart';
 import '../../../../domain/models/sociodemographic_codes.dart';
 import '../../../dialogs/new_session_confirm_dialog.dart';
 import '../../../theme/theme.dart';
-import '../../../utils/constants.dart';
 import '../../../utils/dialogs.dart' as dialogs;
 import '../../../utils/utils.dart' as utils;
 import '../../../widgets/my_bottom_sheet_text_field.dart';
@@ -63,28 +62,26 @@ class _NewSessionContentState extends State<NewSessionContent> {
   }
 
 Widget _body(BuildContext context, NewSessionBloc bloc) {
-  return SingleChildScrollView( // Add scrollability
-    child: Padding(
-      padding: const EdgeInsets.all(Constants.padding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/new_app_splash.png', height: 160),
-          Text(
-            AppLocalizations.of(context)!.completeData,
-            style: const TextStyle(fontSize: 18),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: Constants.paddingLarge), // Replace Spacer
-          _genderDropdown(context, bloc),
-          const SizedBox(height: Constants.paddingLarge),
-          _ageDropdown(bloc),
-          const SizedBox(height: Constants.paddingLarge),
-          _disabilityDropdown(bloc),
-          const SizedBox(height: Constants.paddingLarge), // Replace Spacer
-          _continueButton(bloc),
-        ],
-      ),
+  return SingleChildScrollView(
+    padding: AppSpacing.pageWithVertical,
+    child: Column(
+      children: [
+        Image.asset('assets/images/new_app_splash.png', height: 128),
+        const SizedBox(height: AppSpacing.md),
+        Text(
+          AppLocalizations.of(context)!.completeData,
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: AppColors.textSecondary),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        _genderDropdown(context, bloc),
+        const SizedBox(height: AppSpacing.md),
+        _ageDropdown(bloc),
+        const SizedBox(height: AppSpacing.md),
+        _disabilityDropdown(bloc),
+        const SizedBox(height: AppSpacing.lg),
+        _continueButton(bloc),
+      ],
     ),
   );
 }

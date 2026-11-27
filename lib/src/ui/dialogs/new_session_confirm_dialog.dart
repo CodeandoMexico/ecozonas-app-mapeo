@@ -1,9 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
-import '../utils/constants.dart';
-import '../widgets/my_primary_elevated_button.dart';
-import '../widgets/my_secondary_elevated_button.dart';
+import '../theme/theme.dart';
+import '../widgets/app_button.dart';
 
 class NewSessionConfirmDialog extends StatelessWidget {
   final String gender;
@@ -15,65 +14,47 @@ class NewSessionConfirmDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const styleBold = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
-    const styleTitle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
-    const styleField = TextStyle(fontSize: 14);
+    final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
 
-    return AlertDialog(
-      backgroundColor: Colors.white,
-      contentPadding: const EdgeInsets.all(0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Constants.padding)
-      ),
-      content: Padding(
-        padding: const EdgeInsets.all(Constants.padding),
-        child: Wrap(
-          direction: Axis.vertical,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          runAlignment: WrapAlignment.center,
+    Widget field(String label, String value) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+        child: Column(
           children: [
-            Text(AppLocalizations.of(context)!.detailsCorrect, style: styleTitle),
-            const SizedBox(height: Constants.padding),
-            Text(AppLocalizations.of(context)!.gender, style: styleField),
-            Text(gender, style: styleBold),
-            const SizedBox(height: Constants.padding),
-            Text(AppLocalizations.of(context)!.ageRange, style: styleField),
-            Text(age, style: styleBold),
-            const SizedBox(height: Constants.padding),
-            Text(AppLocalizations.of(context)!.disability, style: styleField),
-            Text(disability, style: styleBold),
-            const SizedBox(height: Constants.padding),
-            _buttons(context)
+            Text(label, style: textTheme.bodySmall),
+            const SizedBox(height: AppSpacing.xxs),
+            Text(value, style: textTheme.titleSmall, textAlign: TextAlign.center),
           ],
         ),
-      ),
-    );
-  }
+      );
+    }
 
-  Widget _buttons(BuildContext context) {
-    return SizedBox(
-      width: 250,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Expanded(
-            child: MySecondaryElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              label: AppLocalizations.of(context)!.no,
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(l10n.detailsCorrect, style: textTheme.titleMedium, textAlign: TextAlign.center),
+            const SizedBox(height: AppSpacing.md),
+            field(l10n.gender, gender),
+            field(l10n.ageRange, age),
+            field(l10n.disability, disability),
+            const SizedBox(height: AppSpacing.sm),
+            Row(
+              children: [
+                Expanded(
+                  child: AppButton.outline(label: l10n.no, onPressed: () => Navigator.pop(context), fullWidth: true),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: AppButton.primary(label: l10n.yes, onPressed: () => callback(), fullWidth: true),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(width: 16.0),
-          Expanded(
-            child: MyPrimaryElevatedButton(
-              onPressed: () {
-                callback();
-              },
-              fullWidth: true,
-              label: AppLocalizations.of(context)!.yes,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
