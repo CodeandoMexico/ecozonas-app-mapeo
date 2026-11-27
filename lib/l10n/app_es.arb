@@ -106,16 +106,11 @@
     "tools": "Herramientas",
     "mySession": "Mi sesión",
     "pleaseWait": "Por favor espere",
-    "objectCount": "Hay {count} objeto{plurals} mapeado{plurals} por enviar",
+    "objectCount": "{count, plural, =0{No hay objetos mapeados por enviar} =1{Hay 1 objeto mapeado por enviar} other{Hay {count} objetos mapeados por enviar}}",
     "@objectCount": {
       "placeholders": {
         "count": {
-          "type": "String",
-          "example": "0"
-        },
-        "plurals": {
-          "type": "String",
-          "example": "s"
+          "type": "int"
         }
       }
     },

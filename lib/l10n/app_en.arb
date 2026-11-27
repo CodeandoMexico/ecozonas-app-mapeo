@@ -106,16 +106,11 @@
     "tools": "Tools",
     "mySession": "My session",
     "pleaseWait": "Please wait",
-    "objectCount": "There are {count} mapped object{plurals} to be submitted",
+    "objectCount": "{count, plural, =0{There are no mapped objects to be submitted} =1{There is 1 mapped object to be submitted} other{There are {count} mapped objects to be submitted}}",
     "@objectCount": {
       "placeholders": {
         "count": {
-          "type": "String",
-          "example": "0"
-        },
-        "plurals": {
-          "type": "String",
-          "example": "s"
+          "type": "int"
         }
       }
     },

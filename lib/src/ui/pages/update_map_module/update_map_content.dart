@@ -58,13 +58,12 @@ class UpdateMapContent extends StatelessWidget {
         if (snapshot.hasData && snapshot.data != null) {
           final mapaton = snapshot.data!;
           final count = mapaton.activities != null ? mapaton.activities!.length : 0;
-          final s = count != 1 ? 's' : '';
 
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: Column(
               children: [
-                Text(AppLocalizations.of(context)!.objectCount(count.toString(), s)),
+                Text(AppLocalizations.of(context)!.objectCount(count)),
                 const SizedBox(height: 8.0),
                 MyPrimaryElevatedButton(
                   onPressed: count != 0 ? () => _postMapaton(context, mapaton) : null,
