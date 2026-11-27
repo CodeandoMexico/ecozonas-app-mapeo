@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
@@ -58,7 +58,7 @@ class _NewSessionContentState extends State<NewSessionContent> {
         },
         child: _body(context, bloc),
       ),
-      backgroundColor: myTheme.colorScheme.background,
+      backgroundColor: myTheme.colorScheme.surface,
     );
   }
 

@@ -1,5 +1,5 @@
 import 'package:ecozonas/l10n/app_localizations.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../pages/form_module/blocks/block_error_text_widget.dart';
 import '../theme/theme.dart';

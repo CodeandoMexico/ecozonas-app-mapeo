@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
@@ -69,7 +69,7 @@ class _MapatonCarouselWidgetState extends State<MapatonCarouselWidget> {
             margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 3.0),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.black.withOpacity(_current == entry.key ? 0.9 : 0.4)),
+              color: Colors.black.withValues(alpha: _current == entry.key ? 0.9 : 0.4)),
           );
         }).toList(),
       ),

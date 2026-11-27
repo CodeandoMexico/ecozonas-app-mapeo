@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
@@ -225,7 +225,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
                           await _goToFormPage(e, context);
                         },
                       );
-                    }).toList(),
+                    }),
                     if (c != null) ActivityItem(
                       activity: c,
                       callback: () async {

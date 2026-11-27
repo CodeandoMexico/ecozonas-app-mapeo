@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class MyModalBottomSheet extends StatelessWidget {
   final String ?titleText;
@@ -32,7 +32,7 @@ class MyModalBottomSheet extends StatelessWidget {
             ),
             title: Text(e, style: const TextStyle(fontSize: 18)),
           );
-        }).toList(),
+        }),
       ],
     );
   }
