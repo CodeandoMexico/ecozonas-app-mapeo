@@ -36,7 +36,8 @@ jobs:
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 17
+          # maplibre_gl compila con Java 21; con JDK 17 falla ("invalid source release: 21").
+          java-version: 21
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
