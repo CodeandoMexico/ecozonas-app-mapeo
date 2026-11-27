@@ -20,8 +20,6 @@
   <string>????</string>
   <key>CFBundleVersion</key>
   <string>1.0</string>
-  <key>MinimumOSVersion</key>
-  <string>12.0</string>
   <key>beta-reports-active</key>
 	<true/>
 </dict>
