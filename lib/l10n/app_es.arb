@@ -1,6 +1,6 @@
 {
-    "selectLanguage": "Seleccionar lenguaje",
-    "language": "Lenguaje",
+    "selectLanguage": "Seleccionar idioma",
+    "language": "Idioma",
     "spanish": "Español",
     "english": "Inglés",
     "init": "Inicio",
@@ -43,16 +43,16 @@
     "deleteSessionsText": "Elimina las sesiones que no quieres que aparezcan en este dispositivo",
     "deleteSession": "¿Eliminar la sesión?",
     "onboardingIntro1": "Las EcoZonas son barrios que promueven colaboración, sostenibilidad y prosperidad. Esta aplicación te ayudará a identificar los desafíos y oportunidades en tu barrio en cuatro dimensiones: entorno urbano, calidad ambiental, bienestar socioeconómico y riesgo de desastres.",
-    "onboardingIntro2": "Realiza la encuesta barrial y el mapeo colaborativo para identificar estos desafíos. Los resultados generarán un reporte de tu barrio junto con una priorización de Soluciones Urbanas Sostenibles (SUS) de rápida implementación y bajo costo para tu comunidad. Podrás visualizar y descargar este reporte en la página  www.ecozonas.org, junto con otros recursos y detalles sobre las Soluciones Urbanas Sostenibles.",
+    "onboardingIntro2": "Realiza la encuesta barrial y el mapeo colaborativo para identificar estos desafíos. Los resultados generarán un reporte de tu barrio junto con una priorización de Soluciones Urbanas Sostenibles (SUS) de rápida implementación y bajo costo para tu comunidad. Podrás visualizar y descargar este reporte en la página www.ecozonas.org, junto con otros recursos y detalles sobre las Soluciones Urbanas Sostenibles.",
     "onboardingIntro3": "Para un diagnóstico completo, sigue estos pasos:",
     "onboarding1": "Completa la encuesta y anima a otras personas a hacerlo.",
     "onboarding2": "Mapea los desafíos y oportunidades en tu barrio y envía la información.",
     "onboarding3": "Descarga el reporte con el diagnóstico y las soluciones en la página www.ecozonas.org",
-    "aboutEcozonas": "Sobre Ecozonas",
+    "aboutEcozonas": "Sobre EcoZonas",
     "onboardingOutro": "Esta herramienta es parte del proyecto \"EcoZonas\", implementado por WRI México y el Instituto Wuppertal, apoyado por el Ministerio Federal de Economía y Protección del Clima Alemán y la Iniciativa Internacional del Clima (IKI).",
     "goToTools": "Ir a las herramientas",
     "moreInfoIntro": "Visita www.ecozonas.org desde tu computadora para ver los resultados de la encuesta y el mapeo realizados en tu comunidad y otras regiones. En el sitio web podrás encontrar información de:",
-    "moreInfo1": "Encuesta: consulta los resultados de la encuesta en tu barrio, enfocados en los principales desafíos y oportunidades. Además, encontrarás una priorización de Soluciones Urbanas Sostenibles (SUS) con intervenciones propuestas tu barrio según los desafíos identificados.",
+    "moreInfo1": "Encuesta: consulta los resultados de la encuesta en tu barrio, enfocados en los principales desafíos y oportunidades. Además, encontrarás una priorización de Soluciones Urbanas Sostenibles (SUS) con intervenciones propuestas para tu barrio según los desafíos identificados.",
     "moreInfo2": "Mapeo: explora el mapa de todos los objetos mapeados y un resumen de la evaluación de tu comunidad.",
     "moreInfo3": "Catálogo de Soluciones Urbanas Sostenibles (SUS): filtra las soluciones según los desafíos identificados o explora el catálogo con 160 ideas para implementar en tu barrio.",
     "moreInfo4": "Descarga el reporte con el diagnóstico de tu barrio y las SUS priorizadas, así como las bases de datos con la información recolectada.",
@@ -102,24 +102,22 @@
     "takePhoto": "Tomar foto",
     "takeAnotherPhoto": "Tomar otra foto",
     "required": "Este campo es obligatorio",
-    "checkRequired": "Por favor, revise los campos obligatorios",
+    "checkRequired": "Por favor, revisa los campos obligatorios",
     "tools": "Herramientas",
     "mySession": "Mi sesión",
-    "pleaseWait": "Por favor espere",
-    "objectCount": "Hay {count} objeto{plurals} mapeado{plurals} por enviar",
+    "pleaseWait": "Por favor, espera",
+    "objectCount": "{count, plural, =0{No hay objetos mapeados por enviar} =1{Hay 1 objeto mapeado por enviar} other{Hay {count} objetos mapeados por enviar}}",
     "@objectCount": {
       "placeholders": {
         "count": {
-          "type": "String",
-          "example": "0"
-        },
-        "plurals": {
-          "type": "String",
-          "example": "s"
+          "type": "int"
         }
       }
     },
     "errorFound": "Se encontró un error",
     "noConnection": "Sin conexión",
-    "locationUnavailable": "No se pudo obtener tu ubicación. Revisa que la ubicación esté activada y que EcoZonas tenga permiso en Ajustes."
+    "locationUnavailable": "No se pudo obtener tu ubicación. Revisa que la ubicación esté activada y que EcoZonas tenga permiso en Ajustes.",
+    "selectOption": "Selecciona una opción",
+    "dataUpdated": "Información actualizada correctamente",
+    "priorityObjects": "Objetos a mapear prioritarios"
 }

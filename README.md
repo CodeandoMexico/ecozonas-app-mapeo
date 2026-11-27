@@ -23,18 +23,25 @@ Los mapas se muestran con [MapLibre](https://maplibre.org/) (`maplibre_gl`) y el
 1. Clonar proyecto desde: ___
 2. Instalar Visual Studio Code para abrir el proyecto
 3. En Visual Studio Code y abrir el proyecto utiilzando Open Folder
-4. Usar Java 17 o superior para Gradle. Flutter usa por defecto el JDK incluido en Android Studio; para usar otro, ejecutar `flutter config --jdk-dir=/PATH_TO_JDK`
+4. Usar Java 21 o superior para Gradle (lo pide `maplibre_gl`). Flutter usa por defecto el JDK incluido en Android Studio; para usar otro, ejecutar `flutter config --jdk-dir=/PATH_TO_JDK`
 5. En la terminal de Visual Studio Code, ejecutar el comando “flutter pub get” para descargar las librerías del proyecto
 6. Seleccionar y arrancar el dispositivo para el que se quiere probar. En VS Code está abajo a la derecha.
 7. Ejecutar `flutter run` para compilar y abrir la app en el dispositivo
 8. Para compilar el APK final para Android ejecutar `flutter build apk`
+
+## Pruebas y análisis
+
+- `flutter test` corre las pruebas de `test/`
+- `flutter analyze` debe terminar sin avisos
+
+GitHub Actions corre ambos y compila el APK de Android en cada pull request (`.github/workflows/ci.yml`).
 
 ## Versiones utilizadas
 1. Flutter 3.50.1 (channel stable), Dart 3.14.0
 2. Android
     1. Gradle 9.5.0, Android Gradle Plugin 9.3.1, Kotlin 2.4.20
     2. compileSdk y targetSdk 36, minSdk 24 (valores de Flutter)
-    3. Java 17 o superior (probado con el JDK 25 incluido en Android Studio)
+    3. JDK 21 o superior (lo pide `maplibre_gl`; probado con el JDK 25 incluido en Android Studio)
 
 ## Notas
 

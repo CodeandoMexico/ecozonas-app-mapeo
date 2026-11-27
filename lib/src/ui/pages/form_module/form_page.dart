@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../../data/preferences/user_preferences.dart';
@@ -40,7 +40,7 @@ class FormPage extends StatelessWidget {
         children: [
           utils.getCategoryIcon(code: activity.category.code, size: 20),
           const SizedBox(width: Constants.paddingMedium),
-          Flexible(child: Text(utils.showEnglish(context) ? activity.titleEn : activity.title, maxLines: 2, style: const TextStyle(fontSize: 16))),
+          Flexible(child: Text(utils.localized(context, es: activity.title, en: activity.titleEn), maxLines: 2, style: const TextStyle(fontSize: 16))),
         ],
       ),
     );
@@ -53,8 +53,8 @@ class FormPage extends StatelessWidget {
           ...activity.blocks.map((e) {
             e.value = null;
 
-            final title = utils.showEnglish(context) ? e.titleEn : e.title;
-            final description = utils.showEnglish(context) ? e.descriptionEn : e.description;
+            final title = utils.localized(context, es: e.title, en: e.titleEn);
+            final description = utils.localized(context, es: e.description, en: e.descriptionEn);
 
             if (e.blockType == 'instructions') {
               return _instructions(title, description);
@@ -75,11 +75,6 @@ class FormPage extends StatelessWidget {
             } else if (e.blockType == 'picture') {
               return _picture(e, title, description);
             }
-            // if (e.blockType == 'POINT') {
-            //   return _map(context, e.title);
-            // }
-
-            // return _checkboxImage();
             return Container();
           }),
           _buttons(context, activity)
@@ -142,12 +137,6 @@ class FormPage extends StatelessWidget {
     );
   }
 
-  Widget _map(String title) {
-    return MapBlockWidget(
-      title: title,
-    );
-  }
-
   Widget _checkbox(Block block, String title, String description) {
     return CheckboxBlockWidget(
       title: title,
@@ -196,16 +185,11 @@ class FormPage extends StatelessWidget {
     );
   }
 
-  Widget _checkboxImage() {
-    return const CheckBlockWidget();
-  }
-
   /*
    * METHODS
    */
   void _save(BuildContext context, Activity activity) async {
     final mandatoryCount = activity.blocks.where((element) {
-      debugPrint(element.toString());
       return element.isRequired && (element.value == null || (element.blockType == 'checkbox' && element.value.isEmpty));
     }).length;
 
@@ -216,7 +200,7 @@ class FormPage extends StatelessWidget {
 
     try {
       final prefs = UserPreferences();
-      final title = utils.showEnglish(context) ? activity.titleEn : activity.title;
+      final title = utils.localized(context, es: activity.title, en: activity.titleEn);
 
       final useCase = MapatonUseCase(MapatonRepositoryImpl());
       final m = await useCase.getMapatonsByUuidAndMapper(activity.mapatonUuid!, prefs.getMapper!.id.toString());

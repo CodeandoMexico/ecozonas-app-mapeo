@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../domain/models/mapaton_model.dart';
 import '../../../utils/utils.dart' as utils;
@@ -49,7 +49,7 @@ class _CheckboxBlockWidgetState extends State<CheckboxBlockWidget> {
               value: e.checked ?? false,
               activeColor: Colors.black,
               checkColor: Colors.white,
-              title: Text(utils.showEnglish(context) ? e.labelEn : e.label),
+              title: Text(utils.localized(context, es: e.label, en: e.labelEn)),
               onChanged: (value) {
                 if (value != null && value) {
                   selectedChoices.add(e.value);

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../domain/models/mapaton_model.dart';
@@ -57,14 +57,14 @@ class ActivityItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            utils.showEnglish(context) ? activity.titleEn : activity.title,
+            utils.localized(context, es: activity.title, en: activity.titleEn),
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: Constants.paddingSmall),
           Text(
-            utils.showEnglish(context) ? activity.descriptionEn : activity.description,
+            utils.localized(context, es: activity.description, en: activity.descriptionEn),
             style: const TextStyle(fontSize: 12)
           ),
           const SizedBox(height: Constants.paddingSmall),
@@ -88,7 +88,7 @@ class ActivityItem extends StatelessWidget {
               activity.isPriority ? Image.asset('assets/icons/ic_asterisk_50.png', width: 18) : Container(),
               activity.isPriority ? Image.asset('assets/icons/ic_asterisk_50.png', width: 18) : Container(),
               SizedBox(width: activity.isPriority ? 8.0 : 0),
-              Flexible(child: Text(utils.showEnglish(context) ? activity.category.nameEn : activity.category.name, style: const TextStyle(fontSize: 10)))
+              Flexible(child: Text(utils.localized(context, es: activity.category.name, en: activity.category.nameEn), style: const TextStyle(fontSize: 10)))
             ],
           ),
         ),

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../../domain/models/mapaton_model.dart';
@@ -125,6 +125,8 @@ ${AppLocalizations.of(context)!.onboardingIntro3}\n\n'''
     );
   }
 
+  // Se usa en los pasos 2a-2c de la introducción, que están comentados.
+  // ignore: unused_element
   WidgetSpan _letterIndent(String letter, String text) {
     final style = _style.copyWith(
       letterSpacing: _letterSpacing,

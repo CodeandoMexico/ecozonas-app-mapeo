@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
@@ -40,7 +40,7 @@ class MySessionContent extends StatelessWidget {
    */
   void _states(context, state) {
     if (state is UpdateSuccessful) {
-      utils.showSnackBarSuccess(context, 'Información actualizada correctamente');
+      utils.showSnackBarSuccess(context, AppLocalizations.of(context)!.dataUpdated);
     }
   }
 

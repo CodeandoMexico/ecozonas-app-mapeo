@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:ecozonas/src/ui/utils/color_extension.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:location/location.dart';
@@ -31,7 +31,7 @@ class MapatonMapContent extends StatefulWidget {
 }
 
 class _MapatonMapContentState extends State<MapatonMapContent> {
-  final ActivitiesDraggable _activitiesDraggable = ActivitiesDraggable();
+  final _activitiesController = DraggableScrollableController();
 
   // late MapatonBloc _bloc;
   MapLibreMapController? _controller;
@@ -43,6 +43,12 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
     target: LatLng(0, 0),
     zoom: 15
   );
+
+  @override
+  void dispose() {
+    _activitiesController.dispose();
+    super.dispose();
+  }
 
   // @override
   // void initState() {
@@ -56,11 +62,6 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
     final bloc = context.read<MapatonBloc>();
 
     final prefs = UserPreferences();
-
-    _activitiesDraggable.setActivities(widget.mapaton!);
-    _activitiesDraggable.setCallback((value) {
-      BlocProvider.of<MapatonBloc>(context).add(AddMarker(value));
-    });
 
     return Scaffold(
       appBar: _appBar(context, bloc, widget.mapaton!),
@@ -113,7 +114,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
         children: [
           Expanded(
             child: Text(
-              utils.showEnglish(context) ? mapaton.titleEn : mapaton.title,
+              utils.localized(context, es: mapaton.title, en: mapaton.titleEn),
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)
             ),
           ),
@@ -237,7 +238,11 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
         label: AppLocalizations.of(context)!.mapHere,
         fullWidth: true,
         elevation: 5,
-        onPressed: () => _activitiesDraggable.animateDraggable(false),
+        onPressed: () => _activitiesController.animateTo(
+          ActivitiesDraggable.openSize,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.ease,
+        ),
       ),
     );
   }
@@ -351,7 +356,11 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
 
   Widget _draggableScrollableSheet() {
     return Positioned.fill(
-      child: _activitiesDraggable
+      child: ActivitiesDraggable(
+        mapaton: widget.mapaton!,
+        controller: _activitiesController,
+        onActivitySaved: (activity) => BlocProvider.of<MapatonBloc>(context).add(AddMarker(activity)),
+      ),
     );
   }
 
@@ -460,6 +469,15 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
     }
   }
 
+  /// Nombre de la actividad en el idioma actual. El mapeo guarda el nombre
+  /// traducido al momento de guardarse; si la actividad sigue en el mapatón
+  /// se usa su título en el idioma actual.
+  String _localizedActivityName(ActivityDbModel mapped) {
+    final activity = widget.mapaton!.activities.where((e) => e.uuid == mapped.uuid).firstOrNull;
+    if (activity == null) return mapped.name;
+    return utils.localized(context, es: activity.title, en: activity.titleEn);
+  }
+
   void _onSymbolTapped(Symbol symbol) {
     if (symbol == _currentPositionSymbol) {
       return;
@@ -471,7 +489,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
 
     BlocProvider.of<MapatonBloc>(context).add(SetCurrentActivity(
       activity: CurrentActivityModel(
-        name: activity.name,
+        name: _localizedActivityName(activity),
         color: activity.color.toColor(),
         borderColor: activity.borderColor.toColor()
       )

@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:cupertino_ui/cupertino_ui.dart' show GlobalCupertinoLocalizations;
+import 'package:ecozonas/l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ecozonas/l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart' show GlobalWidgetsLocalizations;
+import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 
 import 'src/data/preferences/user_preferences.dart';
@@ -10,6 +11,16 @@ import 'src/ui/pages/mapaton_list_module/mapaton_survey_provider.dart';
 import 'src/ui/pages/mapaton_map_module/bloc/bloc.dart';
 import 'src/ui/pages/pages.dart';
 import 'src/ui/theme/theme.dart';
+
+/// Delegados de localización de la app. No se usa
+/// AppLocalizations.localizationsDelegates porque gen-l10n todavía incluye
+/// los delegados de flutter_localizations, que no sirven con material_ui.
+const appLocalizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  AppLocalizations.delegate,
+  GlobalMaterialLocalizations.delegate,
+  GlobalWidgetsLocalizations.delegate,
+  GlobalCupertinoLocalizations.delegate,
+];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,18 +58,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Material App',
+      title: 'EcoZonas',
       locale: _locale,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('es'),
-      ],
+      localizationsDelegates: appLocalizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: myTheme,
       home: LanguagePage(
         localeCallback: (value) {
@@ -73,7 +76,6 @@ class _MyAppState extends State<MyApp> {
         MapatonOnboardingPage.routeName: (_) => const MapatonOnboardingPage(),
         MapatonMapPage.routeName: (_) => const MapatonMapPage(),
         FormPage.routeName: (_) => const FormPage(),
-        ViewMapPage.routeName: (_) => const ViewMapPage(),
         UpdateMapPage.routeName: (_) => const UpdateMapPage(),
         MapatonMainPage.routeName: (_) => const MapatonMainPage(),
         ManageSessionsPage.routeName: (_) => const ManageSessionsPage(),

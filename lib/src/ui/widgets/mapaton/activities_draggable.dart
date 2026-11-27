@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
@@ -16,40 +16,30 @@ import '../../utils/utils.dart' as utils;
 import '../activity_item.dart';
 import '../my_text_form_field.dart';
 
+/// Hoja deslizable con las actividades del mapatón. La abre y cierra quien
+/// tenga [controller]; [onActivitySaved] recibe cada actividad guardada.
 class ActivitiesDraggable extends StatefulWidget {
-  final DraggableScrollableController draggableController = DraggableScrollableController();
+  final MapatonModel mapaton;
+  final DraggableScrollableController controller;
+  final ValueChanged<ActivityDbModel> onActivitySaved;
 
-  ActivitiesDraggable({super.key});
+  const ActivitiesDraggable({
+    super.key,
+    required this.mapaton,
+    required this.controller,
+    required this.onActivitySaved,
+  });
+
+  /// Tamaño de la hoja abierta (fracción de la pantalla).
+  static const openSize = 0.9;
 
   @override
   State<ActivitiesDraggable> createState() => _ActivitiesDraggableState();
-
-  late MapatonModel _mapatone;
-  List<Activity> _activities = [];
-  List<Activity> _filteredActivities = [];
-  late Function(ActivityDbModel) _callback;
-
-
-  void animateDraggable(bool isShowing) {
-    draggableController.animateTo(
-      !isShowing ? 0.9 : 0,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.ease
-    );
-  }
-
-  void setActivities(MapatonModel mapatone) {
-    _mapatone = mapatone;
-    _activities = mapatone.activities;
-    _filteredActivities = _activities;
-  }
-
-  void setCallback(Function(ActivityDbModel) callback) {
-    _callback = callback;
-  }
 }
 
 class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
+  List<Activity> get _activities => widget.mapaton.activities;
+  late List<Activity> _filteredActivities = List.of(_activities);
   late String _selectedCategory;
   late List<CategoryOptionModel> _options;
   final _controller = TextEditingController();
@@ -84,10 +74,10 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
     final bloc = context.read<MapatonBloc>();
 
     return DraggableScrollableSheet(
-      controller: widget.draggableController,
+      controller: widget.controller,
       minChildSize: 0,
       initialChildSize: 0,
-      maxChildSize: 0.9,
+      maxChildSize: ActivitiesDraggable.openSize,
       snap: true,
       builder: (context, scrollController) {
         return Container(
@@ -160,22 +150,22 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   }
 
   Widget _page1(BuildContext context, MapatonBloc bloc) {
-    widget._filteredActivities.sort((a, b) {
+    _filteredActivities.sort((a, b) {
       return a.title.compareTo(b.title);
     });
 
-    widget._filteredActivities.sort((a, b) {
+    _filteredActivities.sort((a, b) {
       return a.category.code.compareTo(b.category.code);
     });
 
-    widget._filteredActivities.sort((a, b) {
+    _filteredActivities.sort((a, b) {
       final aInt = a.isPriority ? 1 : 0;
       final bInt = b.isPriority ? 1 : 0;
 
       return bInt.compareTo(aInt);
     });
 
-    Activity? c = widget._activities.firstWhereOrNull((element) => element.category.code == 'OTRA');
+    Activity? c = _activities.firstWhereOrNull((element) => element.category.code == 'OTRA');
     if (c != null) {
       c.color = c.category.color;
       c.color = c.category.color;
@@ -184,7 +174,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
       c.category.description = c.category.name;
     }
 
-    final withPriority = widget._filteredActivities.where((e) => e.isPriority == true);
+    final withPriority = _filteredActivities.where((e) => e.isPriority == true);
     bool showPriorityLabel = withPriority.isNotEmpty;
 
     return StreamBuilder(
@@ -201,10 +191,10 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
                     if (showPriorityLabel) ...[
                       _priorityLabel()
                     ],
-                    ...widget._filteredActivities.where((element) {
+                    ..._filteredActivities.where((element) {
                       return element.category.code != 'OTRA';
                     }).map((e) {
-                      final category = widget._mapatone.categories
+                      final category = widget.mapaton.categories
                         .where((element) {
                           return element.code == e.category.code;
                         })
@@ -225,7 +215,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
                           await _goToFormPage(e, context);
                         },
                       );
-                    }).toList(),
+                    }),
                     if (c != null) ActivityItem(
                       activity: c,
                       callback: () async {
@@ -258,7 +248,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
           Image.asset('assets/icons/ic_asterisk_50.png', width: 18),
           Image.asset('assets/icons/ic_asterisk_50.png', width: 18),
           const SizedBox(width: 8.0),
-          const Text('Objetos a mapear prioritarios')
+          Text(AppLocalizations.of(context)!.priorityObjects)
         ],
       ),
     );
@@ -270,7 +260,7 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   void _search(String value) {
     setState(() {
       _searchText = value;
-      widget._filteredActivities = widget._activities.where((element) {
+      _filteredActivities = _activities.where((element) {
         if (_selectedCategory != _options[0].text) {
           return _matchCategory(element) && _matchText(element);
         } else {
@@ -284,21 +274,21 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
     setState(() {
       _selectedCategory = value;
       if (_selectedCategory != _options[0].text) {
-        widget._filteredActivities = widget._activities.where((element) {
+        _filteredActivities = _activities.where((element) {
           if (_searchText.isEmpty) {
             return _matchCategory(element);
           } else {
             return _matchCategory(element) && _matchText(element);
           }
         }).toList();
-        widget._filteredActivities.sort((a, b) {
+        _filteredActivities.sort((a, b) {
           return a.title.compareTo(b.title);
         });
       } else {
         if (_searchText.isEmpty) {
-          widget._filteredActivities = widget._activities;
+          _filteredActivities = List.of(_activities);
         } else {
-          widget._filteredActivities = widget._activities.where((element) {
+          _filteredActivities = _activities.where((element) {
             return _matchText(element);
           }).toList();
         }
@@ -307,8 +297,8 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   }
 
   bool _matchText(Activity element) {
-    final title = utils.removeDiacritics(utils.showEnglish(context) ? element.titleEn : element.title);
-    final description = utils.removeDiacritics(utils.showEnglish(context) ? element.descriptionEn : element.description);
+    final title = utils.removeDiacritics(utils.localized(context, es: element.title, en: element.titleEn));
+    final description = utils.removeDiacritics(utils.localized(context, es: element.description, en: element.descriptionEn));
     final blocksJson = utils.removeDiacritics(element.blocksJson);
     final search = utils.removeDiacritics(_searchText);
 
@@ -328,9 +318,9 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
   }
 
   Future<void> _goToFormPage(Activity e, BuildContext context) async {
-    e.mapatonUuid = widget._mapatone.uuid;
-    e.mapatonTitle = widget._mapatone.title;
-    e.mapatonLocationText = widget._mapatone.locationText;
+    e.mapatonUuid = widget.mapaton.uuid;
+    e.mapatonTitle = widget.mapaton.title;
+    e.mapatonLocationText = widget.mapaton.locationText;
 
     final a = await Navigator.push(
       context,
@@ -340,14 +330,14 @@ class _ActivitiesDraggableState extends State<ActivitiesDraggable> {
       )
     );
 
-     if (a != null) {
-      widget.draggableController.animateTo(
+    if (a != null) {
+      widget.controller.animateTo(
         0,
         duration: const Duration(milliseconds: 500),
         curve: Curves.ease
       );
 
-      widget._callback(a);
+      widget.onActivitySaved(a);
     }
   }
 }

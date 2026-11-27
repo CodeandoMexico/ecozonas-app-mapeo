@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 const Color primaryColor = Color(0xFFFFFFFF);
@@ -23,8 +23,6 @@ final myTheme = ThemeData.light().copyWith(
     onSecondary: Colors.black,
     surface: primaryColor,
     onSurface: Colors.black,
-    background: primaryColor,
-    onBackground: Colors.black,
     error: Color(0xffb00020),
     onError: Colors.white,
   ),
