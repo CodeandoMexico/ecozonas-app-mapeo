@@ -1,3 +1,5 @@
+import '../sociodemographic_codes.dart';
+
 const String mappersTable = 'mappersTable';
 
 List<MapperDbModel> mapperDbModelListFromJson(List<Map<String, dynamic>> json) {
@@ -37,9 +39,9 @@ class MapperDbModel {
     id: json[MapperColumns.id] as int?,
     mapperId: json[MapperColumns.mapperId] as int,
     alias: json[MapperColumns.alias] as String,
-    gender: json[MapperColumns.gender] as String,
-    age: json[MapperColumns.age] as String,
-    disability: json[MapperColumns.disability] as String,
+    gender: SociodemographicCodes.normalizeGender(json[MapperColumns.gender] as String),
+    age: SociodemographicCodes.normalizeAge(json[MapperColumns.age] as String),
+    disability: SociodemographicCodes.normalizeDisability(json[MapperColumns.disability] as String),
   );
 
   Map<String, dynamic> toJson() => {

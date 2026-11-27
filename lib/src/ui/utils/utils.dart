@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
+import '../../domain/models/sociodemographic_codes.dart';
 import 'constants.dart';
 
 /*
@@ -118,8 +119,16 @@ List<ItemModel> getDisiability(BuildContext context) {
     ItemModel(label: AppLocalizations.of(context)!.hearing, value: 'AUDITIVA'),
     ItemModel(label: AppLocalizations.of(context)!.cognitive, value: 'COGNITIVA'),
     ItemModel(label: AppLocalizations.of(context)!.other2, value: 'OTRA'),
-    ItemModel(label: AppLocalizations.of(context)!.preferNoAnswer, value: 'OTRA'),
+    ItemModel(label: AppLocalizations.of(context)!.preferNoAnswer, value: SociodemographicCodes.noAnswer),
   ];
+}
+
+/// Etiqueta de la opción cuyo código es [value]; si no existe, el código.
+String optionLabel(List<ItemModel> options, String value) {
+  for (final option in options) {
+    if (option.value == value) return option.label;
+  }
+  return value;
 }
 
 bool showEnglish(BuildContext context) {

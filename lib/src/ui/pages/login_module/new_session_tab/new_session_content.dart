@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
+import '../../../../domain/models/sociodemographic_codes.dart';
 import '../../../dialogs/new_session_confirm_dialog.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/constants.dart';
@@ -30,9 +31,9 @@ class _NewSessionContentState extends State<NewSessionContent> {
   Widget build(BuildContext context) {
     final bloc = context.read<NewSessionBloc>();
 
-    _selectedGender = AppLocalizations.of(context)!.preferNoAnswer;
-    _selectedAge = AppLocalizations.of(context)!.preferNoAnswer;
-    _selectedDisability = AppLocalizations.of(context)!.preferNoAnswer;
+    _selectedGender = SociodemographicCodes.noAnswer;
+    _selectedAge = SociodemographicCodes.noAnswer;
+    _selectedDisability = SociodemographicCodes.noAnswer;
     bloc.setGender(_selectedGender!);
     bloc.setAge(_selectedAge!);
     bloc.setDisability(_selectedDisability!);
@@ -89,7 +90,7 @@ Widget _body(BuildContext context, NewSessionBloc bloc) {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.gender,
       options: utils.getGenderOptions(context),
-      initialValue: utils.getGenderOptions(context).last.label,
+      initialValue: utils.getGenderOptions(context).last.value,
       callback: (value) {
         bloc.setGender(value);
         _selectedGender = value;
@@ -101,7 +102,7 @@ Widget _body(BuildContext context, NewSessionBloc bloc) {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.ageRange,
       options: utils.getAgeRange(context),
-      initialValue: utils.getAgeRange(context).last.label,
+      initialValue: utils.getAgeRange(context).last.value,
       callback: (value) {
         bloc.setAge(value);
         _selectedAge = value;
@@ -113,7 +114,7 @@ Widget _body(BuildContext context, NewSessionBloc bloc) {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.disability,
       options: utils.getDisiability(context),
-      initialValue: utils.getDisiability(context).last.label,
+      initialValue: utils.getDisiability(context).last.value,
       callback: (value) {
         bloc.setDisability(value);
         _selectedDisability = value;
@@ -145,9 +146,9 @@ Widget _body(BuildContext context, NewSessionBloc bloc) {
       context: context,
       builder: (_) {
         return NewSessionConfirmDialog(
-          gender: _selectedGender!,
-          age: _selectedAge!,
-          disability: _selectedDisability!,
+          gender: utils.optionLabel(utils.getGenderOptions(context), _selectedGender!),
+          age: utils.optionLabel(utils.getAgeRange(context), _selectedAge!),
+          disability: utils.optionLabel(utils.getDisiability(context), _selectedDisability!),
           callback: () {
             BlocProvider.of<NewSessionBloc>(context).add(CreateNewSession());
           },
