@@ -211,6 +211,3 @@ final appTheme = ThemeData(
     selectionHandleColor: AppColors.secondary,
   ),
 );
-
-/// Nombre anterior del tema; se mantiene mientras se migran las pantallas.
-final myTheme = appTheme;

@@ -238,6 +238,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
             return const Align(
               alignment: Alignment.center,
               child: Padding(
+                // Sube el ícono para que su punta (no su centro) marque el centro del mapa.
                 padding: EdgeInsets.only(bottom: 36.0),
                 child: Icon(Icons.pin_drop, size: 50),
               ),

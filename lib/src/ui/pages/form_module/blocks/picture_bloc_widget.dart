@@ -89,9 +89,9 @@ class _PictureBlockWidgetState extends State<PictureBlockWidget> {
       right: 0,
       child: Container(
         margin: const EdgeInsets.all(AppSpacing.xs),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12.0)
+        decoration: const BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: AppRadius.mdAll,
         ),
         child: IconButton(
           onPressed: () => setState(() {
