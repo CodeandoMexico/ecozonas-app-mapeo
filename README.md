@@ -28,11 +28,10 @@ Los mapas se muestran con [MapLibre](https://maplibre.org/) (`maplibre_gl`) y el
 
 ### Pasos
 1. Clonar el proyecto: `git clone https://github.com/CodeandoMexico/ecozonas-app-mapeo.git`
-2. Abrir la carpeta del proyecto en Visual Studio Code (o el editor de tu preferencia)
-3. Ejecutar `flutter pub get` para descargar las librerías; también genera los textos traducidos (`lib/l10n/app_localizations*.dart`)
-4. Seleccionar el dispositivo o emulador. En VS Code está abajo a la derecha; desde la terminal, `flutter devices` los lista
-5. Ejecutar `flutter run` para compilar y abrir la app en el dispositivo
-6. Para un iPhone físico, abrir `ios/Runner.xcworkspace` en Xcode y configurar la firma en *Signing & Capabilities* del target Runner
+2. Desde la carpeta del proyecto, ejecutar `flutter pub get` para descargar las librerías; también genera los textos traducidos (`lib/l10n/app_localizations*.dart`)
+3. Conectar un dispositivo o abrir un emulador; `flutter devices` lista los disponibles y `flutter emulators --launch <id>` abre un emulador
+4. Ejecutar `flutter run` para compilar y abrir la app (con varios dispositivos, `flutter run -d <id>`)
+5. Para un iPhone físico, abrir `ios/Runner.xcworkspace` en Xcode y configurar la firma en *Signing & Capabilities* del target Runner
 
 ### Compilar para publicar
 - Android: `flutter build appbundle` (Google Play) o `flutter build apk`. La firma se configura en `android/key.properties`, que no se sube al repositorio; ver [Build and release an Android app](https://docs.flutter.dev/deployment/android)
