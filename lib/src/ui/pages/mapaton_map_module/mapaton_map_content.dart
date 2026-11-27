@@ -469,6 +469,15 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
     }
   }
 
+  /// Nombre de la actividad en el idioma actual. El mapeo guarda el nombre
+  /// traducido al momento de guardarse; si la actividad sigue en el mapatón
+  /// se usa su título en el idioma actual.
+  String _localizedActivityName(ActivityDbModel mapped) {
+    final activity = widget.mapaton!.activities.where((e) => e.uuid == mapped.uuid).firstOrNull;
+    if (activity == null) return mapped.name;
+    return utils.localized(context, es: activity.title, en: activity.titleEn);
+  }
+
   void _onSymbolTapped(Symbol symbol) {
     if (symbol == _currentPositionSymbol) {
       return;
@@ -480,7 +489,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
 
     BlocProvider.of<MapatonBloc>(context).add(SetCurrentActivity(
       activity: CurrentActivityModel(
-        name: activity.name,
+        name: _localizedActivityName(activity),
         color: activity.color.toColor(),
         borderColor: activity.borderColor.toColor()
       )
