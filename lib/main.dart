@@ -12,6 +12,16 @@ import 'src/ui/pages/mapaton_map_module/bloc/bloc.dart';
 import 'src/ui/pages/pages.dart';
 import 'src/ui/theme/theme.dart';
 
+/// Delegados de localización de la app. No se usa
+/// AppLocalizations.localizationsDelegates porque gen-l10n todavía incluye
+/// los delegados de flutter_localizations, que no sirven con material_ui.
+const appLocalizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  AppLocalizations.delegate,
+  GlobalMaterialLocalizations.delegate,
+  GlobalWidgetsLocalizations.delegate,
+  GlobalCupertinoLocalizations.delegate,
+];
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
@@ -50,16 +60,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'EcoZonas',
       locale: _locale,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('es'),
-      ],
+      localizationsDelegates: appLocalizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: myTheme,
       home: LanguagePage(
         localeCallback: (value) {
