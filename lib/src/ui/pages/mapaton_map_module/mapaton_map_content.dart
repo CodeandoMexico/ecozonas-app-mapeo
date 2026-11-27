@@ -218,8 +218,8 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
         }
 
         if (mounted) {
-          BlocProvider.of<MapatonBloc>(context).add(GetLocation());
-          BlocProvider.of<MapatonBloc>(context).add(GetMarkers(mapaton.uuid));
+          bloc.add(GetLocation());
+          bloc.add(GetMarkers(mapaton.uuid));
         }
       },
     );

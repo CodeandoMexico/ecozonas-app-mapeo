@@ -183,8 +183,8 @@ class MySessionContent extends StatelessWidget {
    * METHODS
    */
   Future<void> _copyToClipboard(int id, BuildContext context) async {
-    await Clipboard.setData(ClipboardData(text: id.toString())).then((value) {
-      utils.showSnackBar(context, AppLocalizations.of(context)!.copiedId);
-    });
+    await Clipboard.setData(ClipboardData(text: id.toString()));
+    if (!context.mounted) return;
+    utils.showSnackBar(context, AppLocalizations.of(context)!.copiedId);
   }
 }
