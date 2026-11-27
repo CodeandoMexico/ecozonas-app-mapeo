@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../../../data/preferences/user_preferences.dart';
 import '../../../../data/repositories/preferences/preferences_repository_impl.dart';

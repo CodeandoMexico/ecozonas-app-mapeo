@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:location/location.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../../../main.dart';
 import '../../../data/device/connectivity.dart';
