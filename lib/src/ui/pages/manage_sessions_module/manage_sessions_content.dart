@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../../domain/models/db/mapper_db_model.dart';
-import '../../utils/constants.dart';
 import '../../utils/dialogs.dart' as dialogs;
 import '../../widgets/my_app_bar.dart';
 import 'bloc/bloc.dart';
+import '../../theme/theme.dart';
+import '../../widgets/app_list_item.dart';
 
 class ManageSessionsContent extends StatelessWidget {
   const ManageSessionsContent({super.key});
@@ -24,15 +25,18 @@ class ManageSessionsContent extends StatelessWidget {
       },
       child: Scaffold(
         appBar: MyAppBar(
-          title: Text(AppLocalizations.of(context)!.manageSessions, style: const TextStyle(fontSize: Constants.appBarFontSize)),
+          title: Text(AppLocalizations.of(context)!.manageSessions),
         ),
-        body: Column(
-          children: [
-            _text(context),
-            _listView(bloc),
-          ],
+        body: Padding(
+          padding: AppSpacing.pageWithVertical,
+          child: Column(
+            children: [
+              _text(context),
+              const SizedBox(height: AppSpacing.lg),
+              _listView(bloc),
+            ],
+          ),
         ),
-        backgroundColor: Colors.white,
       ),
     );
   }
@@ -41,13 +45,10 @@ class ManageSessionsContent extends StatelessWidget {
    * WIDGETS
    */
   Widget _text(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(Constants.padding),
-      child: Text(
-        AppLocalizations.of(context)!.deleteSessionsText,
-        style: const TextStyle(fontSize: 18),
-        textAlign: TextAlign.center,
-      ),
+    return Text(
+      AppLocalizations.of(context)!.deleteSessionsText,
+      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: AppColors.textSecondary),
+      textAlign: TextAlign.center,
     );
   }
 
@@ -58,8 +59,9 @@ class ManageSessionsContent extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<List<MapperDbModel>> snapshot) {
         if (snapshot.hasData && snapshot.data!.isNotEmpty) {
           return Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: snapshot.data!.length,
+              separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.xs),
               itemBuilder: (context, index) {
                 return _sessionListItem(context, snapshot.data![index]);
               },
@@ -73,32 +75,10 @@ class ManageSessionsContent extends StatelessWidget {
   }
 
   Widget _sessionListItem(BuildContext context, MapperDbModel mapperDbModel) {
-    return GestureDetector(
+    return AppListItem(
+      title: '${mapperDbModel.alias}#${mapperDbModel.mapperId}',
+      trailingIcon: Icons.delete_outline,
       onTap: () => _deleteSession(context, mapperDbModel.id!),
-      child: Container(
-        height: 56,
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: const Color(0xFF494949), width: 1),
-          borderRadius: BorderRadius.circular(12)
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                '${mapperDbModel.alias}#${mapperDbModel.mapperId}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Constants.labelTextColor,
-                  fontWeight: FontWeight.w500
-                ),
-              ),
-            ),
-            const Icon(Icons.delete_outline, size: 26)
-          ],
-        ),
-      ),
     );
   }
 

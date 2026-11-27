@@ -1,12 +1,12 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
-import '../../utils/constants.dart';
 import '../../utils/utils.dart' as utils;
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/my_bottom_sheet_text_field.dart';
 import '../../widgets/my_primary_elevated_button.dart';
 import '../login_module/tabs_container/login_tab_page.dart';
+import '../../theme/theme.dart';
 
 class LanguagePage extends StatelessWidget {
   final Function(Locale) localeCallback;
@@ -17,21 +17,21 @@ class LanguagePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(context),
-      body: Padding(
-        padding: const EdgeInsets.all(Constants.padding),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-              child: Image.asset('assets/images/new_app_splash.png', height: 160),
-            ),
-            _bottomSheet(context),
-            const Spacer(),
-            _continueButton(context)
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: AppSpacing.pageWithVertical,
+          child: Column(
+            children: [
+              const SizedBox(height: AppSpacing.xxl),
+              Image.asset('assets/images/new_app_splash.png', height: 128),
+              const SizedBox(height: AppSpacing.xl),
+              _bottomSheet(context),
+              const Spacer(),
+              _continueButton(context)
+            ],
+          ),
         ),
       ),
-      backgroundColor: Colors.white,
     );
   }
 
@@ -40,7 +40,7 @@ class LanguagePage extends StatelessWidget {
    */
   MyAppBar _appBar(BuildContext context) {
     return MyAppBar(
-      title: Text(AppLocalizations.of(context)!.selectLanguage, style: const TextStyle(fontSize: Constants.appBarFontSize)),
+      title: Text(AppLocalizations.of(context)!.selectLanguage),
     );
   }
 

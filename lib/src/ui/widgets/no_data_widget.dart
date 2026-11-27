@@ -1,8 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
-import '../utils/constants.dart';
 import 'ecozonas_image.dart';
+import '../theme/theme.dart';
+import 'app_button.dart';
 
 class NoDataWidget extends StatelessWidget {
   final VoidCallback callback;
@@ -11,28 +12,22 @@ class NoDataWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(36.0, 0, 36.0, 0),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
       child: Column(
         children: [
-          const EcozonasImage(topPadding: 96, bottomPadding: 76),
+          const EcozonasImage(topPadding: AppSpacing.xxl, bottomPadding: AppSpacing.xl),
           Text(
             AppLocalizations.of(context)!.noDataYet,
             textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
-          ElevatedButton.icon(
+          const SizedBox(height: AppSpacing.lg),
+          AppButton.primary(
+            label: AppLocalizations.of(context)!.download,
+            icon: Icons.download,
             onPressed: () => callback(),
-            icon: const Icon(Icons.download, color: Constants.darkBlueColor),
-            label: Text(AppLocalizations.of(context)!.download, style: const TextStyle(color: Constants.darkBlueColor, fontSize: 18)),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Constants.yellowButtonColor,
-              shadowColor: Constants.yellowButtonShadowColor,
-              elevation: 0,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(Constants.borderRadiusMedium))
-              )
-            ),
-          )
+          ),
         ],
       ),
     );
