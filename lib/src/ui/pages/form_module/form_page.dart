@@ -190,7 +190,6 @@ class FormPage extends StatelessWidget {
    */
   void _save(BuildContext context, Activity activity) async {
     final mandatoryCount = activity.blocks.where((element) {
-      debugPrint(element.toString());
       return element.isRequired && (element.value == null || (element.blockType == 'checkbox' && element.value.isEmpty));
     }).length;
 
