@@ -44,25 +44,29 @@ class _RadioBlockWidgetState extends State<RadioHorizontalBlockWidget> {
           BlockErrorTextWidget(showError: showError),
           SizedBox(
             width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: widget.choices.asMap().entries.map((e) {
-                return GestureDetector(
-                  onTap: () => _onChanged(e, e.key),
-                  child: Column(
-                    children: [
-                      Radio(
-                        value: e.key,
-                        groupValue: selectedRadioTile,
-                        visualDensity: VisualDensity.compact,
-                        activeColor: Colors.black,
-                        onChanged: (value) => _onChanged(e, value),
-                      ),
-                      Text(utils.localized(context, es: e.value.label, en: e.value.labelEn), style: const TextStyle(fontSize: 16))
-                    ],
-                  ),
-                );
-              }).toList()
+            child: RadioGroup<int>(
+              groupValue: selectedRadioTile,
+              onChanged: (value) {
+                if (value != null) _onChanged(MapEntry(value, widget.choices[value]), value);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: widget.choices.asMap().entries.map((e) {
+                  return GestureDetector(
+                    onTap: () => _onChanged(e, e.key),
+                    child: Column(
+                      children: [
+                        Radio<int>(
+                          value: e.key,
+                          visualDensity: VisualDensity.compact,
+                          activeColor: Colors.black,
+                        ),
+                        Text(utils.localized(context, es: e.value.label, en: e.value.labelEn), style: const TextStyle(fontSize: 16))
+                      ],
+                    ),
+                  );
+                }).toList()
+              ),
             ),
           )
         ],

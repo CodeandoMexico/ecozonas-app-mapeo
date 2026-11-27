@@ -15,10 +15,12 @@ class ManageSessionsContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<ManageSessionsBloc>();
 
-    return WillPopScope(
-      onWillPop: () async {
+    // Al regresar avisa a la pantalla anterior (true) para que recargue las sesiones.
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
         Navigator.pop(context, true);
-        return false;
       },
       child: Scaffold(
         appBar: MyAppBar(

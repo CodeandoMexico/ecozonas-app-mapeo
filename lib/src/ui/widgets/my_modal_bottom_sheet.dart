@@ -22,17 +22,23 @@ class MyModalBottomSheet extends StatelessWidget {
             ),
           ),
         ) : Container(margin: const EdgeInsets.only(top: 12.0)),
-        ...options.map((e) {
-          return ListTile(
-            onTap: () => _onTap(context, e),
-            leading: Radio(
-              value: false,
-              groupValue: 'options',
-              onChanged: (value) => _onTap(context, e)
-            ),
-            title: Text(e, style: const TextStyle(fontSize: 18)),
-          );
-        }),
+        // Los círculos son decorativos: ninguno aparece seleccionado.
+        RadioGroup<String>(
+          groupValue: null,
+          onChanged: (value) {
+            if (value != null) _onTap(context, value);
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: options.map((e) {
+              return ListTile(
+                onTap: () => _onTap(context, e),
+                leading: Radio<String>(value: e),
+                title: Text(e, style: const TextStyle(fontSize: 18)),
+              );
+            }).toList(),
+          ),
+        ),
       ],
     );
   }

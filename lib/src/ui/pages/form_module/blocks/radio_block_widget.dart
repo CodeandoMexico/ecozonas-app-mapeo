@@ -44,27 +44,31 @@ class _RadioBlockWidgetState extends State<RadioBlockWidget> {
           BlockErrorTextWidget(showError: showError),
           SizedBox(
             width: double.infinity,
-            child: Wrap(
-              direction: Axis.horizontal,
-              runAlignment: WrapAlignment.center,
-              alignment: WrapAlignment.center,
-              children: widget.choices.asMap().entries.map((e) {
-                return GestureDetector(
-                  onTap: () => _onChanged(e, e.key),
-                  child: Row(
-                    children: [
-                      Radio(
-                        value: e.key,
-                        groupValue: selectedRadioTile,
-                        visualDensity: VisualDensity.compact,
-                        activeColor: Colors.black,
-                        onChanged: (value) => _onChanged(e, value),
-                      ),
-                      Expanded(child: Text(utils.localized(context, es: e.value.label, en: e.value.labelEn), style: const TextStyle(fontSize: 16)))
-                    ],
-                  ),
-                );
-              }).toList()
+            child: RadioGroup<int>(
+              groupValue: selectedRadioTile,
+              onChanged: (value) {
+                if (value != null) _onChanged(MapEntry(value, widget.choices[value]), value);
+              },
+              child: Wrap(
+                direction: Axis.horizontal,
+                runAlignment: WrapAlignment.center,
+                alignment: WrapAlignment.center,
+                children: widget.choices.asMap().entries.map((e) {
+                  return GestureDetector(
+                    onTap: () => _onChanged(e, e.key),
+                    child: Row(
+                      children: [
+                        Radio<int>(
+                          value: e.key,
+                          visualDensity: VisualDensity.compact,
+                          activeColor: Colors.black,
+                        ),
+                        Expanded(child: Text(utils.localized(context, es: e.value.label, en: e.value.labelEn), style: const TextStyle(fontSize: 16)))
+                      ],
+                    ),
+                  );
+                }).toList()
+              ),
             ),
           )
         ],
