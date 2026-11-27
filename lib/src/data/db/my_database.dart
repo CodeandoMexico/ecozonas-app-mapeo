@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -15,6 +16,17 @@ class MyDatabase {
   static Database? _database;
 
   MyDatabase._init();
+
+  /// Ruta de la base en las pruebas (por ejemplo, inMemoryDatabasePath).
+  @visibleForTesting
+  static String? pathOverride;
+
+  /// Cierra la base y la olvida, para que cada prueba empiece de cero.
+  @visibleForTesting
+  static Future<void> reset() async {
+    await _database?.close();
+    _database = null;
+  }
 
   final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
   final textNotNullType = 'TEXT NOT NULL';
@@ -33,8 +45,7 @@ class MyDatabase {
   }
 
   Future<Database> _initDB(String filePath) async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, filePath);
+    final path = pathOverride ?? join(await getDatabasesPath(), filePath);
 
     return await openDatabase(path, version: 1, onCreate: _createDB);//, onUpgrade: _upgradeDB);
   }
@@ -138,15 +149,14 @@ class MyDatabase {
   Future<Map<String, dynamic>?> getMapatonByUuidAndMapper(String table, String uuid, String mapperId) async {
     final db = await instance.database;
 
-    final result = await db.rawQuery('''
-      SELECT * FROM $table
-      WHERE uuid = '$uuid' AND mapperId = '$mapperId'
-      LIMIT 1;
-    ''');
+    final result = await db.query(
+      table,
+      where: '${MapatonColumns.uuid} = ? AND ${MapatonColumns.mapperId} = ?',
+      whereArgs: [uuid, mapperId],
+      limit: 1
+    );
 
-    final list = result.toList();
-
-    return list.isNotEmpty ? list[0] : null;
+    return result.isNotEmpty ? result[0] : null;
   }
 
   Future<List<Map<String, dynamic>>?> getMapatonActivities(String table, int mapatonId) async {
@@ -162,27 +172,22 @@ class MyDatabase {
   Future<List<Map<String, dynamic>>?> getMapatonActivitiesToSend(String table, int mapatonId) async {
     final db = await instance.database;
 
-    // return await db.query(
-    //   table,
-    //   where: '${ActivityColumns.mapatonId} = ?',
-    //   whereArgs: [mapatonId]
-    // );
-    final result = await db.rawQuery('''
-      SELECT * FROM $table
-      WHERE ${ActivityColumns.mapatonId} = '$mapatonId' AND sent = 0;
-    ''');
-
-    return result.toList();
+    return await db.query(
+      table,
+      where: '${ActivityColumns.mapatonId} = ? AND ${ActivityColumns.sent} = 0',
+      whereArgs: [mapatonId]
+    );
   }
 
   Future updateSentActivities(int mapatonId) async {
     final db = await instance.database;
 
-    await db.rawUpdate('''
-      UPDATE $activitiesTable
-      SET sent = 1
-      WHERE ${ActivityColumns.mapatonId} = '$mapatonId' AND sent = 0;
-    ''');
+    await db.update(
+      activitiesTable,
+      {ActivityColumns.sent: 1},
+      where: '${ActivityColumns.mapatonId} = ? AND ${ActivityColumns.sent} = 0',
+      whereArgs: [mapatonId]
+    );
   }
 
   Future<int> update(String table, int id, Map<String, dynamic> map) async {
