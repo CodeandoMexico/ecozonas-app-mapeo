@@ -13,5 +13,32 @@
   - Dependencias clave y integraciones externas (Mapbox, API EcoZonas, KoboToolbox)
   - Identificación de mejoras prioritarias (testing, migraciones BD, DI, logging)
 
+## 26 de noviembre de 2026
 
+### Actualización a Flutter 3.50 y MapLibre (PR #7)
+
+- Compatibilidad con Flutter 3.50
+  - `intl` ^0.20.2
+  - Las traducciones se importan desde `package:ecozonas/l10n` (el paquete `flutter_gen` ya no existe); los archivos generados en `lib/l10n/` quedan fuera de git
+- Android al día con la plantilla de Flutter 3.50
+  - Gradle en Kotlin DSL: Gradle 9.5.0, AGP 9.3.1, Kotlin 2.4.20, Java 17
+  - compileSdk/targetSdk 36, minSdk 24 (antes 23)
+- iOS
+  - Versión mínima 15.5 (la pide `maplibre_gl`)
+  - Plugins con Swift Package Manager; se quitó CocoaPods
+  - Corregido `ONLY_ACTIVE_ARCH = NO` en Debug, que hacía fallar `flutter run` ("Unsupported Swift architecture")
+- Mapas: `mapbox_gl` (abandonado, incompatible con AGP 8+) reemplazado por `maplibre_gl` ^0.28.1 con el estilo de OpenFreeMap
+  - Ya no se necesitan `ACCESS_TOKEN` ni `MAPBOX_DOWNLOADS_TOKEN`
+  - La descarga de regiones espera a que termine de verdad (antes avisaba "Descarga completa" en cuanto empezaba)
+- `location` 10.2: se acepta la ubicación aproximada; se quitan del manifest los permisos de servicio en primer plano que la app no usa
+- Limpieza de credenciales y permisos sin uso: clave de Google Maps, `MBXAccessToken` y `READ_PHONE_STATE`
+
+### Correcciones
+
+- Género, edad y discapacidad se guardan como código (`MUJER`, `18_25`…) en vez de la etiqueta traducida; antes, enviar mapeos podía tronar si la sesión se creó en otro idioma. Las sesiones existentes se convierten al leerlas
+- La pantalla de idioma cambia el idioma por código (base para agregar más idiomas)
+- El mapa avisa cuando no puede obtener la ubicación (permiso negado o servicio apagado)
+- Al borrar un marcador se quita la tarjeta con su nombre
+- Crear sesión ya no reinicia las opciones elegidas
+- No se usa `BuildContext` después de un `await` en el mapa ni en "Mi sesión"
 
