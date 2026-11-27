@@ -23,20 +23,24 @@ class NewSessionContent extends StatefulWidget {
 }
 
 class _NewSessionContentState extends State<NewSessionContent> {
-  String? _selectedGender;
-  String? _selectedAge;
-  String? _selectedDisability;
+  String? _selectedGender = SociodemographicCodes.noAnswer;
+  String? _selectedAge = SociodemographicCodes.noAnswer;
+  String? _selectedDisability = SociodemographicCodes.noAnswer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Valores iniciales una sola vez: si se hiciera en build, cada
+    // reconstrucción borraría lo que la persona ya eligió.
+    final bloc = context.read<NewSessionBloc>();
+    bloc.setGender(_selectedGender!);
+    bloc.setAge(_selectedAge!);
+    bloc.setDisability(_selectedDisability!);
+  }
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<NewSessionBloc>();
-
-    _selectedGender = SociodemographicCodes.noAnswer;
-    _selectedAge = SociodemographicCodes.noAnswer;
-    _selectedDisability = SociodemographicCodes.noAnswer;
-    bloc.setGender(_selectedGender!);
-    bloc.setAge(_selectedAge!);
-    bloc.setDisability(_selectedDisability!);
 
     return Scaffold(
       body: BlocListener<NewSessionBloc, NewSessionState>(
@@ -90,7 +94,7 @@ Widget _body(BuildContext context, NewSessionBloc bloc) {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.gender,
       options: utils.getGenderOptions(context),
-      initialValue: utils.getGenderOptions(context).last.value,
+      initialValue: _selectedGender,
       callback: (value) {
         bloc.setGender(value);
         _selectedGender = value;
@@ -102,7 +106,7 @@ Widget _body(BuildContext context, NewSessionBloc bloc) {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.ageRange,
       options: utils.getAgeRange(context),
-      initialValue: utils.getAgeRange(context).last.value,
+      initialValue: _selectedAge,
       callback: (value) {
         bloc.setAge(value);
         _selectedAge = value;
@@ -114,7 +118,7 @@ Widget _body(BuildContext context, NewSessionBloc bloc) {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.disability,
       options: utils.getDisiability(context),
-      initialValue: utils.getDisiability(context).last.value,
+      initialValue: _selectedDisability,
       callback: (value) {
         bloc.setDisability(value);
         _selectedDisability = value;
