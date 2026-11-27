@@ -75,11 +75,6 @@ class FormPage extends StatelessWidget {
             } else if (e.blockType == 'picture') {
               return _picture(e, title, description);
             }
-            // if (e.blockType == 'POINT') {
-            //   return _map(context, e.title);
-            // }
-
-            // return _checkboxImage();
             return Container();
           }),
           _buttons(context, activity)
@@ -142,12 +137,6 @@ class FormPage extends StatelessWidget {
     );
   }
 
-  Widget _map(String title) {
-    return MapBlockWidget(
-      title: title,
-    );
-  }
-
   Widget _checkbox(Block block, String title, String description) {
     return CheckboxBlockWidget(
       title: title,
@@ -194,10 +183,6 @@ class FormPage extends StatelessWidget {
       description: description,
       callback: (value) => block.value = value,
     );
-  }
-
-  Widget _checkboxImage() {
-    return const CheckBlockWidget();
   }
 
   /*

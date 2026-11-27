@@ -73,7 +73,6 @@ class _MyAppState extends State<MyApp> {
         MapatonOnboardingPage.routeName: (_) => const MapatonOnboardingPage(),
         MapatonMapPage.routeName: (_) => const MapatonMapPage(),
         FormPage.routeName: (_) => const FormPage(),
-        ViewMapPage.routeName: (_) => const ViewMapPage(),
         UpdateMapPage.routeName: (_) => const UpdateMapPage(),
         MapatonMainPage.routeName: (_) => const MapatonMainPage(),
         ManageSessionsPage.routeName: (_) => const ManageSessionsPage(),
