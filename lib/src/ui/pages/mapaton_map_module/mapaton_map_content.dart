@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:location/location.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:maplibre_gl/maplibre_gl.dart';
+import 'package:ecozonas/l10n/app_localizations.dart';
 
-import '../../../../main.dart';
 import '../../../data/device/connectivity.dart';
 import '../../../data/preferences/user_preferences.dart';
 import '../../../domain/models/current_activity_model.dart';
@@ -35,7 +34,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
   final ActivitiesDraggable _activitiesDraggable = ActivitiesDraggable();
 
   // late MapatonBloc _bloc;
-  MapboxMapController? _controller;
+  MapLibreMapController? _controller;
   Symbol? _currentPositionSymbol;
   bool _disableCameraMove = false;
   String? _selectedMarkerId;
@@ -79,6 +78,9 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
   void _states(context, state) {
     if (state is LocationGetted) {
       _moveCamera(state.location);
+    }
+    if (state is ErrorGettingLocation) {
+      utils.showSnackBarError(context, AppLocalizations.of(context)!.locationUnavailable);
     }
     if (state is MarkersGetted) {
       for(var a in state.activities) {
@@ -175,13 +177,13 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
 
             if (_currentPositionSymbol != null) {
               final currentGeo = _currentPositionSymbol!.options.geometry!;
-              if (currentGeo.latitude.toStringAsFixed(5) != l.latitude!.toStringAsFixed(5) ||
-                  currentGeo.longitude.toStringAsFixed(5) != l.longitude!.toStringAsFixed(5)) {
+              if (currentGeo.latitude.toStringAsFixed(5) != l.latitude.toStringAsFixed(5) ||
+                  currentGeo.longitude.toStringAsFixed(5) != l.longitude.toStringAsFixed(5)) {
                 removeMyLocation();
-                addMyLocation(LatLng(l.latitude!, l.longitude!));
+                addMyLocation(LatLng(l.latitude, l.longitude));
               }
             } else {
-              addMyLocation(LatLng(l.latitude!, l.longitude!));
+              addMyLocation(LatLng(l.latitude, l.longitude));
             }
           }
 
@@ -192,8 +194,8 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
   }
 
   Widget _map(MapatonBloc bloc, UserPreferences prefs, BuildContext context, MapatonModel mapaton) {
-    return MapboxMap(
-      accessToken: MyApp.accessToken,
+    return MapLibreMap(
+      styleString: Constants.mapStyleUrl,
       initialCameraPosition: _cameraPosition,
       myLocationEnabled: false,
       trackCameraPosition: true,
@@ -219,8 +221,8 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
         }
 
         if (mounted) {
-          BlocProvider.of<MapatonBloc>(context).add(GetLocation());
-          BlocProvider.of<MapatonBloc>(context).add(GetMarkers(mapaton.uuid));
+          bloc.add(GetLocation());
+          bloc.add(GetMarkers(mapaton.uuid));
         }
       },
     );
@@ -365,7 +367,7 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
     Navigator.pushNamed(context, UpdateMapPage.routeName);
   }
 
-  void _onMapCreated(MapboxMapController controller, BuildContext context, MapatonModel mapaton) async {
+  void _onMapCreated(MapLibreMapController controller, BuildContext context, MapatonModel mapaton) async {
     _controller = controller;
     _controller!.onSymbolTapped.add(_onSymbolTapped);
     _controller!.addListener(() {
@@ -484,7 +486,12 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
           await _controller!.removeSymbol(symbol);
 
           if (mounted) {
-            BlocProvider.of<MapatonBloc>(context).add(RemoveMarker(activity));
+            final bloc = BlocProvider.of<MapatonBloc>(context);
+            bloc.add(RemoveMarker(activity));
+            // Deselecciona: quita la tarjeta del nombre y vuelve a mostrar el pin central.
+            _selectedMarkerId = null;
+            bloc.add(SetCurrentActivity(activity: null));
+            bloc.add(ShowCenter(showCenter: true));
             utils.showSnackBarSuccess(context, AppLocalizations.of(context)!.activityDeleted);
           }
         }

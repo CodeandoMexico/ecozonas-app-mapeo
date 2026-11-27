@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import '../theme/theme.dart';
 import '../utils/constants.dart';
 import '../utils/dialogs.dart' as dialogs;
+import '../utils/utils.dart' as utils;
 
+/// Selector de opciones. [initialValue] y el valor que recibe [callback] son el
+/// `value` (código) de un [ItemModel]; el texto que se muestra es su `label`.
 class MyBottomSheetTextField extends StatelessWidget {
   final String titleText;
   final List<ItemModel> options;
@@ -18,7 +21,7 @@ class MyBottomSheetTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (initialValue != null) {
-      textController.text = initialValue!;
+      textController.text = utils.optionLabel(options, initialValue!);
     }
 
     return TextFormField(
@@ -49,9 +52,9 @@ class MyBottomSheetTextField extends StatelessWidget {
       context: context,
       titleText: titleText,
       options: options.map((e) => e.label).toList(),
-      callback: (value) {
-        textController.text = value;
-        callback(value);
+      callback: (label) {
+        textController.text = label;
+        callback(options.firstWhere((e) => e.label == label).value);
       }
     );
   }

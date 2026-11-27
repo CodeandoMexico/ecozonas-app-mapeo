@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'sociodemographic_codes.dart';
+
 MapatonPostModel mapatonPostModelFromJson(String str) => MapatonPostModel.fromJson(json.decode(str));
 
 String mapatonPostModelToJson(MapatonPostModel data) => json.encode(data.toJson());
@@ -188,9 +190,9 @@ class SociodemographicData {
     });
 
     factory SociodemographicData.fromJson(Map<String, dynamic> json) => SociodemographicData(
-        gender: json["gender"],
-        ageRange: json["age_range"],
-        disability: json["disability"],
+        gender: SociodemographicCodes.normalizeGender(json["gender"]),
+        ageRange: SociodemographicCodes.normalizeAge(json["age_range"]),
+        disability: SociodemographicCodes.normalizeDisability(json["disability"]),
     );
 
     Map<String, dynamic> toJson() => {

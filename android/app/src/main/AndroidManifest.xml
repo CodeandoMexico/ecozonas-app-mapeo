@@ -1,12 +1,20 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <uses-permission
         android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission
         android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission
         android:name="android.permission.INTERNET"/>
+    <!-- El plugin location declara estos permisos para su modo en segundo
+         plano, que la app no usa. Se quitan para no tener que justificar
+         FOREGROUND_SERVICE_LOCATION en Google Play. -->
     <uses-permission
-        android:name="android.permission.READ_PHONE_STATE"/>
+        android:name="android.permission.FOREGROUND_SERVICE"
+        tools:node="remove"/>
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE_LOCATION"
+        tools:node="remove"/>
     <application
         android:label="EcoZonas"
         android:name="${applicationName}"
@@ -36,8 +44,5 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2"/>
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC8ZjGpUtbXC3ovG-ok4EIMNg0UebF-jds"/>
     </application>
 </manifest>

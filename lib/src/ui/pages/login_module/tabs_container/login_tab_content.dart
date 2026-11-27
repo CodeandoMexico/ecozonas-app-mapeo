@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../../utils/constants.dart';
 import '../../login_module/tabs_container/bloc/login_tab_event.dart';

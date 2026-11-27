@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../utils/constants.dart';
 import '../../utils/utils.dart' as utils;
@@ -50,9 +50,7 @@ class LanguagePage extends StatelessWidget {
   Widget _bottomSheet(BuildContext context) {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.language,
-      initialValue: utils.showEnglish(context) ?
-        AppLocalizations.of(context)!.english :
-        AppLocalizations.of(context)!.spanish,
+      initialValue: Localizations.localeOf(context).languageCode,
       options: utils.getLanguageOptions(context),
       callback: (value) => _setLocale(value, context),
     );
@@ -71,11 +69,7 @@ class LanguagePage extends StatelessWidget {
   /*
    * METHODS
    */
-  void _setLocale(String value, BuildContext context) {
-    if (value == AppLocalizations.of(context)!.spanish) {
-      localeCallback(const Locale('es'));
-    } else {
-      localeCallback(const Locale('en'));
-    }
+  void _setLocale(String languageCode, BuildContext context) {
+    localeCallback(Locale(languageCode));
   }
 }

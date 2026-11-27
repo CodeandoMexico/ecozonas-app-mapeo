@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ecozonas/l10n/app_localizations.dart';
 
+import '../../../../domain/models/sociodemographic_codes.dart';
 import '../../../dialogs/new_session_confirm_dialog.dart';
 import '../../../theme/theme.dart';
 import '../../../utils/constants.dart';
@@ -22,20 +23,24 @@ class NewSessionContent extends StatefulWidget {
 }
 
 class _NewSessionContentState extends State<NewSessionContent> {
-  String? _selectedGender;
-  String? _selectedAge;
-  String? _selectedDisability;
+  String? _selectedGender = SociodemographicCodes.noAnswer;
+  String? _selectedAge = SociodemographicCodes.noAnswer;
+  String? _selectedDisability = SociodemographicCodes.noAnswer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Valores iniciales una sola vez: si se hiciera en build, cada
+    // reconstrucción borraría lo que la persona ya eligió.
+    final bloc = context.read<NewSessionBloc>();
+    bloc.setGender(_selectedGender!);
+    bloc.setAge(_selectedAge!);
+    bloc.setDisability(_selectedDisability!);
+  }
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<NewSessionBloc>();
-
-    _selectedGender = AppLocalizations.of(context)!.preferNoAnswer;
-    _selectedAge = AppLocalizations.of(context)!.preferNoAnswer;
-    _selectedDisability = AppLocalizations.of(context)!.preferNoAnswer;
-    bloc.setGender(_selectedGender!);
-    bloc.setAge(_selectedAge!);
-    bloc.setDisability(_selectedDisability!);
 
     return Scaffold(
       body: BlocListener<NewSessionBloc, NewSessionState>(
@@ -89,7 +94,7 @@ Widget _body(BuildContext context, NewSessionBloc bloc) {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.gender,
       options: utils.getGenderOptions(context),
-      initialValue: utils.getGenderOptions(context).last.label,
+      initialValue: _selectedGender,
       callback: (value) {
         bloc.setGender(value);
         _selectedGender = value;
@@ -101,7 +106,7 @@ Widget _body(BuildContext context, NewSessionBloc bloc) {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.ageRange,
       options: utils.getAgeRange(context),
-      initialValue: utils.getAgeRange(context).last.label,
+      initialValue: _selectedAge,
       callback: (value) {
         bloc.setAge(value);
         _selectedAge = value;
@@ -113,7 +118,7 @@ Widget _body(BuildContext context, NewSessionBloc bloc) {
     return MyBottomSheetTextField(
       titleText: AppLocalizations.of(context)!.disability,
       options: utils.getDisiability(context),
-      initialValue: utils.getDisiability(context).last.label,
+      initialValue: _selectedDisability,
       callback: (value) {
         bloc.setDisability(value);
         _selectedDisability = value;
@@ -145,9 +150,9 @@ Widget _body(BuildContext context, NewSessionBloc bloc) {
       context: context,
       builder: (_) {
         return NewSessionConfirmDialog(
-          gender: _selectedGender!,
-          age: _selectedAge!,
-          disability: _selectedDisability!,
+          gender: utils.optionLabel(utils.getGenderOptions(context), _selectedGender!),
+          age: utils.optionLabel(utils.getAgeRange(context), _selectedAge!),
+          disability: utils.optionLabel(utils.getDisiability(context), _selectedDisability!),
           callback: () {
             BlocProvider.of<NewSessionBloc>(context).add(CreateNewSession());
           },

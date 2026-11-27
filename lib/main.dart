@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ecozonas/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'src/data/preferences/user_preferences.dart';
@@ -28,8 +28,6 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  static const String accessToken = String.fromEnvironment("ACCESS_TOKEN");
-  
   const MyApp({super.key});
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../../domain/models/db/mapper_db_model.dart';
 import '../../utils/constants.dart';
@@ -183,8 +183,8 @@ class MySessionContent extends StatelessWidget {
    * METHODS
    */
   Future<void> _copyToClipboard(int id, BuildContext context) async {
-    await Clipboard.setData(ClipboardData(text: id.toString())).then((value) {
-      utils.showSnackBar(context, AppLocalizations.of(context)!.copiedId);
-    });
+    await Clipboard.setData(ClipboardData(text: id.toString()));
+    if (!context.mounted) return;
+    utils.showSnackBar(context, AppLocalizations.of(context)!.copiedId);
   }
 }

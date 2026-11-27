@@ -13,11 +13,11 @@ import '../../../../domain/models/db/mapaton_db_model.dart';
 import '../../../../domain/models/image_api_response_model.dart';
 import '../../../../domain/models/mapaton_model.dart';
 import '../../../../domain/models/mapaton_post_model.dart';
+import '../../../../domain/models/sociodemographic_codes.dart';
 import '../../../../domain/models/multipart_file_model.dart';
 import '../../../../domain/use_cases/apis/mapaton_api_use_case.dart';
 import '../../../../domain/use_cases/db/activity_use_case.dart';
 import '../../../../domain/use_cases/db/mapaton_use_case.dart';
-import '../../../utils/constants.dart';
 import 'bloc.dart';
 
 class UpdateMapBloc extends Bloc<UpdateMapEvent, UpdateMapState> {
@@ -153,9 +153,9 @@ class UpdateMapBloc extends Bloc<UpdateMapEvent, UpdateMapState> {
       mapper: Mapper(
         id: prefs.getMapper!.id,
         sociodemographicData: SociodemographicData(
-          gender: Constants.gender.firstWhere((e) => e.label == s.gender).value,
-          ageRange: Constants.ageRange.firstWhere((e) => e.label == s.ageRange).value,
-          disability: Constants.disability.firstWhere((e) => e.label == s.disability).value,
+          gender: s.gender,
+          ageRange: s.ageRange,
+          disability: SociodemographicCodes.disabilityForApi(s.disability),
         )
       ),
       activities: activities.map((e) {

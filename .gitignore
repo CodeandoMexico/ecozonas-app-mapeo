@@ -131,3 +131,5 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
+# Generados por flutter gen-l10n (se regeneran con flutter pub get)
+lib/l10n/app_localizations*.dart

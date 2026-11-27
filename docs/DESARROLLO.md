@@ -72,7 +72,7 @@ Los usuarios crean perfiles anónimos con un alias, género, edad e información
 
 ### Mapeo interactivo
 
-Esta es la funcionalidad principal. Usamos Mapbox GL para mostrar el mapa y permitir que los usuarios:
+Esta es la funcionalidad principal. Usamos MapLibre (`maplibre_gl`) para mostrar el mapa y permitir que los usuarios:
 - Descarguen regiones para trabajar offline
 - Vean marcadores de actividades mapeadas anteriormente  
 - Seleccionen qué tipo de actividad quieren registrar
@@ -94,7 +94,7 @@ La app también permite ver qué actividades están pendientes de envío y el pe
 
 Para gestión de estado usamos `bloc`, `flutter_bloc`, `rxdart` y `provider`. La UI usa cosas estándar como `carousel_slider` para el onboarding, `flutter_svg` para SVGs y Font Awesome para iconos.
 
-La parte crítica es `mapbox_gl` para los mapas (requiere un ACCESS_TOKEN en tiempo de compilación). Para ubicación usamos el paquete `location`.
+La parte crítica es `maplibre_gl` para los mapas, con el estilo de OpenFreeMap (no requiere token). Para ubicación usamos el paquete `location`.
 
 Persistencia: `sqflite` para la base de datos local y `shared_preferences` para cosas simples. Captura de fotos con `image_picker`.
 
@@ -102,7 +102,7 @@ Red: cliente HTTP básico (`http`) y `url_launcher` para abrir las encuestas ext
 
 ### Integraciones externas
 
-- Mapbox (tiles y geocoding) - token configurado en tiempo de build
+- OpenFreeMap (tiles de OpenStreetMap para el mapa y las regiones sin conexión) - sin token
 - API de EcoZonas (`https://ecozonas.org/api/`) - endpoints para obtener mapatones/encuestas y enviar datos. Es pública, no requiere auth
 - KoboToolbox - las URLs vienen en el JSON de configuración
 
