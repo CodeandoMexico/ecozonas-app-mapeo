@@ -31,7 +31,7 @@ class MapatonMapContent extends StatefulWidget {
 }
 
 class _MapatonMapContentState extends State<MapatonMapContent> {
-  final ActivitiesDraggable _activitiesDraggable = ActivitiesDraggable();
+  final _activitiesController = DraggableScrollableController();
 
   // late MapatonBloc _bloc;
   MapLibreMapController? _controller;
@@ -43,6 +43,12 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
     target: LatLng(0, 0),
     zoom: 15
   );
+
+  @override
+  void dispose() {
+    _activitiesController.dispose();
+    super.dispose();
+  }
 
   // @override
   // void initState() {
@@ -56,11 +62,6 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
     final bloc = context.read<MapatonBloc>();
 
     final prefs = UserPreferences();
-
-    _activitiesDraggable.setActivities(widget.mapaton!);
-    _activitiesDraggable.setCallback((value) {
-      BlocProvider.of<MapatonBloc>(context).add(AddMarker(value));
-    });
 
     return Scaffold(
       appBar: _appBar(context, bloc, widget.mapaton!),
@@ -237,7 +238,11 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
         label: AppLocalizations.of(context)!.mapHere,
         fullWidth: true,
         elevation: 5,
-        onPressed: () => _activitiesDraggable.animateDraggable(false),
+        onPressed: () => _activitiesController.animateTo(
+          ActivitiesDraggable.openSize,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.ease,
+        ),
       ),
     );
   }
@@ -351,7 +356,11 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
 
   Widget _draggableScrollableSheet() {
     return Positioned.fill(
-      child: _activitiesDraggable
+      child: ActivitiesDraggable(
+        mapaton: widget.mapaton!,
+        controller: _activitiesController,
+        onActivitySaved: (activity) => BlocProvider.of<MapatonBloc>(context).add(AddMarker(activity)),
+      ),
     );
   }
 
