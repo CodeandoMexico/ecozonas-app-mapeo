@@ -2,7 +2,6 @@ import 'package:material_ui/material_ui.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../theme/theme.dart';
-import '../utils/constants.dart';
 
 class AliasTextFields extends StatelessWidget {
   final int id;
@@ -13,68 +12,20 @@ class AliasTextFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: myTheme.colorScheme.secondary,
-        ),
-        borderRadius: BorderRadius.circular(Constants.borderRadiusSmall)
+    return TextFormField(
+      controller: aliasController,
+      textCapitalization: TextCapitalization.words,
+      decoration: InputDecoration(
+        hintText: AppLocalizations.of(context)!.writeYourName,
+        prefixIcon: const Icon(Icons.edit_outlined),
+        suffixText: '#$id',
+        suffixStyle: Theme.of(context).textTheme.titleSmall!.copyWith(color: AppColors.textSecondary),
       ),
-      child: Row(
-        children: [
-          _aliasTextField(context, aliasController),
-          _divider(),
-          _idText(id),
-        ],
-      ),
-    );
-  }
-
-  /*
-   * WIDGETS
-   */
-  Widget _aliasTextField(BuildContext context, TextEditingController aliasController) {
-    return Flexible(
-      flex: 2,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 12.0),
-        child: TextFormField(
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-          controller: aliasController,
-          cursorColor: Colors.black,
-          decoration: InputDecoration(
-            hintText: AppLocalizations.of(context)!.writeYourName,
-            border: InputBorder.none,
-            suffixIcon: const Icon(Icons.edit_outlined, color: Colors.black)
-          ),
-          onChanged: (value) {
-            if (callback != null) {
-              callback!(value);
-            }
-          },
-        ),
-      )
-    );
-  }
-
-  Widget _divider() {
-    return Container(
-      color: Constants.labelTextColor,
-      width: 1,
-      height: 30,
-    );
-  }
-
-  Widget _idText(int id) {
-    return Flexible(
-      flex: 1,
-      child: Align(
-        alignment: Alignment.center,
-        child: Text(
-          '#$id',
-          style: const TextStyle(fontSize: 20),
-        ),
-      ),
+      onChanged: (value) {
+        if (callback != null) {
+          callback!(value);
+        }
+      },
     );
   }
 }

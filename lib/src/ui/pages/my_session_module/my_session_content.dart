@@ -4,15 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../../domain/models/db/mapper_db_model.dart';
-import '../../utils/constants.dart';
 import '../../utils/utils.dart' as utils;
 import '../../widgets/alias_text_fields.dart';
 import '../../widgets/my_app_bar.dart';
 import '../../widgets/my_bottom_sheet_text_field.dart';
 import '../../widgets/my_primary_elevated_button.dart';
-import '../../widgets/my_secondary_elevated_button.dart';
 import '../login_module/tabs_container/login_tab_page.dart';
 import 'bloc/bloc.dart';
+import '../../theme/theme.dart';
+import '../../widgets/app_button.dart';
 
 class MySessionContent extends StatelessWidget {
   MySessionContent({super.key});
@@ -49,7 +49,7 @@ class MySessionContent extends StatelessWidget {
    */
   MyAppBar _appBar(BuildContext context) {
     return MyAppBar(
-      title: Text(AppLocalizations.of(context)!.mySession, style: const TextStyle(fontSize: Constants.appBarFontSize)),
+      title: Text(AppLocalizations.of(context)!.mySession),
       hideBackButton: true,
     );
   }
@@ -58,8 +58,6 @@ class MySessionContent extends StatelessWidget {
    * WIDGETS
    */
   Widget _body(MySessionBloc bloc) {
-    const style = TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Color(0xFF646464));
-
     return StreamBuilder(
       stream: bloc.mapper,
       builder: (BuildContext context, AsyncSnapshot<MapperDbModel> snapshot) {
@@ -67,13 +65,15 @@ class MySessionContent extends StatelessWidget {
           final mapper = snapshot.data!;
           aliasController.text = mapper.alias;
 
+          final sectionStyle = Theme.of(context).textTheme.titleSmall;
+
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: AppSpacing.pageWithVertical,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(AppLocalizations.of(context)!.mappingId, style: style),
-                const SizedBox(height: Constants.padding),
+                Text(AppLocalizations.of(context)!.mappingId, style: sectionStyle),
+                const SizedBox(height: AppSpacing.sm),
                 AliasTextFields(
                   id: mapper.mapperId,
                   aliasController: aliasController,
@@ -81,19 +81,19 @@ class MySessionContent extends StatelessWidget {
                     bloc.setMapper(bloc.mapperValue.copyWith(alias: value));
                   },
                 ),
-                const SizedBox(height: Constants.padding),
+                const SizedBox(height: AppSpacing.sm),
                 _copyButton(context, mapper.mapperId),
-                const SizedBox(height: Constants.paddingXLarge),
-                Text(AppLocalizations.of(context)!.yourData, style: style),
-                const SizedBox(height: Constants.padding),
+                const SizedBox(height: AppSpacing.xl),
+                Text(AppLocalizations.of(context)!.yourData, style: sectionStyle),
+                const SizedBox(height: AppSpacing.sm),
                 _genderDropdown(context, bloc, mapper.gender),
-                const SizedBox(height: Constants.paddingLarge),
+                const SizedBox(height: AppSpacing.md),
                 _ageDropdown(context, bloc, mapper.age),
-                const SizedBox(height: Constants.paddingLarge),
+                const SizedBox(height: AppSpacing.md),
                 _disabilityDropdown(context, bloc, mapper.disability),
-                const SizedBox(height: Constants.paddingXLarge),
+                const SizedBox(height: AppSpacing.xl),
                 _saveButton(context, bloc, aliasController),
-                const SizedBox(height: Constants.padding),
+                const SizedBox(height: AppSpacing.sm),
                 _logoutButton(context)
               ],
             ),
@@ -106,10 +106,11 @@ class MySessionContent extends StatelessWidget {
   }
 
   Widget _copyButton(BuildContext context, int id) {
-    return MySecondaryElevatedButton(
+    return AppButton.outline(
+      fullWidth: true,
       onPressed: () async => await _copyToClipboard(id, context),
       label: AppLocalizations.of(context)!.copy,
-      iconData: Icons.copy,
+      icon: Icons.copy,
     );
   }
 
@@ -158,24 +159,11 @@ class MySessionContent extends StatelessWidget {
   }
 
   Widget _logoutButton(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size.fromHeight(50),
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: Constants.redColor)
-        )
-      ),
+    return AppButton.danger(
+      label: AppLocalizations.of(context)!.logout,
+      icon: Icons.logout,
+      fullWidth: true,
       onPressed: () => Navigator.of(context).popUntil((route) => route.settings.name == LoginTabPage.routeName),
-      child: Text(
-        AppLocalizations.of(context)!.logout,
-        style: const TextStyle(
-          color: Constants.redColor,
-          fontWeight: FontWeight.w500,
-          fontSize: 18
-        )
-      )
     );
   }
 
