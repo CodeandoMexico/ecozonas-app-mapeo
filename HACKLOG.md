@@ -42,3 +42,23 @@
 - Crear sesión ya no reinicia las opciones elegidas
 - No se usa `BuildContext` después de un `await` en el mapa ni en "Mi sesión"
 
+### Preparación para traducción
+
+- `objectCount` usa plural ICU (antes pegaba una "s", que no sirve en otros idiomas)
+- Textos fijos en el código pasan a los `.arb`: "Selecciona una opción", "Información actualizada correctamente" y "Objetos a mapear prioritarios"
+- `showEnglish()` reemplazado por `localized()`: elige el texto del servidor según el idioma y usa el español si falta la traducción
+- El nombre del marcador se muestra en el idioma actual (antes quedaba en el idioma con el que se guardó)
+- Título de la app "EcoZonas" (antes "Material App") y correcciones de redacción en español
+- Notas para traductores en `app_en.arb` para las claves ambiguas
+
+### Mantenimiento
+
+- Migración de `package:flutter/material.dart` a `material_ui`/`cupertino_ui` (obsoleto desde Flutter 3.47)
+- APIs obsoletas: `Radio` → `RadioGroup`, `WillPopScope` → `PopScope`
+- `bloc`/`flutter_bloc` 9 y `equatable` 3; se quitaron `font_awesome_flutter` y `cupertino_icons`, que no se usaban
+- `ActivitiesDraggable` inmutable: recibe mapatón, controlador y callback por constructor
+- Se borró código sin uso (`mapbox_test.dart`, `CheckBlockWidget`, `MapBlockWidget`, `ViewMapPage`)
+- `flutter analyze` sin avisos
+- Pruebas: la del contador de la plantilla se reemplazó por pruebas de códigos sociodemográficos, selector, `localized()`, plurales y consistencia de los `.arb`
+- CI con GitHub Actions: análisis, pruebas y compilación del APK en cada pull request
+
