@@ -120,5 +120,6 @@
       }
     },
     "errorFound": "An error was found",
-    "noConnection": "No connection"
+    "noConnection": "No connection",
+    "locationUnavailable": "Couldn't get your location. Make sure location is turned on and EcoZonas has permission in Settings."
 }

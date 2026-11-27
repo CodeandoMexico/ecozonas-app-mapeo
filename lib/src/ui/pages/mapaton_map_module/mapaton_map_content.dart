@@ -79,6 +79,9 @@ class _MapatonMapContentState extends State<MapatonMapContent> {
     if (state is LocationGetted) {
       _moveCamera(state.location);
     }
+    if (state is ErrorGettingLocation) {
+      utils.showSnackBarError(context, AppLocalizations.of(context)!.locationUnavailable);
+    }
     if (state is MarkersGetted) {
       for(var a in state.activities) {
         addImageFromAsset(LatLng(a.latitude, a.longitude), a);
