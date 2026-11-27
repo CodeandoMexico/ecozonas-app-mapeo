@@ -4,10 +4,9 @@ import 'package:ecozonas/l10n/app_localizations.dart';
 import '../../../data/preferences/user_preferences.dart';
 import '../../../domain/models/mapaton_model.dart';
 import '../../theme/theme.dart';
-import '../../utils/constants.dart';
 import '../../widgets/mapaton_carousel_widget.dart';
-import '../../widgets/my_primary_elevated_button.dart';
 import '../mapaton_main_module/mapaton_main_page.dart';
+import '../../widgets/app_button.dart';
 
 class MapatonOnboardingPage extends StatelessWidget {
   static const routeName = 'mapatonDetails';
@@ -24,7 +23,6 @@ class MapatonOnboardingPage extends StatelessWidget {
         child: Column(
           children: [
             MapatonCarouselWidget(mapaton: mapaton),
-            const SizedBox(height: Constants.paddingLarge),
             _buttons(context, mapaton),
           ],
         ),
@@ -38,22 +36,12 @@ class MapatonOnboardingPage extends StatelessWidget {
    */
   AppBar _appBar(MapatonModel mapaton) {
     return AppBar(
-      title: Row(
+      title: Column(
         children: [
-          const Icon(Icons.map),
-          const SizedBox(width: Constants.paddingSmall),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(mapaton.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              Text(mapaton.locationText, style: const TextStyle(fontSize: 14)),
-            ],
-          )
+          Text(mapaton.title),
+          if (mapaton.locationText.isNotEmpty)
+            Text(mapaton.locationText, style: appTheme.textTheme.bodySmall),
         ],
-      ),
-      elevation: 0,
-      iconTheme: const IconThemeData(
-        color: Colors.black
       ),
     );
   }
@@ -63,11 +51,11 @@ class MapatonOnboardingPage extends StatelessWidget {
    */
   Widget _buttons(BuildContext context, MapatonModel mapaton) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: MyPrimaryElevatedButton(
+      padding: AppSpacing.pageWithVertical,
+      child: AppButton.primary(
         label: AppLocalizations.of(context)!.goToTools,
         fullWidth: true,
-        onPressed: () => _continue(context, mapaton)
+        onPressed: () => _continue(context, mapaton),
       ),
     );
   }

@@ -4,8 +4,8 @@ import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../domain/models/mapaton_model.dart';
 import '../../ui/utils/color_extension.dart';
-import '../utils/constants.dart';
 import '../utils/utils.dart' as utils;
+import '../theme/theme.dart';
 
 class MapatonCarouselWidget extends StatefulWidget {
   final MapatonModel mapaton;
@@ -59,17 +59,20 @@ class _MapatonCarouselWidgetState extends State<MapatonCarouselWidget> {
 
   Widget _carouselIndicator() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: _categories.asMap().entries.map((entry) {
-          return Container(
-            width: 9,
-            height: 9,
-            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 3.0),
+          final active = _current == entry.key;
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            width: active ? 20 : 8,
+            height: 8,
+            margin: const EdgeInsets.symmetric(horizontal: AppSpacing.xxs),
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.black.withValues(alpha: _current == entry.key ? 0.9 : 0.4)),
+              borderRadius: BorderRadius.circular(AppRadius.pill),
+              color: active ? AppColors.secondary : AppColors.outlineVariant,
+            ),
           );
         }).toList(),
       ),
@@ -80,7 +83,7 @@ class _MapatonCarouselWidgetState extends State<MapatonCarouselWidget> {
     return Column(
       children: [
         _header(context, category),
-        const SizedBox(height: Constants.paddingXLarge),
+        const SizedBox(height: AppSpacing.lg),
         _details(category.description)
       ],
     );
@@ -91,7 +94,7 @@ class _MapatonCarouselWidgetState extends State<MapatonCarouselWidget> {
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.4,
       color: category.color.toColor(),
-      padding: const EdgeInsets.all(Constants.padding),
+      padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -109,20 +112,15 @@ class _MapatonCarouselWidgetState extends State<MapatonCarouselWidget> {
   Widget _sectionTitle(String title) {
     return Text(
       title,
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 18,
-        color: Color(0xFF29496E))
+      textAlign: TextAlign.center,
+      style: appTheme.textTheme.titleMedium!.copyWith(color: AppColors.secondary),
     );
   }
 
   Widget _details(String description) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Constants.padding),
-      child: Text(
-        description,
-        style: const TextStyle(fontSize: 16)
-      ),
+      padding: AppSpacing.page,
+      child: Text(description, style: appTheme.textTheme.bodyLarge),
     );
   }
 }

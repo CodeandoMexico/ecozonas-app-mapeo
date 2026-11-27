@@ -3,9 +3,10 @@ import 'package:ecozonas/l10n/app_localizations.dart';
 
 import '../../../domain/models/mapaton_model.dart';
 import '../../bloc/bottom_navigation_bar_bloc.dart';
-import '../../utils/constants.dart';
 import '../../widgets/my_app_bar.dart';
-import '../../widgets/my_primary_elevated_button.dart';
+import '../../theme/theme.dart';
+import '../../widgets/app_button.dart';
+import '../../widgets/app_numbered_text.dart';
 import 'mapaton_onboarding_page.dart';
 
 class MapatonTextOnboardingPage extends StatelessWidget implements BottomNavigationBarState {
@@ -13,135 +14,64 @@ class MapatonTextOnboardingPage extends StatelessWidget implements BottomNavigat
 
   const MapatonTextOnboardingPage({super.key});
 
-  final _letterSpacing = 0.75;
-  final _height = 1.5;
-  final _style = const TextStyle(
-    color: Constants.labelTextColor,
-    fontSize: 16
-  );
 
   @override
   Widget build(BuildContext context) {
     final showContinueButton = ModalRoute.of(context)!.settings.arguments as bool?;
+    final l10n = AppLocalizations.of(context)!;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: MyAppBar(
-        title: Image.asset(
-          'assets/images/new_app_logo.png',
-          height: 35,
-        ),
+        title: Image.asset('assets/images/new_app_logo.png', height: 32),
         hideBackButton: showContinueButton != true,
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              RichText(
-                text: TextSpan(
-                  style: _style.copyWith(
-                    letterSpacing: _letterSpacing,
-                    height: _height
-                  ),
-                  children: [
-                    TextSpan(
-                      text: '''${AppLocalizations.of(context)!.onboardingIntro1}
-
-${AppLocalizations.of(context)!.onboardingIntro2}
-
-${AppLocalizations.of(context)!.onboardingIntro3}\n\n'''
-                    ),
-                    _numberIndent(
-                      1,
-                      AppLocalizations.of(context)!.onboarding1
-                    ),
-                    _numberIndent(
-                      2,
-                      AppLocalizations.of(context)!.onboarding2
-                    ),
-                    // _letterIndent(
-                    //   'a',
-                    //   AppLocalizations.of(context)!.onboarding2a
-                    // ),
-                    // _letterIndent(
-                    //   'b',
-                    //   AppLocalizations.of(context)!.onboarding2b
-                    // ),
-                    // _letterIndent(
-                    //   'c',
-                    //   '${AppLocalizations.of(context)!.onboarding2b}\n'
-                    // ),
-                    _numberIndent(
-                      3,
-                      '${AppLocalizations.of(context)!.onboarding3}\n'
-                    ),
-                    TextSpan(
-                      text: '${AppLocalizations.of(context)!.aboutEcozonas}\n\n',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      )
-                    ),
-                    TextSpan(
-                      text: AppLocalizations.of(context)!.onboardingOutro
-                    )
-                  ]
-                ),
+        padding: AppSpacing.pageWithVertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(l10n.onboardingIntro1, style: textTheme.bodyLarge),
+            const SizedBox(height: AppSpacing.md),
+            Text(l10n.onboardingIntro2, style: textTheme.bodyLarge),
+            const SizedBox(height: AppSpacing.lg),
+            Text(l10n.onboardingIntro3, style: textTheme.titleSmall),
+            const SizedBox(height: AppSpacing.xs),
+            _numberedItem(context, 1, l10n.onboarding1),
+            _numberedItem(context, 2, l10n.onboarding2),
+            // Pasos 2a-2c, desactivados: _letteredItem(context, 'a', l10n.onboarding2a), …
+            _numberedItem(context, 3, l10n.onboarding3),
+            const SizedBox(height: AppSpacing.lg),
+            Text(l10n.aboutEcozonas, style: textTheme.titleSmall),
+            const SizedBox(height: AppSpacing.xs),
+            Text(l10n.onboardingOutro, style: textTheme.bodyMedium!.copyWith(color: AppColors.textSecondary)),
+            if (showContinueButton == true) ...[
+              const SizedBox(height: AppSpacing.lg),
+              AppButton.primary(
+                label: l10n.continueText,
+                fullWidth: true,
+                onPressed: () => _goToMain(context),
               ),
-              if (showContinueButton == true) ...[
-                const SizedBox(height: 20.0),
-                MyPrimaryElevatedButton(
-                  label: AppLocalizations.of(context)!.continueText,
-                  fullWidth: true,
-                  onPressed: () {
-                    _goToMain(context);
-                  },
-                )
-              ]
             ],
-          ),
+          ],
         ),
       ),
-      backgroundColor: Colors.white,
     );
   }
 
   /*
    * WIDGETS
    */
-  WidgetSpan _numberIndent(int number, String text) {
-    final style = _style.copyWith(
-      letterSpacing: _letterSpacing,
-      height: _height
-    );
-
-    return WidgetSpan(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('$number. ', style: style),
-          Flexible(child: Text(text, style: style))
-        ],
-      )
-    );
+  Widget _numberedItem(BuildContext context, int number, String text) {
+    return AppNumberedText(marker: '$number.', text: text);
   }
 
   // Se usa en los pasos 2a-2c de la introducción, que están comentados.
   // ignore: unused_element
-  WidgetSpan _letterIndent(String letter, String text) {
-    final style = _style.copyWith(
-      letterSpacing: _letterSpacing,
-      height: _height
-    );
-
-    return WidgetSpan(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('    '),
-          Text('$letter. ', style: style),
-          Flexible(child: Text(text, style: style))
-        ],
-      )
+  Widget _letteredItem(BuildContext context, String letter, String text) {
+    return Padding(
+      padding: const EdgeInsets.only(left: AppSpacing.lg),
+      child: AppNumberedText(marker: '$letter.', text: text),
     );
   }
 
